@@ -1,0 +1,12 @@
+<ion-content>
+  <div class="maincontent">
+    <div class="blogDetails" *ngIf="data.selectedBlog">
+      <img *ngIf="data.selectedBlog.news_image" [src]="data.apiUrlNew + data.selectedBlog.news_image" />
+      <img *ngIf="!data.selectedBlog.news_image" [src]="'assets/images/logoColored.png'" style="display:block;height:auto;width: 80%;margin:20px auto;" />
+      <div class="desc">
+        <h3 [innerHTML]="data.selectedBlog.news_name"></h3>
+        <div [innerHTML]="data.selectedBlog.news_description" class=""></div>
+      </div>
+    </div>
+  </div>
+</ion-content>

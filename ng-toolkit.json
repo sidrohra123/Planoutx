@@ -1,0 +1,15 @@
+{
+  "serverless": {
+    "provider": "aws",
+    "project": "app",
+    "skipInstall": false,
+    "directory": ".",
+    "lambdaTS": false,
+    "offline": false,
+    "clientProject": "app",
+    "serverless": {
+      "aws": {},
+      "gcloud": {}
+    }
+  }
+}

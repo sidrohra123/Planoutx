@@ -1,0 +1,63 @@
+<ion-menu side="start" menuId="sideMenu" type="overlay" side="start" contentId="menu-content">
+  <!-- <ion-menu side="start" menuId="sideMenu" type="overlay" side="start" contentId="menu-content" [swipeGesture]="!data.userInfo || !data.selectedLocation ? false : true"> -->
+  <!-- <ion-header>
+    <ion-toolbar color="tertiary">
+      <ion-title>Planoutx</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+  <ion-content>
+    <ion-grid class="userInfo" *ngIf="data.userInfo">
+      <img src="{{ data.userInfo.customers_picture }}" alt="" class="coverImage">
+      <ion-row class="ion-activatable align-items-center" [routerLink]="['/profile']" (click)="methods.closeMenu()">
+        <ion-ripple-effect></ion-ripple-effect>
+        <ion-col size="3">
+          <img src="{{ data.userInfo.customers_picture }}" />
+        </ion-col>
+        <ion-col size="9">
+          <div>{{ data.userInfo.customers_firstname }} {{ data.userInfo.customers_lastname }}</div>
+          <small>{{ data.userInfo.customers_email_address }}</small>
+        </ion-col>
+      </ion-row> 
+    </ion-grid>
+
+    <ion-grid class="userInfo noUser" *ngIf="!data.userInfo">
+      <!-- <img src="assets/images/noUser.png" alt="" class="coverImage"> -->
+      <ion-row class="ion-activatable align-items-center" [routerLink]="['/login']" (click)="methods.closeMenu()">
+        <ion-ripple-effect></ion-ripple-effect>
+        <ion-col size="3">
+          <img src="assets/images/noUser.png" />
+        </ion-col>
+        <ion-col size="9">
+          <div>Login here</div>
+          <small>To plan your special moments</small>
+        </ion-col>
+      </ion-row> 
+    </ion-grid>
+
+    <div class="menus">
+      <ion-list *ngIf="data.sideMenuItems.length">
+        <ion-item lines="none" [routerLink]="item.link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" [class.highlight]="item.highlight" (click)="methods.closeMenu()" [queryParams]="item.params ? item.params : ''" *ngFor="let item of data.sideMenuItems" [hidden]="item.auth && !data.userInfo">
+          <ion-icon *ngIf="!item.highlight" [name]="item.icon"></ion-icon>
+          <img src="https://image.flaticon.com/icons/svg/2851/2851398.svg" *ngIf="item.highlight">
+          <span>{{ item.name }}</span>
+        </ion-item>
+      </ion-list>
+
+      <ion-list *ngIf="data.allPages.length">
+        <ion-item lines="none" [routerLink]="['/content', page.name | urlSlug]" (click)="methods.closeMenu()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" *ngFor="let page of data.allPages">
+          <ion-icon name="paper"></ion-icon>
+          <span>{{ page.name }}</span>
+        </ion-item>
+      </ion-list>
+
+      <ion-list *ngIf="data.userInfo">
+        <hr />
+        <ion-item lines="none" (click)="methods.logout()">
+          <ion-icon name="exit"></ion-icon>
+          <span>Logout</span>
+        </ion-item>
+      </ion-list>
+    </div>
+    
+  </ion-content>
+</ion-menu>

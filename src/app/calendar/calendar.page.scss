@@ -1,0 +1,91 @@
+.logo{
+    width:35px;
+}
+.titleHead{
+    font-size: 14px;
+    font-weight: 500;
+    padding-left: 15px;
+    vertical-align: middle;
+}
+.headerCal{
+    padding: 10px 5px;
+    background: #fff;
+    h3{
+        text-align: center;
+        font-size:16px;
+        font-weight: 400;
+        margin:0;
+    }
+}
+/deep/ .cal-past {
+    color:#f2f2f2;
+    pointer-events: none;
+}
+/deep/ .cal-month-view .cal-day-cell{
+    min-height:0;
+    height:50px;
+    line-height:50px;
+    width:50px;
+    flex:none;
+    margin:auto;
+    min-width: 0;
+}
+/deep/ .cal-month-view .cal-day-cell.cal-today{
+    background: transparent;
+    position: relative;
+    &:after{
+        content:'';
+        pointer-events: none;
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        border:1px solid #f5444c;
+        border-radius:50%;
+        margin:5px;
+    }
+}
+/deep/ .cal-month-view .cal-cell-row .cal-cell:hover, .cal-month-view .cal-cell.cal-has-events.cal-open{
+    background: transparent;
+}
+/deep/ .cal-month-view .cal-day-cell.active{
+    position: relative;
+    &:after{
+        content:'';
+        pointer-events: none;
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        border:1px solid #f5444c;
+        border-radius:50%;
+        margin:5px;
+    }
+}
+/deep/ .cal-month-view .cal-cell-top{
+    min-height:0;
+}
+/deep/ .cal-month-view .cal-day-number{
+    color: inherit !important;
+    font-size: inherit !important;
+    opacity: 1;
+    float: none;
+    text-align: center;
+    display: block;
+    margin:0;
+}
+/deep/ .cal-month-view .cal-cell-row:hover {
+    background-color: transparent;
+}
+/deep/ .cal-month-view .cal-days .cal-cell-row, /deep/ .cal-month-view .cal-day-cell {
+    border: none!important;
+}
+/deep/ .cal-month-view .cal-days{
+    border:none!important;
+}
+/deep/ .cal-month-view .cal-header .cal-cell{
+    font-size:11px;
+    font-weight: 400;
+}

@@ -1,0 +1,74 @@
+<!-- <ion-tabs>
+  <ion-tab-bar slot="bottom" *ngIf="!router.url.includes('login') && !router.url.includes('tutorials')">
+    <ion-tab-button tab="home">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="trending">
+      <ion-icon name="paper"></ion-icon>
+      <ion-label>Trending</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="offers">
+      <ion-icon name="list"></ion-icon>
+      <ion-label>Offers</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="notifications">
+      <ion-icon name="notifications"></ion-icon>
+      <ion-label>Notifications</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="profile">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Account</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs> -->
+
+<div class="footerTabs">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="iconText" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <ion-icon name="home"></ion-icon>
+          <div class="tabName">Home</div>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="iconText" routerLink="/trending" routerLinkActive="active">
+          <ion-icon name="bulb"></ion-icon>
+          <!-- <img src="https://image.flaticon.com/icons/svg/702/702814.svg" /> -->
+          <div class="tabName">Ideas</div>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="iconText offersTab" routerLink="/eveyrthing" [queryParams]="{'occasion':'19'}" routerLinkActive="active">
+          <div class="smallImageBox">
+            <!-- <ion-slides [options]="footerOffersOpts" #footOffersSlides class="offersFooter">
+              <ion-slide *ngFor="let offer of data.footerOffers">
+                <img [src]="offer.image" />
+              </ion-slide>
+            </ion-slides> -->
+            <!-- <img src="https://img.webhotelier.net/templates/5262/files/1522162332icon-offer.gif" /> -->
+            <img src="assets/images/passport/passportIcon.gif" />
+          </div>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="iconText" routerLink="/chatsupport" routerLinkActive="active">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <div class="tabName">Help</div>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="iconText" [routerLink]="data.userInfo ? ['/profile'] : ['/login']"
+          [queryParams]="!data.userInfo ? {'next' : '/profile'} : '{}'" routerLinkActive="active" id="step1">
+          <ion-icon name="person"></ion-icon>
+          <div class="tabName">Account</div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

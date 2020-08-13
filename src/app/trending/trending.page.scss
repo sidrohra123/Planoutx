@@ -1,0 +1,91 @@
+.maincontent {
+    // padding: 115px 10px 80px;
+}
+.caraouselVideos{
+    margin: -15px -10px 0;
+    padding: 5px 5px;
+    background: #ccc;
+    height: 20vh;
+    overflow: hidden;
+    /deep/ ion-slides{
+        height: 100%;
+    }
+}
+.thumbNail {
+    position: relative;
+    width: 100%;
+    height:100%;
+    img{
+        display:block;
+        width:100%;
+    }
+    iframe{
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        height:100%;
+        width:100%;
+        object-fit: cover;
+        z-index: 9;
+    }
+    ion-icon{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translate(-50%, -50%);
+        background: #f5444c;
+        padding: 6px;
+        border-radius: 50%;
+        box-shadow: 0px 0px 0px 6px rgba(0, 0, 0, 0.3);
+        font-size: 14px;
+    }
+    >h3{
+        position: absolute;
+        left: 0;
+        right: 0;
+        font-size: 10px;
+        color: #fff;
+        margin: 0;
+        padding: 5px 5px;
+        background: rgba(0, 0, 0, 0.9);
+        bottom: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+.tabsArea{
+    margin:0 -10px 20px;
+    height: calc(80vh - 137px);
+    .tabsHead{
+        display:flex;
+        box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+        > a{
+            text-decoration: none;
+            white-space: nowrap;
+            display:block;
+            padding:11px 12px;
+            border-bottom:3px solid transparent;
+            color:#797979;
+            text-align: center;
+            text-transform: uppercase;
+            font-size:13px;
+            font-weight: 700;
+            flex:auto;
+        }
+        >a.active{
+            border-color:#f5444c;
+        }
+    }
+    .tabDetails{
+        position: relative;
+        padding: 6px 10px 40px;
+        background: #f4f4f4;
+    }
+}

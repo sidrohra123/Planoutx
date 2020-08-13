@@ -1,0 +1,15 @@
+<ion-content>
+  <div class="maincontent">
+    <form class="googleSearchBox" [class.hasError] = 'hasError'>
+      <h3>Deliver To (Try searching by entering pin code for accurate results): </h3>
+      <div class="inputBox">
+        <ion-icon name="pin"></ion-icon>
+        <input type="text" placeholder="* Search your location" name="pinCode" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" />
+      </div>
+      <div class="buttonText">
+        <p *ngIf="address && !data.isEligibleLocation">Sorry. We do not deliver in {{ address.formatted_address }} for now.</p>
+        <ion-button color="tertiary" expand="block" *ngIf="address && data.isEligibleLocation" (click)="toContinue()">Continue</ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

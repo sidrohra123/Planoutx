@@ -1,0 +1,45 @@
+.logo{
+    width: 130px;
+    position: relative;
+    top: -1px;
+}
+ion-title{
+    position: relative;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+.maincontent {
+    padding: 8px 5px;
+    background: #f1f1f1;
+    min-height: 100%;
+}
+.prodBox{
+    text-align: center;
+    padding: 0;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+.addonCta ion-button{
+    margin:0;
+    border-radius:0;
+    --border-radius:0;
+    height:35px;
+    font-size:14px;
+}
+.prodDetailsOther{
+    flex:auto;
+    h5{
+        margin:0;
+        font-size:15px;
+    }
+    h6{
+        color:#444;
+        font-size:13px;
+        margin:3px 0 15px;
+    }
+}

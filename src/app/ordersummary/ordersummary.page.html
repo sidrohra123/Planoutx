@@ -1,0 +1,49 @@
+<ion-content>
+  <div class="maincontent" *ngIf="summary">
+    <lottie-animation-view
+    [options]="lottieConfig"
+    [width]="300"
+    [height]="100"
+    (animCreated)="handleAnimation($event)">
+    </lottie-animation-view>
+    <h3 class="text-center">Thank you for shopping with us!</h3>
+    <p class="text-center">Find below your order details</p>
+    <ion-card class="transaction">
+      <ion-card-content>
+        <h2>Order Details</h2>
+        <hr>
+        <p>Order Id - PLN{{ summary.order[0].orders_id }}</p>
+        <p>Order Date - {{ summary.order[0].date_purchased | date : 'dd MMM yyyy, hh:mm:a' }}</p>
+        <p>Order subotal - {{ +summary.order[0].shipping_cost <  +summary.order[0].order_price ? (+summary.order[0].order_price - +summary.order[0].shipping_cost | currency:'INR') :  0 }}</p>
+        <p>Order shipping - {{ summary.order[0].shipping_cost | currency:'INR' }}</p>
+        <p>Order total - {{ (+summary.order[0].order_price) | currency:'INR' }}</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="recipient">
+      <ion-card-content>
+        <h2>Recipient Details</h2>
+        <hr>
+        <p>{{ summary.order[0].delivery_name }}</p>
+        <p>{{ summary.order[0].delivery_street_address }}</p>
+        <p>{{ summary.order[0].delivery_city}}-{{ summary.order[0].delivery_postcode }}</p>
+        <p>Mobile - {{ summary.order[0].customers_telephone }}</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-list *ngIf="summary.data.length">
+      <h2>Order Items</h2>
+      <ion-item *ngFor="let prod of summary.data">
+        <ion-thumbnail slot="start">
+          <img [src]="data.apiUrlNew + prod.image">
+        </ion-thumbnail>
+        <ion-label>
+          <h3>{{ prod.products_name }}</h3>
+          <p>Quantity: {{ prod.products_quantity }}</p>
+          <p>Price: ₹{{ prod.final_price }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div class="maincontent" *ngIf="!summary">
+    
+  </div>
+</ion-content>

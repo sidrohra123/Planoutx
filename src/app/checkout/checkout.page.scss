@@ -1,0 +1,253 @@
+.cartFilled ul{
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+.fistSec{
+    background:#f3f3f3;
+    padding:10px 0 0;
+}
+.cartFilled{
+    margin-bottom:10px;
+}
+.cartFilled ul > li .catRow{
+    margin:0 10px;
+    border-bottom:1px solid #ccc;
+}
+.cartFilled ul > li .catRow > span{
+    display:inline-block;
+    padding:3px 8px;
+    font-size:12px;
+    color:#fff;
+    background: var(--ion-color-px);
+    border-radius: 3px 3px 0 0;
+}
+.prodRow{
+    display: flex;
+    padding:8px 10px 2px;
+    border-bottom:1px solid #ccc;
+}
+
+.prodRow img{
+    width:70px;
+    height:70px;
+    border-radius: 3px;
+    display:inline-block;
+    object-fit: cover;
+}
+.detailsProd{
+    flex:auto;
+}
+.detailsProd{
+    display:flex;
+    padding-left:10px;
+    flex-flow: column;
+    justify-content: space-between;
+}
+.detailsProd h5{
+    font-size:12px;
+    color:#333;
+    font-weight: 400;
+    margin:0;
+    margin-bottom:4px;
+}
+.priceProd{
+    text-align: right;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex:150px 0 1;
+}
+.priceProd strong{
+    font-size:13px;
+    color:var(--ion-color-tertiary);
+    display:block;
+}
+.priceProd ion-icon{
+    color:#797979;
+    font-size:20px;
+}
+.deliveryDetails, .addressDetails, .cakeMessage{
+    display:flex;
+    padding:8px 10px;
+    border-bottom:1px solid #ccc;
+}
+.deliveryDetails h3, .addressDetails h3, .cakeMessage h3{
+    color:#333;
+    font-size:13px;
+    margin:0;
+    font-weight: 700;
+}
+.deliveryDetails .detailsDate{
+    display:flex;
+    flex-flow: column;
+    justify-content: center;
+    padding-left:25px;
+    font-size:11px;
+}
+.deliveryDetails .detailsDate span{
+    display:block;
+    &:nth-child(2){
+        margin:3px 0;
+    }
+}
+.totalsArea{
+    display:flex;
+    padding:8px 10px;
+    // border-bottom:1px solid #ccc;
+}
+.totalsArea h3{
+    color:#333;
+    font-size:13px;
+    margin:0;
+    font-weight: 700;
+}
+.priceSets{
+    padding-left: 50px;
+    flex: auto;
+    > div{
+        display: flex;
+        justify-content: space-between;
+        padding-bottom:5px;
+        flex-wrap: wrap;
+    }
+    > div:nth-child(3){
+        padding-bottom:7px;
+        border-bottom: 1px solid #ccc;
+    }
+    >div.totalAmount{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 10px;
+        strong{
+            font-weight: bolder;
+            font-size: 14px;
+        }
+        span{
+            color: var(--ion-color-tertiary);
+            font-weight: bolder;
+            font-size: 14px;
+        }
+    }
+    strong{
+        font-size: 13px;
+        font-weight: normal;
+    }
+    span{
+        font-size: 13px;
+    }
+}
+.checkoutBtn ion-button{
+    font-size:16px;
+    margin:0;
+}
+.noAddress{
+    padding-left: 25px;
+    flex:auto;
+    text-align:right;
+    ion-button{
+        margin:0;
+    }
+}
+.extraMessage{
+    padding-left: 25px;
+    flex:auto;
+    text-align:right;
+    font-size:14px;
+    input{
+        width:100%;
+        display:block;
+        padding:9px 12px;
+        border:1px solid #ccc;
+        border-radius: 4px;
+    }
+}
+span.hint{
+    display:block;
+    font-size:11px;
+    margin-top:3px;
+}
+.couponApplyArea ion-button{
+    color: #000;
+    text-transform: none;
+    font-size: 13px;
+    --box-shadow: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    ion-icon{
+        font-size:13px;
+    }
+}
+.hasAddress{
+    font-size:12px;
+    padding-left:67px;
+    p{
+        margin:0 0 5px;
+    }
+}
+.cartEmpty{
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+.detailsWhy{
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+}
+.detailsWhy img{
+    width:70px;
+    display:block;
+    margin:0 auto;
+}
+.detailsWhy h3{
+    font-size:16px;
+    font-weight: 500;
+    margin:10px 0 5px;
+    color:var(--ion-color-px);
+}
+.detailsWhy p{
+    font-size:13px;
+    color:#797979;
+    margin:0 0 25px;
+}
+.detailsWhy ion-button{
+    font-size:12px;
+    font-weight: 400;
+}
+.couponForm{
+    width: 100%;
+    margin-top: 0px;
+    padding: 10px 10px;
+    background: var(--ion-color-px)17;
+    border: 1px solid var(--ion-color-px);
+    border-radius: 4px;
+    > input{
+        border-radius:4px;
+        border:1px solid #ccc;
+        margin:8px 0 6px;
+        width:100%;
+        line-height: 35px;
+        height: 35px;
+        padding-left:10px;
+        font-size:13px;
+        text-transform: uppercase;
+        outline:none!important;
+    }
+    > ion-button{
+        margin:0;
+        text-transform: uppercase;
+    }
+}
+.savedMoney{
+    padding: 10px 5px;
+    font-size: 12px;
+    font-weight: 500;
+    background: #fff;
+    text-align: center;
+    color: #000;
+}

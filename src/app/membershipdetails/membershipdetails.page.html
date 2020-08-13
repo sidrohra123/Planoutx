@@ -1,0 +1,29 @@
+<ion-content>
+  <div class="maincontent" *ngIf="data.userInfo && data.userInfo.membership && data.userInfo.membership.length">
+    <lottie-animation-view
+    [options]="lottieConfig"
+    [width]="300"
+    [height]="100"
+    (animCreated)="handleAnimation($event)">
+    </lottie-animation-view>
+    <h3 class="text-center">Thank you for purchasing Planout Passport!</h3>
+    <p class="text-center">Here are your Plan Details</p>
+    <ion-card class="recipient">
+      <ion-card-content>
+        <h2>Plan Details</h2>
+        <hr>
+        <p>Transaction Id: {{ data.userInfo.membership[0].invoice_id }}</p>
+        <p>Plan Id: {{ data.userInfo.membership[0].plan_id }}</p>
+        <p>Plan Name: {{ data.userInfo.membership[0].plan_name }}</p>
+        <p>Plan Duration: {{ +data.userInfo.membership[0].days/30 }} Months</p>
+        <p>Your plan will expire on : {{ data.userInfo.membership[0].end_date | date:'dd MMM yyyy' }}</p>
+        <p>Purchased on: {{ data.userInfo.membership[0].created_at | date:'dd MMM yyyy, hh:mm:a' }}</p>
+        <p>Name: {{ data.userInfo.customers_firstname }} {{ data.userInfo.customers_lastname }}</p>
+        <p>Mobile - {{ data.userInfo.customers_telephone }}</p>
+      </ion-card-content>
+    </ion-card>
+    <div class="seeBenefits">
+      <ion-button color="tertiary" expand="block" routerLink="/passport">Check your Benefits Now</ion-button>
+    </div>
+  </div>
+</ion-content>

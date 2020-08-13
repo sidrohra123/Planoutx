@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar class="mainHeader" color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-img class="logo" [src]="'assets/images/logo.png'" routerLink="/home"></ion-img>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-title>categories</ion-title> -->
+  </ion-toolbar>
+  <div class="innerHeader" *ngIf="!data.subCategories.length">
+    <span>Shop by Category</span>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="!data.subCategories.length">
+    <ion-item [routerLink]="cat.subcategory && cat.subcategory.length ? ['/categories', cat.i_pki_id] : ['/categories']" lines="none" *ngFor="let cat of data.fullCatalog; let i=index;" detail>
+      <ion-avatar slot="start">
+        <img [src]="cat.vc_image">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ cat.vc_title | titlecase }}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ul *ngIf="data.subCategories.length" class="subCategories">
+    <li *ngFor="let cat of data.subCategories; let i=index;" class="ion-activatable">
+      <ion-ripple-effect></ion-ripple-effect>
+      <a href="javascript:void(0);" (click)="methods.openSub($event, i)">
+        <img [src]="cat.vc_image" />
+        <span>{{ cat.vc_title | titlecase }}</span>
+        <ion-icon [name]="data.selectedSubCat && data.selectedSubCat.i_pki_id==cat.i_pki_id ? 'remove' : 'add'" *ngIf="cat.subsubcategory && cat.subsubcategory.length"></ion-icon>
+      </a>
+      <ul *ngIf="cat.subsubcategory && cat.subsubcategory.length">
+        <li *ngFor="let subcat of cat.subsubcategory; let j=index;" class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <a href="javascript:void(0);">
+            <img [src]="subcat.vc_image" />
+            <span>{{ subcat.vc_title }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- <ion-list *ngIf="data.subCategories.length">
+    <ion-item *ngFor="let cat of data.subCategories; let i=index;">
+      <ion-avatar slot="start">
+        <img [src]="cat.vc_image">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ cat.vc_title }}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list> -->
+</ion-content>

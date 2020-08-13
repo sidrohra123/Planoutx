@@ -1,0 +1,103 @@
+.planHead, .planHead .toolbar-background{
+    background:#00994f;
+}
+.logo{
+    width: 126px;
+    position: relative;
+    top: -2px;
+    left: -2px;
+}
+.mainHeader{
+    // height:44px;
+}
+.openedSearch .mainHeader{
+    height:44px;
+}
+.openedSearch .subHeader{
+    animation:fromTop 0.4s both;
+}
+@keyframes fromTop{
+    from{
+        opacity:0;
+        transform-origin:left;
+        transform:translateX(-100%);
+    }
+}
+.customColor{
+    background:#f2f2f2;
+    color:#333;
+    text-transform: none;
+    width:100px;
+    text-align: left;
+    white-space: normal;
+}
+.p-btn{
+    background: #f6f7f2;
+    color: #333;
+    padding: 4px 12px;
+    font-size: 13px;
+    border-radius: 3px;
+    height: 42px;
+}
+.p-btn > div{
+    font-weight:bold;
+}
+/deep/ ion-searchbar .searchbar-input{
+    line-height: 42px !important;
+    padding-left: 34px !important;
+    box-shadow: none !important;
+    border-radius: 3px !important;
+    font-size: 14px !important;
+    height: 42px!important;
+    padding: 2px 36px 0!important;
+}
+/deep/ ion-searchbar .searchbar-input-container /deep/ ion-icon{
+    left: 8px!important;
+    top: 12px!important;
+    width: 21px!important;
+    height: 21px!important;
+}
+ion-searchbar{
+    padding:0;
+}
+ion-grid, ion-col{
+    padding-top:0;
+    padding-bottom:0;
+}
+.logo{
+    outline: none!important;
+}
+/deep/ .searchbar-input-container.sc-ion-searchbar-ios{
+    height:40px;
+}
+.sc-ion-searchbar-ios-h{
+    height:39px;
+}
+ion-badge{
+    position: absolute;
+    top: 0px;
+    left: 1px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    font-size: 10px;
+    line-height: 15px;
+}
+.searchUI{
+    position: relative;
+    z-index: 111;
+    background: #fff;
+    // min-height: 120px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.speech{
+    color: #444;
+    position: absolute;
+    right: 15px;
+    z-index: 1;
+    font-size: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+}

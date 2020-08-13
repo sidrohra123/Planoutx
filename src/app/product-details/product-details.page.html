@@ -1,0 +1,527 @@
+
+  <ion-header *ngIf="data.isMobile">
+    <ion-toolbar class="mainHeader" color="tertiary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/" text="" style="margin-right: 10px;"></ion-back-button>
+      </ion-buttons>
+      <ion-img class="logo" [src]="'assets/images/logo.png'" routerLink="/"></ion-img>
+      <ion-buttons slot="end" *ngIf="data.selectedProduct">
+        <!-- <ion-button>
+          <ion-icon slot="icon-only" name="search"></ion-icon>
+        </ion-button> -->
+        <ion-button routerLink="/cart" id="cartBtn">
+          <ion-badge color="px" *ngIf="data.cart.length">{{ data.cart.length }}</ion-badge>
+          <ion-icon slot="icon-only" name="cart"></ion-icon>
+        </ion-button>
+        <ion-button class="wishlistBtn" (click)="methods.toggleWishList(data.selectedProduct)" [class.isWishlisted]="data.selectedProduct.isWishlisted">
+          <ion-icon slot="icon-only" name="heart"></ion-icon>
+        </ion-button>
+        <ion-button (click)="methods.shareProduct()">
+          <ion-icon slot="icon-only" name="share"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <!-- <ion-title>categories</ion-title> -->
+    </ion-toolbar>
+    <!-- <div class="innerHeader" *ngIf="!data.subCategories.length">
+      <span>Shop by Category</span>
+    </div> -->
+  </ion-header>
+
+  <ion-content>
+
+    <div class="cashBackMessage" *ngIf="data.selectedProduct && data.selectedProduct.products_cashback">
+      <p *ngIf="data.selectedProduct.products_cashback.indexOf('FLAT') == -1">You will get an instant <strong>{{ data.selectedProduct.products_cashback }}%</strong> cashback in your wallet on this product.</p>
+      <p *ngIf="data.selectedProduct.products_cashback.indexOf('FLAT') != -1">You will get an instant cashback of <strong>₹{{ data.selectedProduct.products_cashback.split('FLAT').pop() }}</strong> in your wallet on this product.</p>
+    </div>
+
+    <div class="productDetails" *ngIf="data.selectedProduct">
+      <div class="imageArea">
+        <div class="imageProd" *ngIf="!data.selectedProduct.images.length && !data.selectedProduct.products_videos.length">
+          <img [src]="data.apiUrlNew + data.selectedProduct.products_image" />
+        </div>
+        <div class="imageSlides" *ngIf="(data.selectedProduct.images && data.selectedProduct.images.length) || (data.selectedProduct.products_videos && data.selectedProduct.products_videos.length)">
+          <ion-slides pager="true" [options]="prodDetailsSlides" (ionSlideDidChange)="slideChanged()" (ionSlidesDidLoad)="slideChanged()">
+            <ng-container *ngIf="data.selectedProduct.products_videos && data.selectedProduct.products_videos.length">
+              <ion-slide *ngFor="let video of data.selectedProduct.products_videos; let j = index;">
+                <div class="videoThumb" (click)="playVideo(data.selectedProduct.videosId[j])">
+                  <img [src]="'https://img.youtube.com/vi/'+data.selectedProduct.videosId[j]+'/maxresdefault.jpg'" />
+                </div>
+              </ion-slide>
+            </ng-container>
+            <ion-slide><img [src]="data.apiUrlNew + data.selectedProduct.products_image" /></ion-slide>
+            <ion-slide *ngFor="let img of data.selectedProduct.images">
+              <img [src]="data.apiUrlNew + img.image" />
+            </ion-slide>
+          </ion-slides>
+          <div class="uspsBox" *ngIf="!data.isMobile">
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <div class="uspBox">
+                    <img src="assets/images/del.png" />
+                    <div class="descrUsp">
+                      <p>Same Day</p>
+                      <p>Next Day</p>
+                      <p>Midnight Delivery</p>
+                    </div>
+                  </div>
+                </ion-col>
+                <ion-col>
+                  <div class="uspBox">
+                    <img src="assets/images/smile.jpg" />
+                    <div class="descrUsp">
+                      <p>100% smile Guaranteed</p>
+                    </div>
+                  </div>
+                </ion-col>
+                <ion-col>
+                  <div class="uspBox">
+                    <img src="assets/images/safe.png" />
+                    <div class="descrUsp">
+                      <p>100% SAFE & SECURE PAYMENT</p>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </div>
+      </div>
+
+      <div class="otherDetailsArea" [style.top]="topPos+'px'">
+        <div class="prodName">
+          <div class="name">{{ data.selectedProduct.products_name }}
+            <div class="ratings" *ngIf="data.selectedProduct.allRatings">
+              {{ data.selectedProduct.allRatings.toFixed(1) }}
+              <span>
+                <small><ion-icon name="star" *ngFor="let str of methods.convertToArray(5)"></ion-icon></small>
+                <strong [style.width]="((+data.selectedProduct.allRatings)/5)*100+'%'"><ion-icon name="star" *ngFor="let str of methods.convertToArray(5)"></ion-icon></strong>
+              </span>
+            </div>
+          </div>
+          <div class="price">
+            <strong><sup>₹</sup>{{ data.selectedProduct.specials_new_products_price ? data.selectedProduct.specials_new_products_price : data.selectedProduct.products_price }}</strong>
+            <span *ngIf="data.selectedProduct.specials_new_products_price && data.selectedProduct.specials_new_products_price!=data.selectedProduct.products_price">₹ <del>{{ data.selectedProduct.products_price }}</del><cite>{{ (((+data.selectedProduct.products_price - +data.selectedProduct.specials_new_products_price)/+data.selectedProduct.products_price)*100).toFixed(0) }}% OFF</cite></span>
+            <span class="taxMessage">(inclusive of all taxes)</span>
+          </div>
+        </div>
+
+        <div class="uspsBox" *ngIf="data.isMobile">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div class="uspBox">
+                  <img src="assets/images/del.png" />
+                  <div class="descrUsp">
+                    <p>Same Day</p>
+                    <p>Next Day</p>
+                    <p>Midnight Delivery</p>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div class="uspBox">
+                  <img src="assets/images/smile.jpg" />
+                  <div class="descrUsp">
+                    <p>100% smile Guaranteed</p>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div class="uspBox">
+                  <img src="assets/images/safe.png" />
+                  <div class="descrUsp">
+                    <p>100% SAFE & SECURE PAYMENT</p>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+        <div class="attributesSec" *ngIf="data.selectedProduct.attributes && data.selectedProduct.attributes.length">
+          <ion-list *ngFor="let attr of data.selectedProduct.attributes" [hidden]="attr.values.length <= 1" mode="md">
+            <ion-radio-group *ngIf="attr.values.length && attr.values.length > 1">
+              <ion-list-header>Select {{ attr.option.name }}</ion-list-header>
+
+              <ion-item *ngFor="let option of attr.values; let i=index;" lines="none">
+                <ion-label mode="md">{{ option.value }}</ion-label>
+                <ion-radio mode="md" color="px" (ionSelect)="methods.selectAttribute(attr,option, 'yes')" slot="start" [value]="option.id" [checked]="option.id==attr.selectedValue.id"></ion-radio>
+              </ion-item>
+
+            </ion-radio-group>
+          </ion-list>
+        </div>
+        <div class="variantsSec" *ngIf="data.selectedProduct.products_variant && data.selectedProduct.products_variant.length && data.selectedProduct.selectedVariant">
+          <ion-list-header style="font-weight: 700;min-height: 10px;margin-bottom: 10px;" mode="md">Select Weight</ion-list-header>
+          <div class="variantCard ion-activatable" (click)="data.isVariantsOpened=true">
+            <ion-ripple-effect></ion-ripple-effect>
+            <small>{{ data.selectedProduct.selectedVariant.name }} - <strong style="display:inline-block;">₹{{ data.selectedProduct.selectedVariant.price }}</strong></small>
+            <!-- <strong>{{ data.selectedProduct.selectedVariant.price }}</strong> -->
+            <p>{{ data.selectedProduct.products_name | titlecase }}</p>
+            <ion-icon name="ios-arrow-forward"></ion-icon>
+          </div>
+        </div>
+
+        <div class="variantsPopup" *ngIf="data.isVariantsOpened">
+          <ion-list mode="md">
+            <ion-item-divider mode="md">
+              <ion-label mode="md">Select Weight</ion-label>
+              <ion-icon name="close" (click)="data.isVariantsOpened=false"></ion-icon>
+            </ion-item-divider>
+            <ion-item detail [class.active]="variant.name == data.selectedProduct.selectedVariant.name" (click)="methods.selectVariant(variant)" *ngFor="let variant of data.selectedProduct.products_variant">
+              <ion-label mode="md">{{ variant.name }} - ₹ {{ variant.price }}</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <div class="deliveryArea">
+          <h5>Delivery to</h5>
+          <p>Make sure to enter correct Pincode for hassle free delivery.</p>
+          <div class="inputIcon" (click)="methods.openOptions()">
+            <input type="text" placeholder="Select Location" readonly name="userLoc" [(ngModel)]="data.userGeoLocation" />
+            <ion-icon name="create"></ion-icon>
+          </div>
+          <p *ngIf="data.userGeoLocation && !data.isEligibleLocation">Sorry we do not deliver in {{ data.userGeoLocation  }}</p>
+          <h4 *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167')">Delivery on</h4>
+          <div class="deliveryDayTabs" *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167')">
+            <div class="rowHead">
+              <a href="javascript:void(0);" (click)="methods.changeDeliveryOpts('today')" [class.active]="data.selectedDay.name=='today'" *ngIf="currentTimeHour < (data.deliveryHours.to - 3)">Today</a>
+              <a href="javascript:void(0);" (click)="methods.changeDeliveryOpts('tomorrow')" [class.active]="data.selectedDay.name=='tomorrow'">Tomorrow</a>
+              <a href="javascript:void(0);" (click)="methods.changeDeliveryOpts('later')" [class.active]="data.selectedDay.name=='later'">Later</a>
+            </div>
+            <div class="deliveryBody">
+              <span>Delivery options for: <strong>{{ data.selectedDay.date | date : 'd MMM, EEEE' }}</strong></span>
+              <ion-list class="deliveryopts">
+                <ion-radio-group>
+
+                  <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('1') || data.selectedProduct.delivery_option_ids.includes('1,') || data.selectedProduct.delivery_option_ids.includes(',1')">
+                    <ion-label mode="md">Standard Delivery - <span>₹ 49</span></ion-label>
+                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="stdDel" checked></ion-radio>
+                  </ion-item>
+
+                  <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('1') || data.selectedProduct.delivery_option_ids.includes('1,') || data.selectedProduct.delivery_option_ids.includes(',1')) && data.selectedDeliveryType.type=='stdDel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">
+                    <p *ngIf="data.selectedDeliveryType.slot==0">
+                      <ion-icon name="information-circle-outline"></ion-icon>
+                      Earliest Delivery Time Slot Selected.
+                    </p>
+                    <span class="chip ion-activatable" (click)="methods.selectSlot(slot, j)" [class.active]="data.selectedDeliveryType.slot == j" *ngFor="let slot of data.selectedProduct.availableSlots; let j=index;">
+                        <ion-ripple-effect></ion-ripple-effect>
+                        {{ slot.from }}:00 - {{ slot.to }}:00
+                    </span>
+                  </div>
+                  <div class="bodyDel" *ngIf="data.selectedDeliveryType.type=='stdDel' && data.selectedProduct.availableSlots.length==0">
+                    <p>
+                      <ion-icon name="information-circle-outline"></ion-icon>
+                      No delivery slots available for this option. Please choose another one.
+                    </p>
+                  </div>
+
+                  <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('4') || data.selectedProduct.delivery_option_ids.includes('4,') || data.selectedProduct.delivery_option_ids.includes(',4')">
+                    <ion-label mode="md">Free Delivery - <span class="freeDel">Free</span></ion-label>
+                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="freedel"></ion-radio>
+                  </ion-item>  
+
+                  <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('4') || data.selectedProduct.delivery_option_ids.includes('4,') || data.selectedProduct.delivery_option_ids.includes(',4')) && data.selectedDeliveryType.type=='freedel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">
+                      <p *ngIf="data.selectedDeliveryType.slot==0">
+                        <ion-icon name="information-circle-outline"></ion-icon>
+                        Earliest Delivery Time Slot Selected.
+                      </p>
+                      <span class="chip ion-activatable" (click)="methods.selectSlot(slot,j)" [class.active]="data.selectedDeliveryType.slot == j" *ngFor="let slot of data.selectedProduct.availableSlots; let j=index;">
+                          <ion-ripple-effect></ion-ripple-effect>
+                          {{ slot.from }}:00 - {{ slot.to }}:00
+                      </span>
+                  </div>
+                  <div class="bodyDel" *ngIf="data.selectedDeliveryType.type=='freedel' && data.selectedProduct.availableSlots.length==0">
+                    <p>
+                      <ion-icon name="information-circle-outline"></ion-icon>
+                      No delivery slots available for this option. Please choose another one.
+                    </p>
+                  </div>
+                  
+                  <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('2') || data.selectedProduct.delivery_option_ids.includes('2,') || data.selectedProduct.delivery_option_ids.includes(',2')">
+                    <ion-label mode="md">Fixed Time Delivery - <span>₹ 99</span></ion-label>
+                    <ion-radio mode="md" slot="start" (ionSelect)="methods.selectDeliveryType($event)" value="fixDel"></ion-radio>
+                  </ion-item>
+
+                  <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('2') || data.selectedProduct.delivery_option_ids.includes('2,') || data.selectedProduct.delivery_option_ids.includes(',2')) && data.selectedDeliveryType.type=='fixDel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">
+                    <p *ngIf="data.selectedDeliveryType.slot==0">
+                      <ion-icon name="information-circle-outline"></ion-icon>
+                      Earliest Delivery Time Slot Selected.
+                    </p>
+                    <span class="chip ion-activatable" (click)="methods.selectSlot(slot,i)" [class.active]="data.selectedDeliveryType.slot == i" *ngFor="let slot of data.selectedProduct.availableSlots; let i=index;">
+                        <ion-ripple-effect></ion-ripple-effect>
+                        {{ slot.from }}:00 - {{ slot.to }}:00
+                    </span>
+                  </div>
+                  <div class="bodyDel" *ngIf="data.selectedDeliveryType.type=='fixDel' && data.selectedProduct.availableSlots.length==0">
+                    <p>
+                      <ion-icon name="information-circle-outline"></ion-icon>
+                      No delivery slots available for this option. Please choose another one.
+                    </p>
+                  </div>
+
+                  <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('5') || data.selectedProduct.delivery_option_ids.includes('5,') || data.selectedProduct.delivery_option_ids.includes(',5')">
+                    <ion-label mode="md">Mid Night Delivery - <span>₹ 149</span></ion-label>
+                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="midnightDel"></ion-radio>
+                  </ion-item>
+
+                  <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('5') || data.selectedProduct.delivery_option_ids.includes('5,') || data.selectedProduct.delivery_option_ids.includes(',5')) && data.selectedDeliveryType.type=='midnightDel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">
+                    <p *ngIf="data.selectedDeliveryType.slot==0">
+                      <ion-icon name="information-circle-outline"></ion-icon>
+                      Earliest Delivery Time Slot Selected.
+                    </p>
+                    <span class="chip ion-activatable" (click)="methods.selectSlot(slot,i)" [class.active]="data.selectedDeliveryType.slot == i" *ngFor="let slot of data.selectedProduct.availableSlots; let i=index;">
+                        <ion-ripple-effect></ion-ripple-effect>
+                        {{ slot.from }}:00 - {{ slot.to }}:00
+                    </span>
+                  </div>
+                  <div class="bodyDel" *ngIf="data.selectedDeliveryType.type=='midnightDel' && data.selectedProduct.availableSlots.length==0">
+                    <p>
+                      <ion-icon name="information-circle-outline"></ion-icon>
+                      No delivery slots available for this option. Please choose another one.
+                    </p>
+                  </div>
+
+
+                </ion-radio-group>
+              </ion-list>
+            </div>
+          </div>
+          <h4 *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167'))">Expected Delivery</h4>
+          <div class="deliveryDatTabs" *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167'))">
+            <div class="shippingBox" *ngIf="!data.selectedProduct.category_ids.includes('167')">
+              Within 4 days | Expect it by {{ shippingDelivery | date:'mediumDate' }}
+              <!-- Expect it by 30th June -->
+            </div>
+            <div class="shippingBox" *ngIf="data.selectedProduct.category_ids.includes('167')">
+              Expect it by {{ shippingDeliveryDigital | date:'dd MMM yyyy' }} between 6:00pm-9:00pm
+            </div>
+          </div>
+        </div>
+
+        <div class="buttonsAreaBuyNow" *ngIf="!data.isMobile">
+          <ion-grid>
+            <ion-row *ngIf="data.selectedProduct.products_quantity != '0'">
+              <ion-col size="6">
+                <ion-button expand="block" color="tertiary" (click)="toCart()">ADD TO CART</ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button expand="block" color="tertiary" (click)="toCheckout()">BUY NOW</ion-button>
+              </ion-col>
+              <ion-col size="12" *ngIf="data.isEligibleForPassport">
+                <ion-button expand="block" color="secondary" (click)="toPassportCart()">Avail for Free</ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="data.selectedProduct.products_quantity == '0'">
+              <ion-col size="12">
+                <ion-button expand="block" color="tertiary" (click)="notifyMe()">Notify Me</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+        <div class="personalizedMessage" *ngIf="data.selectedProduct.is_personalized != '0'">
+          <h3>For Personalized Products</h3>
+          <p>1. Just email pictures with orderid to <a href="mailto:design@planoutx.com">design@planoutx.com</a> after placing the order.</p>
+          <p>2. Enter message, if any.</p>
+        </div>
+
+        <div class="detailsTabs" *ngIf="data.selectedProduct.categories_id == '1'">
+          <div class="tabsHead">
+            <a href="javascript:void(0);" [class.active]="data.selectedTab==1" (click)="methods.selectTab(1)">Description</a>
+            <a href="javascript:void(0);" [class.active]="data.selectedTab==2" (click)="methods.selectTab(2)">Delivery Info</a>
+            <a href="javascript:void(0);" [class.active]="data.selectedTab==3" (click)="methods.selectTab(3)">Care</a>
+          </div>
+          <div class="tabsBody">
+            <div class="desc" *ngIf="data.selectedTab==1">
+              <strong>Product Details:</strong>
+              <div [innerHTML]="data.selectedProduct.products_description"></div>
+            </div>
+            <div class="desc" *ngIf="data.selectedTab==2">
+              <strong>Delivery Info:</strong>
+              <div class="delInfo">
+                <li>Our delicious cakes are hand-delivered by our delivery boy in a good quality cardboard box.There might be slight variation in the product in terms of design and shape.</li>
+                <li>The chosen delivery time is an estimate and depends on the availability of the product and the destination to which you want the product to be delivered.</li>
+                <li>Since cakes are perishable in nature, we attempt delivery of your order only once. The delivery cannot be redirected to any other address.</li>
+                <li>Candle and knife will be delivered as per the availability.</li>
+              </div>
+            </div>
+            <div class="desc" *ngIf="data.selectedTab==3">
+              <strong>Care Instructions:</strong>
+              <div class="careInfo">
+                <li>Store cream cakes in a refrigerator. Fondant cakes should be stored in an air-conditioned environment.</li>
+                <li>Consume the cake within 24 hours.</li>
+                <li>Enjoy your cake!</li>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="detailsTabs" *ngIf="data.selectedProduct.categories_id != '1'">
+          <div class="tabsBody">
+            <div class="desc">
+              <strong>Product Details:</strong>
+              <div [innerHTML]="data.selectedProduct.products_description"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="productRatings" *ngIf="data.selectedProduct.show_review == '1'">
+          <div class="viewRatings" *ngIf="data.selectedProduct.reviews && data.selectedProduct.reviews.length">
+            <h3>What customers are saying</h3>
+            <ion-slides [options]="ratingSlideOpts" #ratingSlides class="ratingSlides">
+              <ion-slide *ngFor="let slide of data.selectedProduct.reviews">
+                <div class="ratingbox">
+                  <span class="ratingBg"></span>
+                  <div class="ratingDetails">
+                    <div class="initialImage">{{ slide.customers_name | slice:0:1 }}<span *ngIf="slide.customers_name && slide.customers_name.indexOf(' ') != -1">{{ (slide.customers_name.split(' ').pop()) | slice:0:1 }}</span></div>
+                    <!-- <img [src]="slide.image" [ngStyle]="{'border':'4px solid #'+slide.theme}" /> -->
+                    <h4>{{ slide.customers_name }}</h4>
+                    <div class="starsRate">
+                      <ion-icon name="star" *ngFor="let rate of methods.convertToArray(+slide.reviews_rating)"></ion-icon>
+                    </div>
+                    <p>{{ slide.reviews_text }}</p>
+                  </div>
+                </div>
+              </ion-slide>
+            </ion-slides>
+          </div>
+          <div class="viewRatings" *ngIf="!data.selectedProduct.reviews || (data.selectedProduct.reviews && !data.selectedProduct.reviews.length)">
+            <h3>Not Reviewed yet</h3>
+          </div>
+          <div class="createReview">
+            <h5 *ngIf="data.selectedProduct.reviews.length < 1">Be the first one to review this product!</h5>
+            <ion-button color="tertiary" expand="block" (click)="openReview()">Write a review</ion-button>
+            <div class="formReview" *ngIf="isReviewOpened">
+              <h5>Add your rating</h5>
+              <p>In the range from 1 to 5</p>
+              <div class="starBox">
+                <ion-icon color=tertiary [name]="rateArray.length && rateArray.includes(1) ? 'star' : 'star-outline'" (click)="selectRatings(1)"></ion-icon>
+                <ion-icon color=tertiary [name]="rateArray.length && rateArray.includes(2) ? 'star' : 'star-outline'" (click)="selectRatings(2)"></ion-icon>
+                <ion-icon color=tertiary [name]="rateArray.length && rateArray.includes(3) ? 'star' : 'star-outline'" (click)="selectRatings(3)"></ion-icon>
+                <ion-icon color=tertiary [name]="rateArray.length && rateArray.includes(4) ? 'star' : 'star-outline'" (click)="selectRatings(4)"></ion-icon>
+                <ion-icon color=tertiary [name]="rateArray.length && rateArray.includes(5) ? 'star' : 'star-outline'" (click)="selectRatings(5)"></ion-icon>
+              </div>
+              <h5>Add a title</h5>
+              <p>Sum up your review in one line</p>
+              <input type="text" [(ngModel)]="reviewTitle" placeholder="Add a title">
+              <h5>Add a written review</h5>
+              <p>You could mention "Quality", "Quantity", "Packaging" etc..</p>
+              <textarea [(ngModel)]="reviewDesc" placeholder="Tell us what you like or dislike about this product."></textarea>
+              <ion-button (click)="addReview()" expand="full" color="tertiary">Submit</ion-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="productRatings" *ngIf="data.selectedProduct.show_review != '1'">
+          <div class="viewRatings">
+            <h3 style="margin:0;">Not Reviewed yet</h3>
+          </div>
+        </div>
+
+        <div class="refundPolicy">
+          <h3>Refund Policy</h3>
+          <p>Unhappy with what you got? Email us on support@planoutx.com and we shall dedicate a Happiness Consultant to resolve your issue within 8 working hours.</p>
+          <p>For orders placed during the COVID-19 lock-down period, no refund or cancellations can be made after delivery of the free surprise.</p>
+        </div>
+
+        <div class="recentlyViewed" *ngIf="data.recommendedProducts.length > 1">
+          <h3>Recommended Products</h3>
+          <ion-slides pager="false" [options]="prodSlide">
+            <ion-slide *ngFor="let product of data.recommendedProducts" [hidden]="product.products_id == data.selectedProduct.products_id">
+              <div class="prodBox ion-activatable" [style.paddingBottom]="product.delivery_option_ids ? '50px' : '30px'" [routerLink]="['/product', product.products_name | urlSlug]">
+                <ion-ripple-effect></ion-ripple-effect>
+                <div class="prodImage">
+                  <span class="badge" *ngIf="product.products_tags">{{ product.products_tags }}</span>
+                  <img [src]="data.apiUrlNew + product.products_image" />
+                </div>
+                <div class="prodDetails text-center">
+                  <h5>{{ product.products_name }}</h5>
+                  <h6>₹ {{ product.products_price }}</h6>
+                  <div class="offerTag" *ngIf="product.oprice!=product.dprice"><del>₹ {{ product.oprice }}</del><span>{{ (((+product.oprice - +product.dprice)/+product.oprice)*100).toFixed(0) }}% OFF</span></div>
+                  <div class="bottomSecProd">
+                    <div class="earliestDelivery" *ngIf="product.delivery_option_ids && product.delivery_option_ids != '4' && product.delivery_option_ids != '5'">Earliest Delivery:
+                      <span *ngIf="product.delivery_option_ids == '1,2' || product.delivery_option_ids == '1'">Today</span>
+                      <span *ngIf="product.delivery_option_ids == '2' || product.delivery_option_ids == '3'">Tomorrow</span>
+                    </div>
+                    <div class="ratingsReviews" *ngIf="product.show_review == '1' && product.reviews && product.reviews.length">
+                      <span>{{ (product.allRatings).toFixed(1) }} <ion-icon name="star" color="tertiary"></ion-icon></span>
+                      <span>{{ product.reviews.length }} Reviews</span>
+                    </div>
+                  </div>
+                  <!-- <div class="ratings" *ngIf="product.ratings">
+                    <span>{{ (+product.ratings).toFixed(1) }}</span><ion-icon name="star" *ngFor="let rate of  methods.convertToArray(+product.ratings)"></ion-icon>
+                  </div> -->
+                </div>
+              </div>
+            </ion-slide>
+          </ion-slides>
+        </div>
+
+        <div class="recentlyViewed" *ngIf="data.recentlyViewed.length > 1">
+          <h3>Recently Viewed By You</h3>
+          <ion-slides pager="false" [options]="prodSlide">
+            <ion-slide *ngFor="let product of data.recentlyViewed" [hidden]="product.products_id == data.selectedProduct.products_id">
+              <div class="prodBox ion-activatable" [style.paddingBottom]="product.delivery_option_ids ? '50px' : '30px'" [routerLink]="['/product', product.products_name | urlSlug]">
+                <ion-ripple-effect></ion-ripple-effect>
+                <div class="prodImage">
+                  <span class="badge" *ngIf="product.products_tags">{{ product.products_tags }}</span>
+                  <img [src]="data.apiUrlNew + product.products_image" />
+                </div>
+                <div class="prodDetails text-center">
+                  <h5>{{ product.products_name }}</h5>
+                  <h6>₹ {{ product.products_price }}</h6>
+                  <div class="offerTag" *ngIf="product.oprice!=product.dprice"><del>₹ {{ product.oprice }}</del><span>{{ (((+product.oprice - +product.dprice)/+product.oprice)*100).toFixed(0) }}% OFF</span></div>
+                  <div class="bottomSecProd">
+                    <div class="earliestDelivery" *ngIf="product.delivery_option_ids && product.delivery_option_ids != '4' && product.delivery_option_ids != '5'">Earliest Delivery:
+                      <span *ngIf="product.delivery_option_ids == '1,2' || product.delivery_option_ids == '1'">Today</span>
+                      <span *ngIf="product.delivery_option_ids == '2' || product.delivery_option_ids == '3'">Tomorrow</span>
+                    </div>
+                    <div class="ratingsReviews" *ngIf="product.show_review == '1' && product.reviews && product.reviews.length">
+                      <span>{{ (product.allRatings).toFixed(1) }} <ion-icon name="star" color="tertiary"></ion-icon></span>
+                      <span>{{ product.reviews.length }} Reviews</span>
+                    </div>
+                  </div>
+                  <!-- <div class="ratings" *ngIf="product.ratings">
+                    <span>{{ (+product.ratings).toFixed(1) }}</span><ion-icon name="star" *ngFor="let rate of  methods.convertToArray(+product.ratings)"></ion-icon>
+                  </div> -->
+                </div>
+              </div>
+            </ion-slide>
+          </ion-slides>
+        </div>
+
+        <div class="videoPlayer" *ngIf="currentVideo">
+          <div class="videoFrame">
+            <iframe width="560" height="315" [src]="currentVideo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <ion-button color="px" (click)="noVideo()">Close</ion-button>
+        </div>
+      </div>
+    </div>
+    <app-desktopfooter></app-desktopfooter>
+  </ion-content>
+  <div class="cartAnimationProduct" *ngIf="data.selectedProduct">
+    <img [src]="data.apiUrlNew + data.selectedProduct.products_image" />
+  </div>
+  <ion-footer class="btnFooter" *ngIf="data.isMobile && data.selectedProduct">
+    <ion-toolbar>
+      <ion-row *ngIf="data.selectedProduct.products_quantity != '0'">
+        <ion-col size="6">
+          <ion-button expand="block" color="tertiary" (click)="toCart()">ADD TO CART</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button expand="block" color="tertiary" (click)="toCheckout()">BUY NOW</ion-button>
+        </ion-col>
+        <ion-col size="12" *ngIf="data.isEligibleForPassport">
+          <ion-button expand="block" color="secondary" (click)="toPassportCart()">Avail for Free</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.selectedProduct.products_quantity == '0'">
+        <ion-col size="12">
+          <ion-button expand="block" color="tertiary" (click)="notifyMe()">Notify Me</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-footer>

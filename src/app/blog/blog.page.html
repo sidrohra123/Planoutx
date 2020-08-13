@@ -1,0 +1,59 @@
+<!-- <ion-header>
+  <ion-toolbar class="mainHeader" color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-img class="logo" [src]="'assets/images/logo.png'" routerLink="/home"></ion-img>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="innerHeader">
+    <span>Blog</span>
+  </div>
+</ion-header> -->
+
+  <!-- <ion-list *ngIf="data.blogPosts.length">
+    <ion-item [routerLink]="['/blogDetails', i]" *ngFor="let post of data.blogPosts; let i=index;" detail>
+      <ion-avatar slot="start">
+        <img [src]="post.media ? post.media : 'https://www.tambawaras.id/wp-content/uploads/2018/05/noimage-portfolio-2000x1125.png'" />
+      </ion-avatar>
+      <ion-label>
+        <h2 [innerHTML]="sanitizer.bypassSecurityTrustHtml(post.title)"></h2>
+        <p [innerHTML]="sanitizer.bypassSecurityTrustHtml(post.shortDesc)"></p>
+      </ion-label>
+    </ion-item>
+    <ion-button (click)="methods.getMorePosts()" color="tertiary" style="margin-top:30px;" expand="block">More Posts</ion-button>
+  </ion-list> -->
+
+
+  <div class="videoCardSec" *ngIf="data.blogPosts.length">
+    <ion-card *ngFor="let post of data.blogPosts; let i=index;">
+      <div class="media" [routerLink]="['/blogDetails', post.news_id]">
+        <img (load)="imageLoaded($event)" *ngIf="post.news_image " [src]="data.apiUrlNew + post.news_image" />
+        <img *ngIf="!post.news_image " [src]="'assets/images/logoColored.png'" style="max-width: 70%;margin: 40px auto;" />
+      </div>
+      <ion-card-header [routerLink]="['/blogDetails', post.news_id]">
+        <!-- <ion-card-subtitle [innerHTML]="video.snippet.channelTitle"></ion-card-subtitle> -->
+        <ion-card-title [innerHTML]="post.news_name"></ion-card-title>
+      </ion-card-header>
+      <ion-card-content [innerHTML]="(post.news_description | slice:0:160) + '...'" [routerLink]="['/blogDetails', post.news_id]">
+        
+      </ion-card-content>
+      <div class="cardFooter">
+        <!-- <ion-button color="tertiary" (click)="methods.savePost($event, post.news_id)">Save</ion-button> -->
+        <!-- <ion-button color="tertiary" expand="block" (click)="methods.sharePost($event, post.news_id)">Share<ion-icon name="share"></ion-icon></ion-button> -->
+        <ion-button color="tertiary" expand="block" [routerLink]="['/blogDetails', post.news_id]">Read More<ion-icon name="eye"></ion-icon></ion-button>
+      </div>
+    </ion-card>
+    <ion-button id="showMoreBtn" *ngIf="data.totalBlogs && data.totalBlogs > data.blogPosts.length" (click)="loadMorePosts()" color="tertiary" style="margin-top:30px;" expand="block">More Posts</ion-button>
+  </div>
+
+  <div class="videoCardSec" *ngIf="!data.isFetching && !data.blogPosts.length">
+    <h2>No Blog Posts were found!</h2>
+  </div>

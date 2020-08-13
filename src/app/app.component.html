@@ -1,0 +1,36 @@
+<ion-app [class.processing]="data.isProcessing">
+  <app-header
+  *ngIf="
+  !data.isMobile || 
+   (!router.url.includes('categories') &&
+   router.url!='/cart' && 
+   !router.url.includes('/product/') && 
+   !router.url.includes('locations') && 
+   !router.url.includes('calendar') &&
+   !router.url.includes('login') && 
+   !router.url.includes('addons') && 
+   router.url!='/passport' && 
+   !router.url.includes('/filter'))"
+  ></app-header>
+  <app-menu></app-menu>
+  <ion-router-outlet [animated]="true" id="menu-content" [class.autoHeight]="router.url.includes('/product/') || router.url.includes('trending') || router.url=='/passport' || router.url.includes('eveyrthing') || router.url.includes('/shop') || router.url.includes('cart') || router.url.includes('/filter') || router.url.includes('/checkout') || router.url.includes('/payment-options') || router.url.includes('/login') || router.url.includes('passport/availcakes') || router.url.includes('addons')" (activate)="onNavStart()"></ion-router-outlet>
+  <!-- <div class="planoutPop" id=planoutPass *ngIf="!router.url.includes('login') && !router.url.includes('tutorials')">
+    <h3><ion-icon name="close" (click)="methods.closePopup()"></ion-icon> <span>Buy Planout Passport Now</span></h3>
+    <ion-button color="tertiary">Buy Now</ion-button>
+  </div> -->
+  <app-tabs *ngIf="!router.url.includes('/product/') && !router.url.includes('locations') && !router.url.includes('login') && router.url!='/passport' && !router.url.includes('eveyrthing') && !router.url.includes('/shop') && !router.url.includes('cart') && !router.url.includes('/filter') && !router.url.includes('/checkout') && !router.url.includes('/payment-options') && !router.url.includes('passport/availcakes') && !router.url.includes('addons')"></app-tabs>
+  <div class="loadingMore" *ngIf="data.isProcessing">
+    <lottie-animation-view
+    [options]="data.multilottieConfig"
+    [width]="300"
+    [height]="auto"
+    (animCreated)="handleAnimation($event)">
+    </lottie-animation-view>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="whtsappButton">
+    <ion-fab-button color="whatsapp" (click)="sendToWhatsapp()">
+      <ion-icon name="logo-whatsapp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-app>

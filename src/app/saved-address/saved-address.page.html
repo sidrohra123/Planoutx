@@ -1,0 +1,27 @@
+<ion-content>
+  <div class="maincontent">
+    <ion-button color="tertiary" expand="block" routerLink="/addnewaddress"><ion-icon name="add"></ion-icon>Add new Address</ion-button>
+    <div class="userAddresses" *ngIf="data.userInfo && data.savedAddresses.length">
+      <ion-list>
+        <ion-radio-group (ionChange)="chooseAddress($event)">
+          <ion-item *ngFor="let address of data.savedAddresses; let i=index;">
+            <ion-radio color="tertiary" [value]="address.address_id" [checked]="data.deliveryAddress && data.deliveryAddress.address_id == address.address_id"></ion-radio>
+            <ion-label style="padding-left:15px;">
+              <p><strong>{{ address.firstname }} {{ address.lastname }}</strong></p>
+              <p>{{ address.street }}</p>
+              <p>{{ address.city }} {{ address.postcode }}</p>
+              <p>Mobile: {{ data.userInfo.customers_telephone }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+      <ion-grid>
+        <ion-row>
+          <ion-col size=12><ion-button color="tertiary" expand="block" (click)="continue()">Continue</ion-button></ion-col>
+          <ion-col size=12><ion-button color="light" expand="block" (click)="editAddress()">Edit</ion-button></ion-col>
+          <!-- <ion-col size=6><ion-button color="light" expand="block">Delete</ion-button></ion-col> -->
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

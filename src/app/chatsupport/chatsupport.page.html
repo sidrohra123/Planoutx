@@ -1,0 +1,19 @@
+<ion-content>
+  <div class="maincontent">
+   <!-- <h1>Let us know what you need help with today by filling the following form.</h1> -->
+   <div class="formQuery">
+    <h3>Tell us what your query is about</h3>
+    <div class="form">
+      <label>Your Name</label>
+      <input type="text" placeholder="Enter your name" [(ngModel)]="query.name" />
+      <label>Your Email Id</label>
+      <input type="text" placeholder="Enter your email id" [(ngModel)]="query.email" />
+      <label>Describe your Query</label>
+      <textarea [(ngModel)]="query.feedback" placeholder="Enter your query here" rows="10"></textarea>
+      <div class="buttonSubmits" (click)="sendQuery()">
+        <ion-button expand="block" color="tertiary">Submit Query</ion-button>
+      </div>
+    </div>
+  </div>
+  </div>
+</ion-content>

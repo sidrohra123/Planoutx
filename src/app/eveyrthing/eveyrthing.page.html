@@ -1,0 +1,185 @@
+<ion-content [scrollEvents]="true" (ionScroll) = "scrollMe($event)" (ionScrollEnd)="increment($event)" style="-webkit-overflow-scrolling: touch;">
+  <div class="maincontent" *ngIf="data.allFiltered && !isLoading">
+
+    <ion-col size="12" *ngIf="data.allFiltered.selectedSubOccasion && !data.allFiltered.selectedSubOccasion.show_banner && data.allFiltered.selectedOccasion && data.allFiltered.selectedOccasion.show_banner == '1'">
+      <div class="bannerBox ion-activatable" [routerLink]="['/blogDetails', data.allFiltered.selectedOccasion.link_to_blog]">
+        <ion-ripple-effect></ion-ripple-effect>
+        <img [src]="data.apiUrlNew + data.allFiltered.selectedOccasion.categories_banner" />
+      </div>
+    </ion-col>
+
+    <ion-col size="12" *ngIf="data.allFiltered.selectedSubOccasion && data.allFiltered.selectedSubOccasion.show_banner == '1'">
+      <div class="bannerBox ion-activatable" [routerLink]="['/blogDetails', data.allFiltered.selectedOccasion.link_to_blog]">
+        <ion-ripple-effect></ion-ripple-effect>
+        <img [src]="data.apiUrlNew + data.allFiltered.selectedSubOccasion.categories_banner" />
+      </div>
+    </ion-col>
+
+    <ion-grid class="subcategories subOccasions" *ngIf="data.allFiltered.subOccasions && data.allFiltered.subOccasions.length">
+      <ion-row>
+        <ion-col size="6" *ngFor="let subOcc of data.allFiltered.subOccasions; let i=index;">
+          <div class="catBox ion-activatable" [routerLink]="['/eveyrthing']" [queryParams]="{'occasion':data.allFiltered.selectedOccasion.nid, 'subOccasion':subOcc.id}">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img [src]="data.apiUrlNew + subOcc.categories_image" />
+            <div class="catTitle">{{ subOcc.categories_name }}</div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="subcategories mainCategories" *ngIf="data.allFiltered.categories && data.allFiltered.categories.length">
+      <ion-row>
+        <ion-col size="6" *ngFor="let cat of data.allFiltered.categories; let i=index;">
+          <div class="catBox ion-activatable" [routerLink]="['/eveyrthing']" [queryParams]="getMainCatParams(cat)">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img [src]="data.apiUrlNew + cat.image" />
+            <div class="catTitle">{{ cat.name }}</div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="subcategories mainCategories" *ngIf="data.allFiltered.subcategories && data.allFiltered.subcategories.length">
+      <ion-row>
+        <ion-col size="12" *ngIf="data.allFiltered.selectedCategory && data.allFiltered.selectedCategory.show_banner == '1'">
+          <div class="bannerBox ion-activatable" [routerLink]="['/blogDetails', data.allFiltered.selectedCategory.link_to_blog]">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img [src]="data.apiUrlNew + data.allFiltered.selectedCategory.categories_banner" />
+          </div>
+        </ion-col>
+        <ion-col size="6" *ngFor="let cat of data.allFiltered.subcategories; let i=index;">
+          <div class="catBox ion-activatable" [routerLink]="['/shop', data.allFiltered.selectedCategory.name | urlSlug, cat.name | urlSlug]">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img [src]="data.apiUrlNew + cat.image" />
+            <div class="catTitle">{{ cat.name }}</div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-grid class="subcategories subSubCategories mainCategories" *ngIf="data.allFiltered.subsubcategories && data.allFiltered.subsubcategories.length">
+      <ion-row>
+        <ion-col size="12" *ngIf="data.allFiltered.selectedCategory && data.allFiltered.selectedCategory.show_banner == '1'">
+          <div class="bannerBox ion-activatable">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img [src]="data.apiUrlNew + data.allFiltered.selectedCategory.categories_banner" />
+          </div>
+        </ion-col>
+        <ion-col size="6" *ngFor="let subsubcat of data.allFiltered.subsubcategories; let i=index;">
+          <div class="catBox ion-activatable" [routerLink]="['/eveyrthing']" [queryParams]="{'category':data.allFiltered.selectedCategory.id, 'subcategory':data.allFiltered.selectedSubCategory.id, 'subsubcategory':subsubcat.id}">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img [src]="data.apiUrlNew + subsubcat.image" />
+            <div class="catTitle">{{ subsubcat.name }}</div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="filters" *ngIf="data.allFiltered && data.allFiltered.products && data.allFiltered.products.length">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button expand="block" color="light" (click)="openFilterModal($event)">
+              <ion-icon slot="start" name="funnel"></ion-icon>
+              Filter
+              <span class="appliedFilter" *ngIf="data.selectedFilters.price || data.selectedFilters.flavours.length"></span>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button expand="block" color="light" (click)="openSortPopup($event)">
+              <ion-icon slot="start" name="logo-buffer"></ion-icon>
+              Sort
+              <span _ngcontent-sfn-c3="" class="appliedFilter" *ngIf="data.selectedSortBy"></span>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="productsSec" *ngIf="data.allFiltered.products && data.allFiltered.products.length" #products>
+      <h3 *ngIf="data.allFiltered.selectedCategory.name && !data.allFiltered.selectedSubCategory.name">Select {{ data.allFiltered.selectedCategory.name | titlecase }}</h3>
+      <h3 *ngIf="data.allFiltered.selectedSubCategory.name && data.allFiltered.selectedCategory.name">Select {{ data.allFiltered.selectedSubCategory.name | titlecase }}</h3>
+      <p *ngIf="data.allFiltered.products.length >= perPage">Showing {{ perPage }} of {{ data.allFiltered.products.length }} Products</p>
+      <p *ngIf="data.allFiltered.products.length < perPage">Showing {{ data.allFiltered.products.length }} Products</p>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let product of data.allFiltered.products | slice:0:perPage">
+            <div class="prodBox ion-activatable" (click)="goToProduct(product)"
+              [style.paddingBottom]="product.delivery_option_ids && (product.delivery_option_ids.includes('1,2') || product.delivery_option_ids.includes(',1') || product.delivery_option_ids.includes('2') || product.delivery_option_ids.includes('1,') || product.delivery_option_ids == '1' || product.delivery_option_ids == '2') ? '50px' : '30px'">
+              <ion-ripple-effect></ion-ripple-effect>
+              <div class="prodImage">
+                <span class="badge" *ngIf="product.products_tags">{{ product.products_tags }}</span>
+                <img [src]="data.apiUrlNew + product.products_image" />
+              </div>
+              <div class="prodDetails text-center">
+                <h5>{{ product.products_name }}</h5>
+                <h6>₹ {{ product.specials_new_products_price ? product.specials_new_products_price : product.products_price }}</h6>
+                <div class="offerTag" *ngIf="product.specials_new_products_price && product.products_price!=product.specials_new_products_price"><del>₹ {{ product.products_price }}</del><span>{{ (((+product.products_price - +product.specials_new_products_price)/+product.products_price)*100).toFixed(0) }}% OFF</span></div>
+                <div class="bottomSecProd">
+                  <div class="earliestDelivery" *ngIf="product.delivery_option_ids && (product.delivery_option_ids.includes('1,2') || product.delivery_option_ids.includes(',1') || product.delivery_option_ids.includes('2') || product.delivery_option_ids.includes('1,') || product.delivery_option_ids == '1' || product.delivery_option_ids == '2')">Earliest Delivery:
+                    <span *ngIf="product.delivery_option_ids.includes('1,2') || product.delivery_option_ids == '1'">Today</span>
+                    <span *ngIf="(product.delivery_option_ids == '2' || product.delivery_option_ids.includes(',2') || product.delivery_option_ids.includes('2,')) && (!product.delivery_option_ids.includes('1') && !product.delivery_option_ids.includes('1,') && !product.delivery_option_ids.includes(',1'))">Tomorrow</span>
+                  </div>
+                  <div class="ratingsReviews" *ngIf="product.show_review == '1' && product.reviews && product.reviews.length">
+                    <span>{{ (product.allRatings).toFixed(1) }} <ion-icon name="star" color="tertiary"></ion-icon></span>
+                    <span>{{ product.reviews.length }} Reviews</span>
+                  </div>
+                </div>
+                <!-- <div class="ratings" *ngIf="product.ratings">
+                  <span>{{ (+product.ratings).toFixed(1) }}</span>
+                  <ion-icon name="star" *ngFor="let rate of  methods.convertToArray(+product.ratings)"></ion-icon>
+                </div> -->
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="loading text-center" *ngIf="perPage < data.allFiltered.products.length"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
+    </div>
+
+    <div class="productsSec" *ngIf="!data.allFiltered.products || (data.allFiltered.products && !data.allFiltered.products.length)">
+      <p>Our Top Selling Products</p>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let product of data.allProducts | filterBy:data.topSellFilter">
+            <div class="prodBox ion-activatable" (click)="goToProduct(product)"
+              [style.paddingBottom]="product.delivery_option_ids ? '50px' : '30px'">
+              <ion-ripple-effect></ion-ripple-effect>
+              <div class="prodImage">
+                <span class="badge" *ngIf="product.products_tags">{{ product.products_tags }}</span>
+                <img [src]="data.apiUrlNew + product.products_image" />
+              </div>
+              <div class="prodDetails text-center">
+                <h5>{{ product.products_name }}</h5>
+                <h6>₹ {{ product.specials_new_products_price ? product.specials_new_products_price : product.products_price }}</h6>
+                <div class="offerTag" *ngIf="product.specials_new_products_price && product.products_price!=product.specials_new_products_price"><del>₹ {{ product.products_price }}</del><span>{{ (((+product.products_price - +product.specials_new_products_price)/+product.products_price)*100).toFixed(0) }}% OFF</span></div>
+                <div class="bottomSecProd">
+                  <div class="earliestDelivery" *ngIf="product.delivery_option_ids && (product.delivery_option_ids.includes('1,2') || product.delivery_option_ids.includes(',1') || product.delivery_option_ids.includes('2') || product.delivery_option_ids.includes('1,') || product.delivery_option_ids == '1' || product.delivery_option_ids == '2')">Earliest Delivery:
+                    <span *ngIf="product.delivery_option_ids.includes('1,2') || product.delivery_option_ids == '1'">Today</span>
+                    <span *ngIf="(product.delivery_option_ids == '2' || product.delivery_option_ids.includes(',2') || product.delivery_option_ids.includes('2,')) && (!product.delivery_option_ids.includes('1') && !product.delivery_option_ids.includes('1,') && !product.delivery_option_ids.includes(',1'))">Tomorrow</span>
+                  </div>
+                  <div class="ratingsReviews" *ngIf="product.show_review == '1' && product.reviews && product.reviews.length">
+                    <span>{{ (product.allRatings).toFixed(1) }} <ion-icon name="star" color="tertiary"></ion-icon></span>
+                    <span>{{ product.reviews.length }} Reviews</span>
+                  </div>
+                </div>
+                <!-- <div class="ratings" *ngIf="product.ratings">
+                  <span>{{ (+product.ratings).toFixed(1) }}</span>
+                  <ion-icon name="star" *ngFor="let rate of  methods.convertToArray(+product.ratings)"></ion-icon>
+                </div> -->
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="noProductSec" *ngIf="data.allFiltered.products && !data.allFiltered.products.length && !data.allFiltered.categories.length && !data.allFiltered.subcategories.length && !data.allFiltered.subcategories.length && !data.allFiltered.subsubcategories.length && !data.allFiltered.subOccasions.length">
+      <h3 class="text-center">Nothing found yet <ng-container *ngIf="data.allFiltered.selectedCategory">for <small>{{ data.allFiltered.selectedCategory.name }}</small></ng-container>!<p><small>We are trying hard to fill the spot!</small></p></h3>
+    </div>
+
+
+  </div>
+  <app-desktopfooter></app-desktopfooter>
+</ion-content>

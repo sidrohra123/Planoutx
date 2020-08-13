@@ -1,0 +1,33 @@
+<ion-content>
+  <div class="maincontent couponsWrapper" *ngIf="userCoupons.length">
+    <ul>
+      <li *ngFor="let coupon of userCoupons" [class]="coupon.discount_type+' couponCard ion-activatable'">
+        <ion-ripple-effect></ion-ripple-effect>
+        <div class="couponBody">
+          <span class="couponTypeHighlight"><qrcode [qrdata]="coupon.code" [size]="60" [level]="'M'"></qrcode></span>
+          <div class="couponDetails">
+            <h3>{{ coupon.code }}</h3>
+            <p [innerHTML]="coupon.description" *ngIf="coupon.description"></p>
+          </div>
+          <div class="couponDiscount">
+            <h1>{{ coupon.amount }} 
+            <span *ngIf="coupon.discount_type=='percent'">%</span>
+            <span *ngIf="coupon.discount_type=='fixed_cart'">FLAT</span>
+            <span *ngIf="coupon.discount_type=='wallet'">%</span>
+            <span *ngIf="coupon.discount_type=='membership_coupon'">%</span>
+            </h1>
+          </div>
+        </div>
+        <div class="couponFooter">
+          <p>Valid until : {{ coupon.expiry_date | date : 'dd MMM yyyy' }}</p>
+          <ion-button size="small" (click)="copyCode(coupon)">Copy code</ion-button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="maincontent nocoupons" *ngIf="!userCoupons.length">
+    <img src="https://www.netclipart.com/pp/m/161-1615494_download-man-bowing-island-ai-file-waiting-emoji.png" />
+    <h2>Keep coming back for exciting offers <br> They will be here waiting for you!</h2>
+    <ion-button color="tertiary" expand="block" routerLink="/">Go back home</ion-button>
+  </div>
+</ion-content>

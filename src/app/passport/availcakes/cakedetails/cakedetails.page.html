@@ -1,0 +1,287 @@
+<ion-content>
+  <div class="maincontent">
+    <div class="productDetails" *ngIf="cake">
+      <div class="imageProd" *ngIf="!cake.images.length">
+        <img [src]="data.apiUrlNew + cake.products_image" />
+      </div>
+      <div class="imageSlides" *ngIf="cake.images && cake.images.length">
+        <ion-slides pager="true" [options]="prodDetailsSlides">
+          <ion-slide><img [src]="data.apiUrlNew + cake.products_image" /></ion-slide>
+          <ion-slide *ngFor="let img of cake.images">
+            <img [src]="data.apiUrlNew + img.image" />
+          </ion-slide>
+        </ion-slides>
+      </div>
+
+      <div class="prodName">
+        <div class="name">{{ cake.products_name }}
+          <div class="ratings" *ngIf="cake.allRatings">
+            {{ cake.allRatings.toFixed(1) }}
+            <span>
+              <small><ion-icon name="star" *ngFor="let str of methods.convertToArray(5)"></ion-icon></small>
+              <strong [style.width]="((+cake.allRatings)/5)*100+'%'"><ion-icon name="star" *ngFor="let str of methods.convertToArray(5)"></ion-icon></strong>
+            </span>
+          </div>
+        </div>
+        <div class="price">
+          <strong><sup>₹</sup>{{ cake.specials_new_products_price ? cake.specials_new_products_price : cake.products_price }}</strong>
+          <span *ngIf="cake.specials_new_products_price && cake.specials_new_products_price!=cake.products_price">₹ <del>{{ cake.products_price }}</del><cite>{{ (((+cake.products_price - +cake.specials_new_products_price)/+cake.products_price)*100).toFixed(0) }}% OFF</cite></span>
+          <span class="taxMessage">(inclusive of all taxes)</span>
+        </div>
+      </div>
+
+      <div class="uspsBox">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div class="uspBox">
+                <img src="https://d3s16h6oq3j5fb.cloudfront.net/1.58.3.0/img/product-details/early-morning.png" />
+                <div class="descrUsp">
+                  <p>550+ cities</p>
+                  <p>6000+ pincodes</p>
+                  <p>Free Delivery</p>
+                </div>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div class="uspBox">
+                <img src="https://d3s16h6oq3j5fb.cloudfront.net/1.58.3.0/img/product-details/trusted.png" />
+                <div class="descrUsp">
+                  <p>Trusted by over 1 Million Customers Worldwide</p>
+                </div>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div class="uspBox">
+                <img src="https://d3s16h6oq3j5fb.cloudfront.net/1.58.3.0/img/product-details/hassle-free.png" />
+                <div class="descrUsp">
+                  <p>Same Day</p>
+                  <p>Next Day</p>
+                  <p>Midnight Delivery</p>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <div class="attributesSec" *ngIf="cake.attributes && cake.attributes.length">
+        <ion-list *ngFor="let attr of cake.attributes" [hidden]="attr.values.length <= 1">
+          <ion-radio-group *ngIf="attr.values.length && attr.values.length > 1">
+            <ion-list-header>Select {{ attr.option.name }}</ion-list-header>
+
+            <ion-item *ngFor="let option of attr.values; let i=index;" lines="none">
+              <ion-label>{{ option.value }}</ion-label>
+              <ion-radio color="tertiary" (ionSelect)="methods.selectAttribute(attr,option)" slot="start" [value]="option.id" [checked]="option.id==attr.selectedValue.id"></ion-radio>
+            </ion-item>
+
+          </ion-radio-group>
+        </ion-list>
+      </div>
+      <div class="variantsSec" *ngIf="cake.products_variant && cake.products_variant.length && cake.selectedVariant">
+        <div class="variantCard ion-activatable" (click)="data.isVariantsOpened=true">
+          <ion-ripple-effect></ion-ripple-effect>
+          <small>{{ cake.selectedVariant.name }} - <strong style="display:inline-block;">₹{{ cake.selectedVariant.price }}</strong></small>
+          <!-- <strong>{{ cake.selectedVariant.price }}</strong> -->
+          <p>{{ cake.products_name | titlecase }}</p>
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </div>
+      </div>
+
+      <div class="variantsPopup" *ngIf="data.isVariantsOpened">
+        <ion-list>
+          <ion-item-divider>
+            <ion-label>Select Weight</ion-label>
+            <ion-icon name="close" (click)="data.isVariantsOpened=false"></ion-icon>
+          </ion-item-divider>
+          <ion-item detail [class.active]="variant.name == cake.selectedVariant.name" (click)="methods.selectVariant(variant)" *ngFor="let variant of cake.products_variant">
+            <ion-label>{{ variant.name }} - ₹ {{ variant.price }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div class="deliveryArea">
+        <h5>Delivery to</h5>
+        <p>Make sure to enter correct Pincode for hassle free delivery.</p>
+        <div class="inputIcon" (click)="methods.openOptions()">
+          <input type="text" placeholder="Select Location" readonly name="userLoc" [(ngModel)]="data.userGeoLocation" />
+          <ion-icon name="create"></ion-icon>
+        </div>
+        <h4 *ngIf="data.userGeoLocation && cake.delivery_option_ids!='3'">Delivery on</h4>
+        <div class="deliveryDayTabs" *ngIf="data.userGeoLocation && cake.delivery_option_ids!='3'">
+          <div class="dateRow">
+            <ion-datetime displayFormat="DD-MMM-YYYY" [min]="tomorrow|date:'yyyy-MM-dd'" [value]="today|date:'yyyy-MM-dd'"></ion-datetime>
+          </div>
+        </div>
+      </div>
+
+      <div class="detailsTabs" *ngIf="cake.categories_id == '1'">
+        <div class="tabsHead">
+          <a href="javascript:void(0);" [class.active]="data.selectedTab==1" (click)="methods.selectTab(1)">Description</a>
+          <a href="javascript:void(0);" [class.active]="data.selectedTab==2" (click)="methods.selectTab(2)">Delivery Info</a>
+          <a href="javascript:void(0);" [class.active]="data.selectedTab==3" (click)="methods.selectTab(3)">Care</a>
+        </div>
+        <div class="tabsBody">
+          <div class="desc" *ngIf="data.selectedTab==1">
+            <strong>Product Details:</strong>
+            <div [innerHTML]="cake.products_description"></div>
+          </div>
+          <div class="desc" *ngIf="data.selectedTab==2">
+            <strong>Delivery Info:</strong>
+            <div class="delInfo">
+              <li>Our delicious cakes are hand-delivered by our delivery boy in a good quality cardboard box.There might be slight variation in the product in terms of design and shape.</li>
+              <li>The chosen delivery time is an estimate and depends on the availability of the product and the destination to which you want the product to be delivered.</li>
+              <li>Since cakes are perishable in nature, we attempt delivery of your order only once. The delivery cannot be redirected to any other address.</li>
+              <li>Candle and knife will be delivered as per the availability.</li>
+            </div>
+          </div>
+          <div class="desc" *ngIf="data.selectedTab==3">
+            <strong>Care Instructions:</strong>
+            <div class="careInfo">
+              <li>Store cream cakes in a refrigerator. Fondant cakes should be stored in an air-conditioned environment.</li>
+              <li>Consume the cake within 24 hours.</li>
+              <li>Enjoy your cake!</li>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detailsTabs" *ngIf="cake.categories_id != '1'">
+        <div class="tabsBody">
+          <div class="desc">
+            <strong>Product Details:</strong>
+            <div [innerHTML]="cake.products_description"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="productRatings" *ngIf="cake.show_review == '1'">
+        <div class="viewRatings" *ngIf="cake.reviews && cake.reviews.length">
+          <h3>What customers are saying</h3>
+          <ion-slides [options]="ratingSlideOpts" #ratingSlides class="ratingSlides">
+            <ion-slide *ngFor="let slide of cake.reviews">
+              <div class="ratingbox">
+                <span class="ratingBg"></span>
+                <div class="ratingDetails">
+                  <div class="initialImage">{{ slide.customers_name | slice:0:1 }}<span *ngIf="slide.customers_name && slide.customers_name.indexOf(' ') != -1">{{ (slide.customers_name.split(' ').pop()) | slice:0:1 }}</span></div>
+                  <!-- <img [src]="slide.image" [ngStyle]="{'border':'4px solid #'+slide.theme}" /> -->
+                  <h4>{{ slide.customers_name }}</h4>
+                  <div class="starsRate">
+                    <ion-icon name="star" *ngFor="let rate of methods.convertToArray(+slide.reviews_rating)"></ion-icon>
+                  </div>
+                  <p>{{ slide.reviews_text }}</p>
+                </div>
+              </div>
+            </ion-slide>
+          </ion-slides>
+        </div>
+        <div class="createReview">
+          <h5 *ngIf="cake.reviews.length < 1">Be the first one to review this product!</h5>
+          <ion-button color="tertiary" expand="block" (click)="openReview()">Write a review</ion-button>
+          <div class="formReview" *ngIf="isReviewOpened">
+            <h5>Add your rating</h5>
+            <p>In the range from 1 to 5</p>
+            <div class="starBox">
+              <ion-icon color=tertiary [name]="rateArray.length && rateArray.includes(1) ? 'star' : 'star-outline'" (click)="selectRatings(1)"></ion-icon>
+              <ion-icon color=tertiary [name]="rateArray.length && rateArray.includes(2) ? 'star' : 'star-outline'" (click)="selectRatings(2)"></ion-icon>
+              <ion-icon color=tertiary [name]="rateArray.length && rateArray.includes(3) ? 'star' : 'star-outline'" (click)="selectRatings(3)"></ion-icon>
+              <ion-icon color=tertiary [name]="rateArray.length && rateArray.includes(4) ? 'star' : 'star-outline'" (click)="selectRatings(4)"></ion-icon>
+              <ion-icon color=tertiary [name]="rateArray.length && rateArray.includes(5) ? 'star' : 'star-outline'" (click)="selectRatings(5)"></ion-icon>
+            </div>
+            <h5>Add a title</h5>
+            <p>Sum up your review in one line</p>
+            <input type="text" [(ngModel)]="reviewTitle" placeholder="Add a title">
+            <h5>Add a written review</h5>
+            <p>You could mention "Quality", "Quantity", "Packaging" etc..</p>
+            <textarea [(ngModel)]="reviewDesc" placeholder="Tell us what you like or dislike about this product."></textarea>
+            <ion-button (click)="addReview()" expand="full" color="tertiary">Submit</ion-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="recentlyViewed" *ngIf="data.recommendedProducts.length">
+        <h3>Recommended Products</h3>
+        <ion-slides pager="false" [options]="prodSlide">
+          <ion-slide *ngFor="let product of data.recommendedProducts" [hidden]="product.products_id == cake.products_id">
+            <div class="prodBox ion-activatable" [style.paddingBottom]="product.delivery_option_ids ? '50px' : '30px'" [routerLink]="['/product', product.products_id]">
+              <ion-ripple-effect></ion-ripple-effect>
+              <div class="prodImage">
+                <span class="badge" *ngIf="product.products_tags">{{ product.products_tags }}</span>
+                <img [src]="data.apiUrlNew + product.products_image" />
+              </div>
+              <div class="prodDetails text-center">
+                <h5>{{ product.products_name }}</h5>
+                <h6>₹ {{ product.products_price }}</h6>
+                <div class="offerTag" *ngIf="product.oprice!=product.dprice"><del>₹ {{ product.oprice }}</del><span>{{ (((+product.oprice - +product.dprice)/+product.oprice)*100).toFixed(0) }}% OFF</span></div>
+                <div class="bottomSecProd">
+                  <div class="earliestDelivery" *ngIf="product.delivery_option_ids && product.delivery_option_ids != '4' && product.delivery_option_ids != '5'">Earliest Delivery:
+                    <span *ngIf="product.delivery_option_ids == '1,2' || product.delivery_option_ids == '1'">Today</span>
+                    <span *ngIf="product.delivery_option_ids == '2' || product.delivery_option_ids == '3'">Tomorrow</span>
+                  </div>
+                  <div class="ratingsReviews" *ngIf="product.show_review == '1' && product.reviews && product.reviews.length">
+                    <span>{{ (product.allRatings).toFixed(1) }} <ion-icon name="star" color="tertiary"></ion-icon></span>
+                    <span>{{ product.reviews.length }} Reviews</span>
+                  </div>
+                </div>
+                <!-- <div class="ratings" *ngIf="product.ratings">
+                  <span>{{ (+product.ratings).toFixed(1) }}</span><ion-icon name="star" *ngFor="let rate of  methods.convertToArray(+product.ratings)"></ion-icon>
+                </div> -->
+              </div>
+            </div>
+          </ion-slide>
+        </ion-slides>
+      </div>
+
+      <div class="recentlyViewed" *ngIf="data.recentlyViewed.length">
+        <h3>Recently Viewed By You</h3>
+        <ion-slides pager="false" [options]="prodSlide">
+          <ion-slide *ngFor="let product of data.recentlyViewed" [hidden]="product.products_id == cake.products_id">
+            <div class="prodBox ion-activatable" [style.paddingBottom]="product.delivery_option_ids ? '50px' : '30px'" [routerLink]="['/product', product.products_id]">
+              <ion-ripple-effect></ion-ripple-effect>
+              <div class="prodImage">
+                <span class="badge" *ngIf="product.products_tags">{{ product.products_tags }}</span>
+                <img [src]="data.apiUrlNew + product.products_image" />
+              </div>
+              <div class="prodDetails text-center">
+                <h5>{{ product.products_name }}</h5>
+                <h6>₹ {{ product.products_price }}</h6>
+                <div class="offerTag" *ngIf="product.oprice!=product.dprice"><del>₹ {{ product.oprice }}</del><span>{{ (((+product.oprice - +product.dprice)/+product.oprice)*100).toFixed(0) }}% OFF</span></div>
+                <div class="bottomSecProd">
+                  <div class="earliestDelivery" *ngIf="product.delivery_option_ids && product.delivery_option_ids != '4' && product.delivery_option_ids != '5'">Earliest Delivery:
+                    <span *ngIf="product.delivery_option_ids == '1,2' || product.delivery_option_ids == '1'">Today</span>
+                    <span *ngIf="product.delivery_option_ids == '2' || product.delivery_option_ids == '3'">Tomorrow</span>
+                  </div>
+                  <div class="ratingsReviews" *ngIf="product.show_review == '1' && product.reviews && product.reviews.length">
+                    <span>{{ (product.allRatings).toFixed(1) }} <ion-icon name="star" color="tertiary"></ion-icon></span>
+                    <span>{{ product.reviews.length }} Reviews</span>
+                  </div>
+                </div>
+                <!-- <div class="ratings" *ngIf="product.ratings">
+                  <span>{{ (+product.ratings).toFixed(1) }}</span><ion-icon name="star" *ngFor="let rate of  methods.convertToArray(+product.ratings)"></ion-icon>
+                </div> -->
+              </div>
+            </div>
+          </ion-slide>
+        </ion-slides>
+      </div>
+
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="btnFooter" *ngIf="cake">
+  <ion-toolbar>
+    <ion-row *ngIf="cake.products_quantity != '0'">
+      <ion-col size="12">
+        <ion-button expand="block" color="tertiary" (click)="toCart()">ADD TO CART</ion-button>
+      </ion-col>
+      <!-- <ion-col>
+        <ion-button expand="block" color="tertiary" (click)="toCheckout()">BUY NOW</ion-button>
+      </ion-col> -->
+    </ion-row>
+    <ion-row *ngIf="cake.products_quantity == '0'">
+      <ion-col size="12">
+        <ion-button expand="block" color="tertiary" (click)="notifyMe()">Notify Me</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

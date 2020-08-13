@@ -1,0 +1,25 @@
+<ion-content>
+  <div class="maincontent">
+    <div class="refernearn" *ngIf="data.userInfo">
+      <h3>Refer & Earn</h3>
+      <ion-card class="ion-activatable">
+        <ion-ripple-effect></ion-ripple-effect>
+        <ion-card-content>Have an invite? <span color="tertiary">Enter code</span></ion-card-content>
+      </ion-card>
+      <div class="referBanner">
+        <img src="https://www.bigbasket.com/media/uploads/flatpages/refer-and-earn-43306/FP_Refer_Earn_1000px_01.jpg" />
+        <div class="userCode ion-activatable" (click)="methods.copyInviteCode()"><ion-ripple-effect></ion-ripple-effect><span>{{ data.userInfo.refree_id }}</span><small>Tap to Copy</small></div>
+      </div>
+      <div class="benefitsSec">
+        <h3 class="text-center">Benefits</h3>
+        <div class="beneCard text-center" *ngIf="data.referEarnPoints">
+          <h5>Refer your friends to Planoutx</h5>
+          <p>Get {{ data.referEarnPoints | currency : 'INR' }} Planout Cash for each referral! Your friends too get {{ data.referEarnPoints | currency : 'INR' }} Planout Cash. Happy Partying!</p>
+        </div>
+      </div>
+      <div class="inviteBtn">
+        <ion-button color="tertiary" expand="full" (click)="methods.shareInviteCode()">Invite friends and start earning</ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

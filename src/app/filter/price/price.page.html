@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar class="mainHeader" color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-img class="logo" [src]="'assets/images/logo.png'" routerLink="/"></ion-img>
+    <span class="headTitle">Choose Price</span>
+    <ion-buttons slot="end">
+      <ion-button (click)="clearFilters()">
+        Clear
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-radio-group [value]="this.data.selectedFilters.price" (ionChange)="selectPrice($event)">
+      <ion-item *ngFor="let price of prices">
+          <ion-label>{{ price }}</ion-label>
+          <ion-radio slot="end" [value]="price" color="tertiary"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+      <ion-button color="tertiary" slot="end" (click)="applyPrice()">
+        Apply
+      </ion-button>
+  </ion-toolbar>
+</ion-footer>

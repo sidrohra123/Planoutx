@@ -1,0 +1,18 @@
+<ion-content padding>
+  <div class="flex">
+    <div class="getStarted text-center">
+      <img src="assets/images/logo-full-red.png" />
+      <div class="line"></div>
+      <h3>Tell us your location</h3>
+      <p>We won't be asking much</p>
+    </div>
+    <div class="locationsList" *ngIf="data.locations && data.locations.length">
+      <ion-list>
+        <ion-item (click)="methods.selectLocation(location)" detail *ngFor="let location of data.locations">{{ location.vc_name }}</ion-item>
+      </ion-list>
+    </div>
+    <div class="locationsList" *ngIf="data.locations && !data.locations.length">
+      <app-skeleton></app-skeleton>
+    </div>
+  </div>
+</ion-content>

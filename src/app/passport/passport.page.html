@@ -1,0 +1,142 @@
+<ion-content [scrollEvents]="true" fullscreen>
+    <div class="newContent" *ngIf="(data.userInfo && !data.userInfo.membership) || (data.userInfo && data.userInfo.membership && !data.userInfo.membership.length) || !data.userInfo">
+        <!-- <ion-slides *ngIf="passportBanners.length" pager="true" [options]="bannerConfig">
+            <ion-slide *ngFor="let banner of passportBanners">
+                <div class="bannerBox">
+                    <img [src]="banner.url" />
+                </div>
+            </ion-slide>
+        </ion-slides> -->
+        <div class="bannersImg">
+            <img src="assets/images/passport/3.jpg" />
+            <!-- <img src="assets/images/passport/2.png" /> -->
+        </div>
+        <div class="plansList" *ngIf="plans.length">
+            <h3>Select your membership</h3>
+            <div class="rowMembership">
+                <div class="columnMember" *ngFor="let plan of plans; let i=index;">
+                    <div class="planBox" [class.active]="selectedPlan.id==plan.id" (click)="selectPlan(i)">
+                        <h5>{{ plan.plan_name }}</h5>
+                        <h3>{{ plan.days/30 }}<span>months</span></h3>
+                        <h4>{{ plan.amount | currency:'INR' }}</h4>
+                        <!-- <small><strong>{{ plan.plan_cashback_count_per_month }}</strong> times {{ plan.plan_cashback_percentage }}% cashbacks /mo</small> -->
+                        <small><strong>Click here</strong> to know benefits</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="benefitsList" *ngIf="selectedPlan" [innerHTML]="selectedPlan.plan_details">
+            <!-- <h3>Your 3 Months Plan benefits include</h3>
+            <div class="benefPoints">
+                <ul>
+                    <li>GET A FREE CAKE (Click here to select cake) <a href="javascript:void(0);">Terms & Conditions</a></li>
+                    <li>50% CASHBACK ON FIRST DÉCOR</li>
+                    <li>20% CASHBACK ON PARTY GAME + PARTY SUPPLIES + ARTIST + GIFT</li>
+                    <li>100% CASHBACK UPTO 100 ON FIRST FIVE PURCHASES</li>
+                    <li>ADDITIONAL CASHBACK DURING HOUSEFULL SALE</li>
+                    <li>PRIORITY DELIVERY SLOT</li>
+                    <li>PRIORITY CUSTOMER SUPPORT</li>
+                    <li>FREE DELIVERY (TWICE/M ON GIFTS + SUPPLIES CODE: DELIVERY)</li>
+                </ul>
+            </div> -->
+        </div>
+        <div class="faqsArea">
+            <h3>Frequently Asked Questions</h3>
+            <div class="collapsibleSets">
+                <div *ngFor="let faq of faqs; let i = index" (click)="selectFaq(i)">
+                    <h3>{{ faq.title | titlecase }} <ion-icon name="chevron-down-sharp"></ion-icon></h3>
+                    <p *ngIf="selectedFaq && selectedFaq.title==faq.title">{{ faq.desc | titlecase }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="tncArea">
+            <ion-item routerLink="/passportTandC">
+                Terms and Conditions
+            </ion-item>
+        </div>
+        <div class="enterCodeArea">
+            <img src="https://image.flaticon.com/icons/svg/2210/2210220.svg" />
+            <h3>Have a Membership Activation Code?</h3>
+            <ion-item>
+                <ion-label position="floating">Enter your code</ion-label>
+                <ion-input color="tertiary" [(ngModel)]="data.mem_code" maxlength=6></ion-input>
+                <ion-button color="tertiary" *ngIf="data.mem_code">APPLY</ion-button>
+            </ion-item>
+        </div>
+    </div>
+
+    <app-skeleton *ngIf="data.isProcessing"></app-skeleton>
+
+    <div class="newContent memberArea" *ngIf="data.userInfo && data.userInfo.membership && data.userInfo.membership.length && boughtPlan">
+        <div class="plansList">
+            <div class="thumbbadge">
+                <img [src]="data.userInfo.customers_picture" />
+                <span><img src="https://image.flaticon.com/icons/svg/1855/1855345.svg"></span>
+            </div>
+            <h3>Congratulations {{ data.userInfo.customers_firstname }}! You are a Passport Member</h3>
+            <p>Following are your plan details and its benefits:</p>
+        </div>
+        <div class="boughtPlan">
+            <h3>{{ boughtPlan.plan_name }} | <small>for {{ boughtPlan.days }} days</small></h3>
+            <ion-button color="tertiary" (click)="openPlansPopup()">See other Plans</ion-button>
+            <p>Unlock your Benefits:</p>
+            <ion-grid class="listBenefs">
+                <ion-row>
+                    <ion-col size="6">
+                        <div class="benefCol cakes">
+                            <img src="assets/images/passport/cakes.jpg"/>
+                            <p>You have <strong>{{ boughtPlan.plan_cashback_cakes_count_left }}</strong> free cakes worth <strong>{{ boughtPlan.plan_cashback_cakes_base_value | currency : 'INR' }}</strong> or less left.</p>
+                            <ion-button color="tertiary" expand="block" fill="outline" (click)="toCakes()" *ngIf="boughtPlan.plan_cashback_cakes_count_left >= 1">Avail Now</ion-button>
+                            <ion-button color="tertiary" expand="block" fill="outline" *ngIf="boughtPlan.plan_cashback_cakes_count_left <= 0">Availed</ion-button>
+                        </div>
+                    </ion-col>
+                    <ion-col size="6" *ngIf="boughtPlan.plan_cashback_poker_count">
+                        <div class="benefCol poker">
+                            <img src="assets/images/passport/POKER.jpg"/>
+                            <p>You have <strong>{{ boughtPlan.plan_cashback_poker_count_left }}</strong> Poker Games left.</p>
+                            <ion-button *ngIf="boughtPlan.plan_cashback_poker_count_left >= 1" color="tertiary" expand="block" fill="outline" [routerLink]="['/product', 'Poker-Game Set 200 Chips (Aluminium CASE Safe Pack)' | urlSlug]">Avail Now</ion-button>
+                            <ion-button color="tertiary" *ngIf="boughtPlan.plan_cashback_poker_count_left <= 0" expand="block" fill="outline">Availed</ion-button>
+                        </div>
+                    </ion-col>
+                    <ion-col size="6" *ngIf="boughtPlan.plan_cashback_count_per_month">
+                        <div class="benefCol cashback">
+                            <img src="assets/images/passport/CASHBACK.jpg"/>
+                            <p>You have <strong>{{ boughtPlan.plan_cashback_count_per_month_left }}</strong> Cashback left to be availed.</p>
+                            <ion-button *ngIf="boughtPlan.plan_cashback_count_per_month_left >= 1" color="tertiary" expand="block" fill="outline">Avail Now</ion-button>
+                            <ion-button color="tertiary" *ngIf="boughtPlan.plan_cashback_count_per_month_left <= 0" expand="block" fill="outline">Availed</ion-button>
+                        </div>
+                    </ion-col>
+                    <ion-col size="6" *ngIf="boughtPlan.plan_cashback_decorations_count">
+                        <div class="benefCol decoration">
+                            <img src="assets/images/passport/DECOR.jpg"/>
+                            <p>You have <strong>{{ boughtPlan.plan_cashback_decorations_count_left }}</strong> free Decoration left to be availed.</p>
+                            <ion-button *ngIf="boughtPlan.plan_cashback_decorations_count_left >= 1" color="tertiary" expand="block" fill="outline" (click)="toDecoration()">Avail Now</ion-button>
+                            <ion-button color="tertiary" *ngIf="boughtPlan.plan_cashback_decorations_count != '0' && boughtPlan.plan_cashback_decorations_count_left <= 0" expand="block" fill="outline">Availed</ion-button>
+                            <ion-button color="tertiary" *ngIf="boughtPlan.plan_cashback_decorations_count == 0" expand="block" fill="outline">Not available on this plan</ion-button>
+                        </div>
+                    </ion-col>
+                    <ion-col size="6" *ngIf="boughtPlan.plan_cashback_wishing_videos_count">
+                        <div class="benefCol wishingVideo">
+                            <img src="assets/images/passport/WISHING_VIDEO.jpg"/>
+                            <p>You have <strong>{{ boughtPlan.plan_cashback_wishing_videos_count_left }}</strong> free Wishing Videos left to be availed.</p>
+                            <ion-button *ngIf="boughtPlan.plan_cashback_wishing_videos_count_left >= 1" color="tertiary" expand="block" fill="outline">Avail Now</ion-button>
+                            <ion-button color="tertiary" *ngIf="boughtPlan.plan_cashback_wishing_videos_count != '0' && boughtPlan.plan_cashback_wishing_videos_count_left <= 0" expand="block" fill="outline">Availed</ion-button>
+                            <ion-button color="tertiary" *ngIf="boughtPlan.plan_cashback_wishing_videos_count == 0" expand="block" fill="outline">Not available on this plan</ion-button>
+                        </div>
+                    </ion-col>
+                    <ion-col size="6">
+                        <div class="benefCol priorityDel">
+                            <img src="assets/images/passport/PRIORITY_DELIVERY.jpg"/>
+                            <p>You have <strong>Priority Deliveries</strong> to be availed for every order.</p>
+                            <ion-button color="tertiary" expand="block" fill="outline" routerLink="/">Shop Now</ion-button>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+<div class="memberCTA" *ngIf="(data.userInfo && !data.userInfo.membership) || (data.userInfo && data.userInfo.membership && !data.userInfo.membership.length) || !data.userInfo && selectedPlan">
+    <button *ngIf="canBuyPassport" class="ion-activatable" (click)="buyMembership()"><ion-ripple-effect></ion-ripple-effect>Buy Now<p>{{ selectedPlan.days/30 }} months membership @ {{ selectedPlan.amount | currency:'INR' }}</p></button>
+    <button *ngIf="!canBuyPassport" class="ion-activatable" (click)="getNotified()"><ion-ripple-effect></ion-ripple-effect>Passport launching soon after lockdown<p>Tap on this button to get notified</p></button>
+</div>

@@ -1,0 +1,48 @@
+<div class="postCards" *ngIf="data.feeds.length">
+    <div class="profileCard" *ngFor="let feed of data.feeds; let i=index;">
+        <div class="headCard">
+            <img [src]="feed.user.image" />
+            <h3>{{ feed.user.name }}
+                <small>{{ feed.user.desc }}</small>
+            </h3>
+            <small>{{ feed.time }}</small>
+        </div>
+        <div class="detailsCard">
+            <div class="title">#{{ feed.title }}
+                <ion-button *ngIf="!feed.user.follow" class="followButton" (click)="methods.followUser(i)" shape="rounded" color="tertiary">Follow</ion-button>
+                <ion-button *ngIf="feed.user.follow" class="followButton" (click)="methods.followUser(i)" shape="rounded" color="tertiary">Unfollow</ion-button>
+            </div>
+            <div class="postImage">
+                <img [src]="feed.image" *ngIf="feed.type=='image'" />
+                <iframe width="560" *ngIf="feed.type=='video'" height="315" [src]="feed.video" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="cardFooter">
+            <div class="likeComs">
+                <ion-icon name="thumbs-up"></ion-icon>
+                <ion-icon name="chatbubbles"></ion-icon>
+            </div>
+            <div class="shareImages ion-activatable" (click)="methods.shareFeed(i)">
+                <ion-ripple-effect></ion-ripple-effect>
+                <ion-icon name="logo-facebook"></ion-icon>
+                <ion-icon name="logo-whatsapp"></ion-icon>
+                <span>Share</span>
+            </div>
+        </div>
+        <div class="organics">
+            <span>{{ feed.likesCount }} Likes</span>
+            <span>{{ feed.commentsCount }} Comments</span>
+            <div class="commentsList" *ngIf="feed.comments && feed.comments.length">
+                <div class="comment" *ngFor="let comment of feed.comments | slice :0:1">
+                    <Strong>{{ comment.user }}</Strong>
+                    <span>{{ comment.text }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="newPost ion-activatable">
+    <ion-ripple-effect></ion-ripple-effect>
+    <button><ion-icon name="cloud-upload"></ion-icon>Upload a New Post</button>
+</div>

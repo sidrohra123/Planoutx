@@ -1,0 +1,23 @@
+<div class="tagsSec" *ngIf="data.tags && data.tags.length">
+  <span [class.active]="data.selectedTag==tag" *ngFor="let tag of data.tags" (click)="methods.searchYoutube(tag)">#{{ tag }}</span>
+</div>
+<div class="videoCardSec" *ngIf="data.resultedVideos && data.resultedVideos.length">
+  <ion-card *ngFor="let video of data.resultedVideos">
+    <div class="media" (click)="methods.setVideoUrl(video.id.videoId)">
+      <img [src]="video.snippet.thumbnails.medium.url" />
+      <iframe *ngIf="data.currVideoId && data.selVidId==video.id.videoId" [src]="data.currVideoId" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <ion-card-header>
+      <ion-card-subtitle [innerHTML]="video.snippet.channelTitle"></ion-card-subtitle>
+      <ion-card-title [innerHTML]="video.snippet.title"></ion-card-title>
+    </ion-card-header>
+    <ion-card-content [innerHTML]="video.snippet.description">
+      
+    </ion-card-content>
+    <div class="cardFooter">
+      <ion-icon name="heart" class="ion-activatable"><ion-ripple-effect></ion-ripple-effect></ion-icon>
+      <ion-icon name="save" class="ion-activatable"><ion-ripple-effect></ion-ripple-effect></ion-icon>
+      <ion-icon name="share" (click)="methods.shareVideo(video)" class="ion-activatable"><ion-ripple-effect></ion-ripple-effect></ion-icon>
+    </div>
+  </ion-card>
+</div>

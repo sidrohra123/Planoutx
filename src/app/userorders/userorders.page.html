@@ -1,0 +1,42 @@
+<ion-content>
+  <div class="maincontent">
+    <div class="orderCollection" *ngIf="orders.length">
+      <div class="whiteCard ion-activatable" *ngFor="let order of orders | filterBy : data.orderType;" >
+        <ion-ripple-effect></ion-ripple-effect>
+        <div class="orderBody">
+          <div class="imageOrder" *ngIf="order.data && order.data.length">
+            <img [src]="data.apiUrlNew+order.data[0].image" />
+          </div>
+          <div class="prodDetails">
+            <!-- <h3 color=tertiary>{{ order.orders_status }}</h3> -->
+            <p><strong>Order placed on:</strong><span>{{ order.date_purchased | date : 'longDate' }}</span></p>
+            <p><strong>Recipient's Name:</strong><span>{{ order.delivery_name }}</span></p>
+            <p><strong>Order Id:</strong><span>PLN{{ order.orders_id }}</span></p>
+            <p><strong>Shipping Method:</strong><span>{{ order.shipping_method }}</span></p>
+            <p><strong>Payment Method:</strong><span>{{ order.payment_method }}</span></p>
+            <div class="orderBtns">
+              <ion-button color="tertiary" [routerLink]="['order-details', order.orders_id]">View Order</ion-button>
+              <ion-button color="tertiary" fill="outline" (click)="raiseQuery(order)">Raise Query</ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+    <span class="popupOverlay" (click)="closeQueryForm()" *ngIf="isFormOpened"></span>
+    <div class="formQuery" *ngIf="isFormOpened">
+      <h3>Tell us what your query is about <span (click)="closeQueryForm()">&times;</span></h3>
+      <div class="form">
+        <label>Your Name</label>
+        <input type="text" placeholder="Enter your name" [(ngModel)]="query.name" />
+        <label>Your Email Id</label>
+        <input type="text" placeholder="Enter your email id" [(ngModel)]="query.email" />
+        <label>Describe your Query</label>
+        <textarea [(ngModel)]="query.feedback" placeholder="Enter your query here" rows="10"></textarea>
+        <div class="buttonSubmits" (click)="sendQuery()">
+          <ion-button expand="block" color="tertiary">Submit Query</ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,14 @@
+<ion-content>
+  <div class="maincontent">
+    <ion-list *ngIf="data.occasions.length">
+      <ion-item [routerLink]="['/eveyrthing']" [queryParams]="{'occasion':occ.nid}" lines="none" *ngFor="let occ of data.occasions; let i=index;" detail>
+        <ion-avatar slot="start">
+          <img [src]="data.apiUrlNew + occ.categories_icon">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ occ.categories_name | titlecase }}</h2>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

@@ -1,0 +1,15 @@
+<ion-content>
+  <div class="maincontent">
+    <div class="offersList">
+      <ion-card class="ion-activatable" *ngFor="let offer of data.offersMain">
+          <ion-ripple-effect></ion-ripple-effect>
+        <img [src]="offer.offerimage" />
+        <ion-card-header>
+          <ion-card-subtitle>{{ offer.offer_type }}</ion-card-subtitle>
+          <ion-card-title>{{ offer.name }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content [innerHTML]="offer.description"></ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

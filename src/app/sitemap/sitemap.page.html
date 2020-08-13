@@ -1,0 +1,15 @@
+<ion-content>
+  <div class="maincontent" *ngIf="data.allProducts.length">
+    <h1>Planoutx Sitemap</h1>
+    <div class="catalogTree">
+      <ul>
+        <li *ngFor="let cat of data.categories">
+          <label>{{ cat.name | titlecase }}</label>
+          <div class="subCategories" *ngIf="cat.sub_categories">
+            <a href="javascript:void(0);" *ngFor="let subCat of cat.sub_categories">{{ subCat.name | titlecase }}</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ion-content>

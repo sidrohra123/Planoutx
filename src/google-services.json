@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "956820123214",
+    "firebase_url": "https://planoutx.firebaseio.com",
+    "project_id": "planoutx",
+    "storage_bucket": "planoutx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956820123214:android:fc256783e5efa27f",
+        "android_client_info": {
+          "package_name": "com.planout.x"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956820123214-rchpbo8u4411dflqeovh00tgbo3h97of.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl9bGsnFCtIBPOt-zjkW_VLItF7N5ZPGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956820123214-rchpbo8u4411dflqeovh00tgbo3h97of.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

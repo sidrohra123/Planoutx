@@ -1,0 +1,28 @@
+<ion-content>
+  <div class="maincontent">
+    <div class="paymentBox" *ngIf="data.cart && data.cart.length">
+      <h3>Total Amount Payable : <strong color="tertiary">₹ {{ (data.cartTotal).toFixed(2) }}</strong></h3>
+      <ion-list>
+        <ion-radio-group>
+          <ion-list-header>
+            Choose Payment Option
+          </ion-list-header>
+      
+          <ion-item (click)="methods.placeOrder('online')">
+            <ion-label>Debit Card / Credit Card / UPI</ion-label>
+            <ion-radio value="online" color="tertiary"></ion-radio>
+          </ion-item>
+          <!-- <ion-item (click)="methods.placeOrder('cod')">
+            <ion-label>Cash On Delivery</ion-label>
+            <ion-radio value="cod" color="tertiary"></ion-radio>
+          </ion-item> -->
+          <ion-item (click)="methods.placeOrder('wallet', finalUsableAmount)" *ngIf="data.userInfo && data.userWalletBalance && +data.userWalletBalance > 0">
+            <ion-label class="walletItem">Planout Money (₹ {{(+data.userWalletBalance).toFixed(2)}} available )<small>You can use {{ finalUsableAmount | currency : 'INR' }}</small></ion-label>
+            <ion-radio value="wallet" color="tertiary"></ion-radio>
+          </ion-item>
+      
+        </ion-radio-group>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

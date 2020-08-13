@@ -1,0 +1,99 @@
+.loginContent{
+    
+}
+.flex{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 100%;
+    padding: 16px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+.getStarted{
+    margin-bottom:30px;
+    width:100%;
+}
+.getStarted h3{
+    font-weight: 900;
+    font-size: 30px;
+    color:#f5444c;
+    display:none;
+}
+.getStarted p{
+    max-width: 80%;
+    margin:50px auto 0;
+    font-size: 16px;
+}
+.buttonsSocial{
+    width:100%;
+    > ion-input{
+        border-bottom:1px solid #ccc;
+        margin-bottom:10px;
+    }
+}
+.buttonsSocial ion-button{
+    height:50px;
+    text-transform: none;
+    box-shadow: none!important;
+    font-size: 13px!important;
+    font-weight: 400!important;
+    --border-color:#fff;
+    --border-style:solid;
+    --border-width:2px;
+    --box-shadow:none;
+}
+/deep/ .buttonsSocial ion-button.fbButton.ion-color-light{
+    --ion-color-base:#38539b!important;
+    --ion-color-contrast:#fff!important;
+}
+/deep/ .buttonsSocial ion-button.googleBtn.ion-color-light{
+    --ion-color-base:#d64134!important;
+    --ion-color-contrast:#fff!important;
+    margin-top:10px;
+}
+.buttonsSocial ion-button img{
+    width: 30px;
+    height: 30px;
+    display: block;
+    position: absolute;
+    left: 10px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    padding: 5px;
+    filter: brightness(0) invert(1);
+    object-fit: contain;
+}
+.truButton{
+    margin-bottom:10px;
+}
+.getStarted img{
+    max-width:100%;
+    display:block;
+    margin:0 auto 50px;
+}
+.line{
+    height:1px;
+    width:100%;
+    display:block;
+    background:#ccc;
+}
+.goBack{
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+.retryOtp{
+    text-align: center;
+    font-size: 14px;
+    margin: 14px 0;
+     > span{
+         > a{
+             text-decoration: none;
+         }
+     }
+}

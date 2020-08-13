@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-toolbar class="mainHeader" color="tertiary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home"></ion-back-button>
+      </ion-buttons>
+      <ion-img class="logo" [src]="'assets/images/logo.png'" routerLink="/home"></ion-img>
+      <span class="titleHead">Select Delivery Date</span>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content style="--background:#f0f0f0;position: relative;z-index: 11;">
+    <ion-grid class="headerCal">
+      <ion-row>
+        <ion-col>
+            <div
+            class="btn btn-primary"
+            mwlCalendarPreviousView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()"
+          >
+          <ion-icon name="ios-arrow-back"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col><h3>{{ viewDate | date : 'MMMM' }}</h3></ion-col>
+        <ion-col class="text-right">
+            <div
+            class="btn btn-primary"
+            mwlCalendarNextView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()"
+          >
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <mwl-calendar-month-view
+    [viewDate]="viewDate"
+    [refresh]="refresh"
+    (dayClicked)="dayClicked($event.day)"
+  >
+  </mwl-calendar-month-view>
+</ion-content>

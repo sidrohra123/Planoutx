@@ -1,0 +1,114 @@
+.maincontent{
+    background: #fafafa;
+}
+.productsSec{
+    margin-top:5px;
+    > h2{
+        text-align: center;
+        font-size:16px;
+        margin:20px 10px 14px;
+        font-weight: 500;
+        color:#f5444c;
+    }
+}
+.productsSec > h3{
+    text-align: center;
+    font-size:16px;
+    margin:0;
+    font-weight: 500;
+}
+.productsSec > p{
+    font-size:13px;
+    text-align: center;
+    color:#101010;
+    margin:0;
+}
+.prodBox{
+    background: #fff;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    z-index: 1;
+}
+.prodBox.premium{
+    filter: blur(3px);
+}
+.prodImage{
+    position: relative;
+    height:auto;
+    z-index: -1;
+    padding:5px;
+    .badge{
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 4px 5px;
+        color: #fff;
+        background: #f5444c;
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 4px 0 4px 0;
+        white-space: nowrap;
+        max-width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 5px;
+    }
+    img{
+        border-radius: 4px 4px 0 0;
+        display:block;
+        height:100%;
+        object-fit: cover;
+        width: 100%;
+        object-position: top center;
+    }
+}
+.prodDetails{
+    padding:8px 5px 36px;
+    h5{
+        font-size: 12px;
+        margin: 0;
+        font-weight: 400;
+        color: #000;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    h6{
+        font-size:14px;
+        font-weight: 800;
+        margin:5px 0;
+    }
+    .offerTag{
+        font-size:13px;
+        margin-bottom:4px;
+        span{
+            color:#f5444c;
+            padding-left:5px;
+        }
+    }
+    .ratings{
+        color:#f5444c;
+        span{
+            padding-right:5px;
+            font-size:13px;
+            vertical-align: middle;
+        }
+        ion-icon{
+            font-size:13px;
+            vertical-align: middle;
+        }
+    }
+    .availNowCta{
+        position: absolute;
+        bottom:0;
+        left:0;
+        right:0;
+        margin:4px;
+        ion-button{
+            margin:0;
+        }
+    }
+}

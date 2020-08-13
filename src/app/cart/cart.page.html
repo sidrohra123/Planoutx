@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar class="mainHeader" color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text="" style="margin-right: 10px;"></ion-back-button>
+    </ion-buttons>
+    <ion-img class="logo" [src]="'assets/images/logo.png'" routerLink="/"></ion-img>
+    <span class="innerTitle">Your Cart</span>
+    <!-- <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+    <!-- <ion-title>categories</ion-title> -->
+  </ion-toolbar>
+  <!-- <div class="innerHeader">
+    <span>Your Cart</span>
+  </div> -->
+</ion-header>
+
+<ion-content>
+  <div class="cartEmpty" *ngIf="!data.cart.length">
+    <div class="detailsWhy">
+      <img src="assets/images/empty-cart.png" />
+      <h3>Your cart is empty so, its sad and lonely.</h3>
+      <p>Turn its frown upside down: fill it with gift</p>
+      <ion-button color="tertiary" size="block" shape="rounded" routerLink="/">SHOP NOW</ion-button>
+    </div>
+  </div>
+  <div class="cartFilled" *ngIf="data.cart.length">
+    <ul>
+      <li *ngFor="let prod of data.cart; let i = index;">
+        <div class="fistSec">
+          <div class="catRow">
+            <span>Item {{ i+1 }}</span>
+          </div>
+          <div class="prodRow">
+            <img [src]="data.apiUrlNew + prod.image" />
+            <div class="detailsProd">
+              <h5>{{ prod.products_name }}</h5>
+              <h5 *ngIf="prod.weight != '0'">{{ prod.weight }} gm</h5>
+              <h5>Qty : {{ prod.customers_basket_quantity }}</h5>
+              <div *ngIf="prod.attributes && prod.attributes.length" style="margin-top:3px;white-space: nowrap;">
+                <h5 *ngFor="let attr of prod.attributes"><strong>{{ attr.attribute_name.split(':').pop() }}</strong> : {{ attr.attribute_value }}</h5>
+              </div>
+            </div>
+            <div class="priceProd">
+              <strong *ngIf="+prod.final_price >= 1">₹ {{ prod.special_price ? (+prod.special_price).toFixed(2) : (+prod.price).toFixed(2) }}</strong>
+                <strong *ngIf="+prod.final_price == 0"><del style="color:#000;font-size:11px;">₹ {{ (+prod.price).toFixed(2) }}</del><div style="color:#f5444c;">Free</div></strong>
+              <ion-icon name="trash" (click)="methods.removeFromCart(prod)"></ion-icon>
+            </div>
+          </div>
+          <div class="frequentlySec" *ngIf="prod.addonProducts && prod.addonProducts.length">
+            <h3>Frequently Bought Addons</h3>
+            <ul>
+              <li *ngFor="let addonProd of prod.addonProducts">
+                <div class="prodBox" *ngIf="addonProd.products_id != prod.products_id">
+                  <img [src]="data.apiUrlNew + addonProd.products_image" />
+                  <div class="prodDetailsOther">
+                    <h5>{{ addonProd.products_name }}</h5>
+                    <h6>{{ addonProd.products_price | currency : 'INR' }}</h6>
+                  </div>
+                  <div class="adonActions">
+                    <!-- <div class="config">
+                      <span>-</span>
+                      <span>0</span>
+                      <span>+</span>
+                    </div> -->
+                    <div class="addonCta">
+                      <ion-button color="tertiary" expand="block" (click)="addAddon(prod,addonProd)">ADD</ion-button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="deliveryDetails">
+          <h3>DELIVERY DATE</h3>
+          <div class="detailsDate">
+            <strong *ngIf="prod.shipping_date && prod.shipping_date !== 'undefined'">{{ prod.shipping_date | date }}</strong>
+            <span *ngIf="prod.shipping_cost && prod.shipping_cost !== 'undefined'">{{ prod.shipping_cost == '200' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == '0' ? 'Free Delivery' : prod.shipping_cost == '250' ? 'Midnight Delivery' : prod.shipping_cost == '149' ? 'Third Party Delivery' : '' }}</span>
+            <span *ngIf="prod.shipping_time && prod.shipping_time !== 'undefined'">Between {{ prod.shipping_time.from }}:00 to {{ prod.shipping_time.to }}:00</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="totalsArea" *ngIf="data.cartSubTotal">
+      <h3>PRICE</h3>
+      <div class="priceSets">
+        <div>
+          <strong>Subtotal</strong>
+          <span>₹ {{ (+data.cartSubTotal).toFixed(2) }}</span>
+        </div>
+        <div>
+          <strong>Shipping</strong>
+          <span>₹ {{ (data.cartShippingTotal).toFixed(2) }}</span>
+        </div>
+        <div class="totalAmount">
+          <strong>TOTAL</strong>
+          <span>₹ {{ (+data.cartSubTotal + data.cartShippingTotal).toFixed(2) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-footer *ngIf="data.cart.length">
+  <div class="checkoutBtn">
+    <ion-button color="tertiary" expand="full" shape="undefined" size="large" (click)="toCheckout()">PROCEED TO CHECKOUT</ion-button>
+  </div>
+</ion-footer>

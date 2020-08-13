@@ -1,0 +1,30 @@
+<ion-content>
+  <div class="maincontent">
+    <div class="prodList" *ngIf="data.userInfo && data.userInfo.membership && data.userInfo.membership.length">
+      <div class="productsSec" *ngIf="cakes.length">
+        <h2>Choose a Free Cake exclusively for you being an awesome Passport Clan Companion</h2>
+        <ion-grid>
+          <ion-row style="display:block;columns:2">
+            <ion-col size="6" *ngFor="let product of cakes">
+              <div class="prodBox ion-activatable" (click)="goToProduct(product)">
+                <ion-ripple-effect></ion-ripple-effect>
+                <div class="prodImage">
+                  <span class="badge" *ngIf="product.products_tags">{{ product.products_tags }}</span>
+                  <img [src]="data.apiUrlNew + product.products_image" />
+                </div>
+                <div class="prodDetails text-center">
+                  <h5>{{ product.products_name }}</h5>
+                  <h6>₹ {{ product.specials_new_products_price ? product.specials_new_products_price : product.products_price }}</h6>
+                  <div class="offerTag" *ngIf="product.specials_new_products_price && product.products_price!=product.specials_new_products_price"><del>₹ {{ product.products_price }}</del><span>{{ (((+product.products_price - +product.specials_new_products_price)/+product.products_price)*100).toFixed(0) }}% OFF</span></div>
+                  <div class="availNowCta">
+                    <ion-button expand="block" size="small" fill="outline" color="tertiary">Continue</ion-button>
+                  </div>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </div>
+</ion-content>

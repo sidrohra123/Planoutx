@@ -1,0 +1,28 @@
+.maincontent{
+    background: #f4f3f4;
+    height:100%;
+}
+.paymentBox{
+    h3{
+        font-size:16px;
+        margin:5px 0 10px;
+        strong{
+            color:var(--ion-color-px);
+        }
+    }
+    ion-list{
+        padding: 8px 15px 30px 0;
+        border-radius: 5px;
+        box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+    }
+}
+.walletItem{
+    white-space: normal;
+    small{
+        display: block;
+        color:var(--ion-color-px);
+    }
+}
+.item.sc-ion-label-ios-h, .item .sc-ion-label-ios-h{
+    font-size:15px;
+}

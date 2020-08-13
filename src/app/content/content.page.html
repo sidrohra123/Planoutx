@@ -1,0 +1,8 @@
+<ion-content>
+  <div class="pageContent maincontent" *ngIf="pageDetails">
+    <div class="content">
+      <h2>{{ pageDetails.name }}</h2>
+      <div [innerHTML] = "pageDetails.description"></div>
+    </div>
+  </div>
+</ion-content>

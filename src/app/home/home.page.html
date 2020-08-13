@@ -1,0 +1,648 @@
+<ion-content>
+  <div class="maincontent">
+      <!-- <ion-refresher slot="fixed" (ionRefresh)="methods.doRefresh($event)">
+          <ion-refresher-content></ion-refresher-content>
+      </ion-refresher> -->
+    <div class="catSlides" *ngIf="data.categories.length">
+      <ion-slides pager="true" [options]="catSlide" (ionSlideDidChange)="changed()" #catSlides>
+        <ion-slide *ngFor="let cat of this.data.categories | filterBy : data.homeCats; let i=index;" class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <div class="box" [routerLink]="['/shop', cat.name | urlSlug]">
+            <img [src]="data.apiUrlNew + cat.icon" />
+            <div class="catTitle">{{ cat.name | titlecase }}</div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+      <div class="buttonsNav">
+        <ion-icon slot="icon-only" *ngIf="index>=1" name="arrow-dropleft" (click)="slideTo('left')"></ion-icon>
+        <ion-icon slot="icon-only" [style.float]="index<catSlide.slidesPerView-1 ? 'right' : ''" *ngIf="index<catSlide.slidesPerView-1" name="arrow-dropright" (click)="slideTo('right')"></ion-icon>
+      </div>
+    </div>
+    <div class="catSlides" *ngIf="!data.categories.length">
+      <ion-slides pager="true" [options]="catSlide" (ionSlideDidChange)="changed()" #catSlides>
+        <ion-slide class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <div class="box">
+            <img src="https://static.thenounproject.com/png/1134418-200.png" />
+          </div>
+        </ion-slide>
+        <ion-slide class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <div class="box">
+            <img src="https://static.thenounproject.com/png/1134418-200.png" />
+          </div>
+        </ion-slide>
+        <ion-slide class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <div class="box">
+            <img src="https://static.thenounproject.com/png/1134418-200.png" />
+          </div>
+        </ion-slide>
+        <ion-slide class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <div class="box">
+            <img src="https://static.thenounproject.com/png/1134418-200.png" />
+          </div>
+        </ion-slide>
+        <ion-slide class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <div class="box">
+            <img src="https://static.thenounproject.com/png/1134418-200.png" />
+          </div>
+        </ion-slide>
+        <ion-slide class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <div class="box">
+            <img src="https://static.thenounproject.com/png/1134418-200.png" />
+          </div>
+        </ion-slide>
+        <ion-slide class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <div class="box">
+            <img src="https://static.thenounproject.com/png/1134418-200.png" />
+          </div>
+        </ion-slide>
+      </ion-slides>
+      <div class="buttonsNav">
+        <ion-icon slot="icon-only" *ngIf="index>=1" name="arrow-dropleft" (click)="slideTo('left')"></ion-icon>
+        <ion-icon slot="icon-only" [style.float]="index<catSlide.slidesPerView-1 ? 'right' : ''" *ngIf="index<catSlide.slidesPerView-1" name="arrow-dropright" (click)="slideTo('right')"></ion-icon>
+      </div>
+    </div>
+    <div class="offersSlides" *ngIf="data.offers.length">
+      <ion-slides (ionSlideDidChange)="onSlideChange($event)" (ionSlideDrag)="onSlideDrag()" (ionSlideTouchStart)="onSlideTouched()" (ionSlideTouchEnd)="onSlideDragged()" [pager]="data.offers.length > 1 ? true : false" [options]="offerSlides" #offSlides *ngIf="data.offers && data.offers.length">
+        <ion-slide *ngFor="let offer of data.offers">
+          <div class="imageBanner" (click)="methods.goFromOffer(offer)">
+            <img [src]="data.apiUrlNew + offer.image" />
+          </div>
+          <!-- <div class="videoBanner" *ngIf="offer.type=='video'">
+            <div class="youtube" *ngIf="offer.source=='youtube'">
+              <iframe [src]="_sanitize.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+offer.vId+'?autoplay=1&controls=0&modestbranding=1&autohide=1&showinfo=0')" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div> -->
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <div class="offersSlides" *ngIf="!data.offers.length">
+      <ion-slides (ionSlideDidChange)="onSlideChange($event)" (ionSlideDrag)="onSlideDrag()" (ionSlideTouchStart)="onSlideTouched()" (ionSlideTouchEnd)="onSlideDragged()" [pager]="data.offers.length > 1 ? true : false">
+        <ion-slide>
+          <div class="imageBanner">
+            <img src="https://fasttechnologies.com/wp-content/uploads/2017/01/placeholder-banner.png" />
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <!-- <div class="quickSearch" id="step4">
+      <div class="boxed">
+        <h3 class="text-center">Quick Search</h3>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-icon name="star" class="absIcon"></ion-icon>
+              <ion-label *ngIf="!data.quickSearch.occasion">Occasion</ion-label>
+              <ion-select [interface]="'action-sheet'" [(ngModel)]="data.quickSearch.occasion" [interfaceOptions]="occasionOptions" #occasionDrop>
+                <ion-select-option [value]="occ.id" *ngFor="let occ of data.ocassions">{{ occ.name }}</ion-select-option>
+              </ion-select>
+            </ion-col>
+            <ion-col size="6">
+              <ion-icon name="people" class="absIcon"></ion-icon>
+              <ion-label *ngIf="!data.quickSearch.recipient">Recipient</ion-label>
+              <ion-select [interface]="'action-sheet'" [(ngModel)]="data.quickSearch.recipient" [interfaceOptions]="recipientOptions" #recipentDrop>
+                <ion-select-option [value]="rec.i_pki_id" *ngFor="let rec of data.recipients">{{ rec.vc_name }}</ion-select-option>
+              </ion-select>
+            </ion-col>
+            <ion-col size="6">
+              <ion-icon name="gift" class="absIcon"></ion-icon>
+              <ion-label *ngIf="!data.quickSearch.category">Gifts Type</ion-label>
+              <ion-select [interface]="'action-sheet'" [(ngModel)]="data.quickSearch.category" [interfaceOptions]="giftsOptions" #giftDrop>
+                <ion-select-option [value]="cat.id" *ngFor="let cat of data.categories">{{ cat.name }}</ion-select-option>
+              </ion-select>
+            </ion-col>
+            <ion-col size="6" *ngIf="data.locations && data.locations.length">
+              <ion-icon name="pin" class="absIcon"></ion-icon>
+              <ion-label *ngIf="!data.quickSearch.location">City</ion-label>
+              <ion-select [interface]="'action-sheet'" [(ngModel)]="data.quickSearch.location" [interfaceOptions]="cityOptions" #cityDrop>
+                <ion-select-option *ngFor="let location of data.locations" [value]="location.i_pki_id">{{ location.vc_name }}</ion-select-option>
+              </ion-select>
+            </ion-col>
+            <ion-col size="12">
+              <ion-button class="sBtn" color="tertiary" expand="block" btn-block (click)="methods.quickSearch()">Submit</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div> -->
+    <div class="whatPlanning boxed" id="step4" *ngIf="data.occasions.length">
+      <ion-title class="text-center" color="tertiary">What are you Planning for?</ion-title>
+      <ion-grid>
+        <ion-row>
+          <ion-col [size]="i<=1 ? '6' : '4'" *ngFor="let occ of data.occasions | slice:0:8; let i = index;">
+            <div class="boxPlan ion-activatable" [class.nextBox] = "i>1" routerLink="/eveyrthing" [queryParams]="{'occasion':occ.nid}">
+              <ion-ripple-effect></ion-ripple-effect>
+              <img [src]="data.apiUrlNew + occ.categories_image" />
+              <div class="occNames">{{ occ.categories_name | titlecase }}</div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <div class="whatPlanning boxed" id="step4" *ngIf="!data.occasions.length">
+      <ion-title class="text-center" color="tertiary">What are you Planning for?</ion-title>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <div class="boxPlan ion-activatable">
+              <ion-ripple-effect></ion-ripple-effect>
+              <img src="https://i2.wp.com/doou.co.za/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Dark-1024x480.png" />
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="boxPlan ion-activatable">
+              <ion-ripple-effect></ion-ripple-effect>
+              <img src="https://i2.wp.com/doou.co.za/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Dark-1024x480.png" />
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="boxPlan ion-activatable">
+              <ion-ripple-effect></ion-ripple-effect>
+              <img src="https://i2.wp.com/doou.co.za/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Dark-1024x480.png" />
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="boxPlan ion-activatable">
+              <ion-ripple-effect></ion-ripple-effect>
+              <img src="https://i2.wp.com/doou.co.za/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Dark-1024x480.png" />
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="boxPlan ion-activatable">
+              <ion-ripple-effect></ion-ripple-effect>
+              <img src="https://i2.wp.com/doou.co.za/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Dark-1024x480.png" />
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- <div class="timingArea" *ngIf="data.categories.length">
+      <ion-grid>
+        <ion-row align-items-end>
+          <ion-col size="8">
+            <h3>Time left for Today's Delivery</h3>
+            <div class="watchBox">
+              <div class="boxTime">
+                <strong><span>0</span>{{ data.liveTimer.hour }}</strong>
+                <span>hrs</span>
+              </div>
+              <div class="boxTime">
+                <strong><span *ngIf="data.liveTimer.min < 10">0</span>{{ data.liveTimer.min }}</strong>
+                <span>min</span>
+              </div>
+              <div class="boxTime">
+                <strong><span *ngIf="data.liveTimer.sec < 10">0</span>{{ data.liveTimer.sec }}</strong>
+                <span>sec</span>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="4" class="text-right">
+            <ion-button color="tertiary" *ngIf="data.liveTimer.hour != 0 || data.liveTimer.min != 0 || data.liveTimer.sec != 0">Explore Now</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="timingArea" *ngIf="!data.categories.length">
+      <ion-grid>
+        <ion-row align-items-end>
+          <ion-col size="12">
+            <h3>Wait for goodness...</h3>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div> -->
+
+    <div class="passportOffers" *ngIf="data.passOffers.length">
+      <h3>Trending Offers</h3>
+      <p>Discover attractive Passport Joining Benefits</p>
+      <div class="offersWrap">
+        <ul>
+          <li *ngFor="let offer of data.passOffers" class="ion-activatable" [hidden]="offer.banners_url=='FEATURED' || offer.banners_url.includes('POPUP') || offer.banners_url.includes('temporary') || offer.banners_url.includes('passport_not_available')">
+            <ion-ripple-effect></ion-ripple-effect>
+            <a href="javascript:void(0);" [routerLink]="['/'+(offer.banners_url=='category' ? 'eveyrthing' : offer.banners_url=='passport' ? 'passport' : '')]" [queryParams]="offer.banners_url=='category' ? {'category' : offer.banners_category} : {}">
+              <img [src]="data.apiUrlNew + offer.banners_image" alt="">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="passportOffers" *ngIf="!data.passOffers.length">
+      <h3>Trending Offers</h3>
+      <p>Discover attractive Passport Joining Benefits</p>
+      <div class="offersWrap">
+        <ul>
+          <li>
+            <ion-ripple-effect></ion-ripple-effect>
+            <a href="javascript:void(0);">
+              <img src="https://i2.wp.com/www.glamflame.net/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Light-1024x480-1.png" alt="">
+            </a>
+          </li>
+          <li>
+            <ion-ripple-effect></ion-ripple-effect>
+            <a href="javascript:void(0);">
+              <img src="https://i2.wp.com/www.glamflame.net/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Light-1024x480-1.png" alt="">
+            </a>
+          </li>
+          <li>
+            <ion-ripple-effect></ion-ripple-effect>
+            <a href="javascript:void(0);">
+              <img src="https://i2.wp.com/www.glamflame.net/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Light-1024x480-1.png" alt="">
+            </a>
+          </li>
+          <li>
+            <ion-ripple-effect></ion-ripple-effect>
+            <a href="javascript:void(0);">
+              <img src="https://i2.wp.com/www.glamflame.net/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Light-1024x480-1.png" alt="">
+            </a>
+          </li>
+          <li>
+            <ion-ripple-effect></ion-ripple-effect>
+            <a href="javascript:void(0);">
+              <img src="https://i2.wp.com/www.glamflame.net/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Light-1024x480-1.png" alt="">
+            </a>
+          </li>
+          <li>
+            <ion-ripple-effect></ion-ripple-effect>
+            <a href="javascript:void(0);">
+              <img src="https://i2.wp.com/www.glamflame.net/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Light-1024x480-1.png" alt="">
+            </a>
+          </li>
+          <li>
+            <ion-ripple-effect></ion-ripple-effect>
+            <a href="javascript:void(0);">
+              <img src="https://i2.wp.com/www.glamflame.net/wp-content/uploads/2020/01/Hero-Banner-Placeholder-Light-1024x480-1.png" alt="">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="topSellingArea" *ngIf="data.allProducts && data.allProducts.length">
+      <h3>Top Selling Products</h3>
+      <ion-slides [options]="prodSlideOpts" #prodSlides class="prodSlides">
+        <ion-slide *ngFor="let item of data.allProducts | filterBy:data.topSellFilter" (click)="goToProduct(item)" style="outline:none;">
+          <div class="prodBox ion-activatable" [style.paddingBottom]="item.delivery_option_ids ? '50px' : '30px'">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img src="{{ data.apiUrlNew + item.products_image }}" />
+            <div class="prodDetail">
+              <!-- <small>{{ item.categories_name }}</small> -->
+              <h2>{{ item.products_name }}</h2>
+              <h4>₹ {{ item.specials_new_products_price ? item.specials_new_products_price : item.products_price }}</h4>
+              <div class="offerTag" *ngIf="item.specials_new_products_price && item.products_price!=item.specials_new_products_price"><del>₹ {{ item.products_price }}</del><span>{{ (((+item.products_price - +item.specials_new_products_price)/+item.products_price)*100).toFixed(0) }}% OFF</span></div>
+              <div class="bottomSecProd">
+                <div class="earliestDelivery" *ngIf="item.delivery_option_ids && (item.delivery_option_ids.includes('1,2') || item.delivery_option_ids.includes(',1') || item.delivery_option_ids.includes('2') || item.delivery_option_ids.includes('1,') || item.delivery_option_ids == '1' || item.delivery_option_ids == '2')">Earliest Delivery:
+                  <span *ngIf="item.delivery_option_ids.includes('1,2') || item.delivery_option_ids == '1'">Today</span>
+                  <span *ngIf="(item.delivery_option_ids == '2' || item.delivery_option_ids.includes(',2') || item.delivery_option_ids.includes('2,')) && (!item.delivery_option_ids.includes('1') && !item.delivery_option_ids.includes('1,') && !item.delivery_option_ids.includes(',1'))">Tomorrow</span>
+                </div>
+                <div class="ratingsReviews" *ngIf="item.show_review == '1' && item.reviews && item.reviews.length">
+                  <span>{{ (item.allRatings).toFixed(1) }} <ion-icon name="star" color="tertiary"></ion-icon></span>
+                  <span>{{ item.reviews.length }} Reviews</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+    <div class="topSellingArea" *ngIf="!data.allProducts.length">
+      <ion-slides [options]="prodSlideOpts" #prodSlides class="prodSlides">
+        <ion-slide style="outline:none;">
+          <div class="prodBox ion-activatable">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img src="https://i.ya-webdesign.com/images/desserts-drawing-2.png" />
+          </div>
+        </ion-slide>
+        <ion-slide style="outline:none;">
+          <div class="prodBox ion-activatable">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img src="https://i.ya-webdesign.com/images/desserts-drawing-2.png" />
+          </div>
+        </ion-slide>
+        <ion-slide style="outline:none;">
+          <div class="prodBox ion-activatable">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img src="https://i.ya-webdesign.com/images/desserts-drawing-2.png" />
+          </div>
+        </ion-slide>
+        <ion-slide style="outline:none;">
+          <div class="prodBox ion-activatable">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img src="https://i.ya-webdesign.com/images/desserts-drawing-2.png" />
+          </div>
+        </ion-slide>
+        <ion-slide style="outline:none;">
+          <div class="prodBox ion-activatable">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img src="https://i.ya-webdesign.com/images/desserts-drawing-2.png" />
+          </div>
+        </ion-slide>
+        <ion-slide style="outline:none;">
+          <div class="prodBox ion-activatable">
+            <ion-ripple-effect></ion-ripple-effect>
+            <img src="https://i.ya-webdesign.com/images/desserts-drawing-2.png" />
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+    <div class="twoBanners" *ngIf="data.passOffers.length">
+      <div class="featuredOfferImg ion-activatable" *ngFor="let offer of data.passOffers | filterBy : {banners_url:'FEATURED'};">
+        <ion-ripple-effect></ion-ripple-effect>
+        <img [src]="data.apiUrlNew + offer.banners_image" />
+      </div>
+    </div>
+
+    <div class="twoBanners" *ngIf="!data.passOffers.length">
+      <div class="featuredOfferImg ion-activatable">
+        <ion-ripple-effect></ion-ripple-effect>
+        <img src="https://www.bizcastleng.com/wp-content/plugins/wyz-toolkit/businesses-and-offers/offers/images/offers-placeholder.jpg" />
+      </div>
+      <div class="featuredOfferImg ion-activatable">
+        <ion-ripple-effect></ion-ripple-effect>
+        <img src="https://www.bizcastleng.com/wp-content/plugins/wyz-toolkit/businesses-and-offers/offers/images/offers-placeholder.jpg" />
+      </div>
+    </div>
+
+    <div class="categoriesBoxes" *ngIf="!data.categories.length">
+      <div class="whiteBox">
+        <h3 class="withBtn" style="text-transform: uppercase;">Categories
+        </h3>
+        <ion-grid class="catGrid">
+          <ion-row>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+
+    <div class="categoriesBoxes" *ngIf="!data.categories.length">
+      <div class="whiteBox">
+        <h3 class="withBtn" style="text-transform: uppercase;">Categories
+        </h3>
+        <ion-grid class="catGrid">
+          <ion-row>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+
+    <div class="categoriesBoxes" *ngIf="!data.categories.length">
+      <div class="whiteBox">
+        <h3 class="withBtn" style="text-transform: uppercase;">Categories
+        </h3>
+        <ion-grid class="catGrid">
+          <ion-row>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+
+    <div class="categoriesBoxes" *ngIf="!data.categories.length">
+      <div class="whiteBox">
+        <h3 class="withBtn" style="text-transform: uppercase;">Categories
+        </h3>
+        <ion-grid class="catGrid">
+          <ion-row>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="imageBox text-center">
+                <img src="https://demo.themegrill.com/estore-magazine/wp-content/themes/estore/images/placeholder-shop.jpg" />
+                <div class="catName">Category Name</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+
+    <div class="categoriesBoxes" *ngIf="data.categories.length">
+      <div class="whiteBox" *ngFor="let cat of data.categories | filterBy : data.homeSec1; let j=index;">
+        <h3 class="withBtn" style="text-transform: uppercase;">{{ cat.name }}
+          <ion-button color="tertiary" [routerLink]="['/shop', cat.name|urlSlug]">View All</ion-button>
+        </h3>
+        <ion-grid class="catGrid" *ngIf="cat.sub_categories && cat.sub_categories.length">
+          <ion-row>
+            <ion-col size="4" *ngFor="let subCat of cat.sub_categories | slice:0:6; let i = index;" [routerLink]="['/shop', cat.name | urlSlug, subCat.name | urlSlug]">
+              <div class="imageBox text-center">
+                <img [src]="data.apiUrlNew + subCat.image" />
+                <div class="catName">{{ subCat.name }}</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+    <!-- <div class="passportArea">
+      <img src="assets/images/banner-1.jpg" />
+    </div> -->
+    
+    
+    
+    <!-- <div class="youtubeArea" (click)="methods.openVideo('r9_oskyMrGg')">
+      <h3>Make your House Party Lit like this</h3>
+      <div class="boxYoutube">
+        <ion-icon name="play-circle"></ion-icon>
+        <img src="https://eattreat.in/wp-content/uploads/2017/11/sold-over-asking-price-41-768x460.png" />
+      </div>
+    </div> -->
+    <div class="categoriesBoxes" *ngIf="data.categories.length">
+      <div class="whiteBox" *ngFor="let cat of data.categories | filterBy : data.homeSec2; let j=index;">
+        <h3 class="withBtn">{{ cat.name }}
+          <ion-button color="tertiary" [routerLink]="['/shop', cat.name|urlSlug]">View All</ion-button>
+        </h3>
+        <ion-grid class="catGrid" *ngIf="cat.sub_categories && cat.sub_categories.length">
+          <ion-row>
+            <ion-col size="4" *ngFor="let subCat of cat.sub_categories | slice:0:6; let i = index;" [routerLink]="['/shop', cat.name | urlSlug, subCat.name | urlSlug]">
+              <div class="imageBox text-center">
+                <img [src]="data.apiUrlNew + subCat.image" />
+                <div class="catName">{{ subCat.name }}</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+
+    <div class="categoriesBoxes" *ngIf="data.categories.length">
+      <div class="whiteBox" *ngFor="let cat of data.categories | filterBy : data.homeSec3; let j=index;">
+        <h3 class="withBtn">{{ cat.name }}
+          <ion-button color="tertiary" [routerLink]="['/shop', cat.name|urlSlug]">View All</ion-button>
+        </h3>
+        <ion-grid class="catGrid" *ngIf="cat.sub_categories && cat.sub_categories.length">
+          <ion-row>
+            <ion-col size="4" *ngFor="let subCat of cat.sub_categories | slice:0:6; let i = index;" [routerLink]="['/shop', cat.name | urlSlug, subCat.name | urlSlug]">
+              <div class="imageBox text-center">
+                <img [src]="data.apiUrlNew + subCat.image" />
+                <div class="catName">{{ subCat.name }}</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+
+    <div class="categoriesBoxes" *ngIf="data.categories.length">
+      <div class="whiteBox" *ngFor="let cat of data.categories | filterBy : data.homeSec4; let j=index;">
+        <h3 class="withBtn">{{ cat.name }}
+          <ion-button color="tertiary" [routerLink]="['/shop', cat.name|urlSlug]">View All</ion-button>
+        </h3>
+        <ion-grid class="catGrid" *ngIf="cat.sub_categories && cat.sub_categories.length">
+          <ion-row>
+            <ion-col size="4" *ngFor="let subCat of cat.sub_categories | slice:0:6; let i = index;" [routerLink]="['/shop', cat.name | urlSlug, subCat.name | urlSlug]">
+              <div class="imageBox text-center">
+                <img [src]="data.apiUrlNew + subCat.image" />
+                <div class="catName">{{ subCat.name }}</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+
+
+    <!-- <div class="occassionsArea" *ngIf="data.ocassions && data.ocassions.length">
+      <h3>Occasions</h3>
+      <ion-grid>
+        <ion-row>
+          <ion-col size=6 *ngFor="let occ of data.ocassions">
+            <div class="catBox ion-activatable" style="overflow: hidden;" [routerLink]="['/eveyrthing']" [queryParams]="{'occasion':occ.id}">
+              <ion-ripple-effect></ion-ripple-effect>
+              <img [src]="occ.occasionimage" />
+              <div class="occName">{{ occ.name }}</div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div> -->
+    
+    <div class="walletBalanceArea noUserArea" *ngIf="!data.userInfo && data.signUpPoints">
+      <div class="walletBox" [routerLink]="['/login']">
+        <h4 *ngIf="data.signUpPoints > 0">Get ₹ {{ data.signUpPoints }} as signup bonus!</h4>
+        <h4 *ngIf="data.signUpPoints == 0">Sign up and unlock your Special Gift</h4>
+        <p *ngIf="data.signUpPoints > 0">Signup now and get amount instantly in your planout wallet</p>
+        <p *ngIf="data.signUpPoints == 0">Signup now</p>
+      </div>
+    </div>
+    
+    <div class="walletBalanceArea" *ngIf="data.userInfo && +data.userWalletBalance > 0" [routerLink]="['/refernearn']">
+      <div class="walletBox">
+        <h4>Planout Money <sup>₹{{ (+data.userWalletBalance).toFixed(2) }} available</sup></h4>
+        <!-- <p>20% discount on your next bill !</p> -->
+        <p>Add ₹ 1000 in your wallet. Refer your friends | Click here</p>
+      </div>
+    </div>
+
+    <div class="walletBalanceArea refernearn" *ngIf="data.userInfo && +data.userWalletBalance <= 0" [routerLink]="['/refernearn']">
+      <div class="walletBox">
+        <h4>Get ₹ 1000 in your wallet. Refer your friends</h4>
+        <p>Click here</p>
+      </div>
+    </div>
+
+    <div class="ratingsArea" *ngIf="data.ratings && data.ratings.length">
+      <h3>Ratings & Reviews</h3>
+      <ion-slides [options]="ratingSlideOpts" #ratingSlides class="ratingSlides">
+        <ion-slide *ngFor="let slide of data.ratings">
+          <div class="ratingbox">
+            <span class="ratingBg" [style.backgroundColor]="slide.theme"></span>
+            <div class="ratingDetails">
+              <div class="initialImage" [ngStyle]="{'border':'5px solid '+slide.theme, 'color':slide.theme}">{{ slide.reviewer_name | slice:0:1 }}<span *ngIf="slide.reviewer_name && slide.reviewer_name.indexOf(' ') != -1">{{ (slide.reviewer_name.split(' ').pop()) | slice:0:1 }}</span></div>
+              <!-- <img [src]="slide.image" [ngStyle]="{'border':'4px solid #'+slide.theme}" /> -->
+              <h4>{{ slide.reviewer_name }}</h4>
+              <div class="starsRate" [ngStyle]="{'color': slide.theme}">
+                <ion-icon name="star" *ngFor="let rate of methods.convertToArray(+slide.rating)"></ion-icon>
+              </div>
+              <p>{{ slide.review_comment }}</p>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <!-- <div class="eventsAroundMe">
+      <h3>Discover Events Near Me</h3>
+      <ion-slides [options]="eventSlideOpts" #eventSlides class="eventSlides">
+        <ion-slide *ngFor="let event of data.events">
+          <div class="eventBox">
+            <img src="{{ event.image }}" />
+            <div class="eventTitle"><span>{{ event.title }}</span></div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div> -->
+  </div>
+  <app-desktopfooter></app-desktopfooter>
+</ion-content>

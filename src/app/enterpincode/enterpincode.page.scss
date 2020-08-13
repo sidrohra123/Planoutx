@@ -1,0 +1,38 @@
+.googleSearchBox{
+    margin:0 10px;
+    > h3{
+        font-size:14px;
+    }
+    .inputBox{
+        position:relative;
+        ion-icon{
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            color: var(--ion-color-px);
+            font-size: 22px;
+            margin: 11px 7px;
+        }
+    }
+    input{
+        border-radius: 4px;
+        line-height: 26px;
+        font-size: 16px;
+        border: 1px solid var(--ion-color-px);
+        box-shadow: 0 0 5px var(--ion-color-px);
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 44px;
+        padding: 8px 13% 8px 30px!important;
+        display:block;
+        width:100%;
+    }
+    .buttonText{
+        margin-top:20px;
+        ion-button{
+            min-height:42px;
+            --border-radius: 4px!important;
+        }
+    }
+}

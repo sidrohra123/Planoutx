@@ -1,0 +1,74 @@
+.logo{
+    width:35px;
+}
+ion-item{
+    font-size: 14px;
+    font-weight: 600;
+    color:#333;
+}
+.subCategories{
+    list-style: none;
+    padding:0;
+    margin:0;
+}
+.subCategories a{
+    text-decoration: none;
+    font-size: 14px;
+    color:#333;
+}
+.subCategories > li{
+    display:block;
+    position: relative;
+}
+.subCategories > li > a{
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+}
+.subCategories > li > a > img{
+    width: 40px;
+    height: 40px;
+    display: block;
+    border-radius: 50%;
+}
+.subCategories > li > a > span{
+    display:inline-block;
+    padding-left:18px;
+    flex:1;
+}
+.subCategories > li > ul{
+    margin: 5px 5px 15px;
+    padding: 0;
+    list-style: none;
+    display: none;
+}
+.subCategories > li > ul > li{
+    display:block;
+    position: relative;
+}
+.subCategories > li a *{
+    pointer-events: none;
+}
+.subCategories > li > a.opened + ul{
+    display:block;
+}
+.subCategories > li > ul > li > a{
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    // background: #fff;
+    border-bottom: 1px solid #f2f2f2;
+}
+.subCategories > li > ul > li > a > img{
+    width: 40px;
+    height: 40px;
+    display: block;
+    border-radius: 50%;
+}
+.subCategories > li > ul > li > a > span{
+    display:inline-block;
+    padding-left:18px;
+    flex:1;
+}

@@ -1,0 +1,71 @@
+.flex{
+    display:flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height:100%;
+}
+.getStarted{
+    margin-bottom:30px;
+    width:100%;
+}
+.getStarted h3{
+    font-weight: 900;
+    font-size: 30px;
+    color:#d64134;
+}
+.getStarted p{
+    max-width: 80%;
+    margin:20px auto 0;
+    font-size: 13px;
+}
+.buttonsSocial{
+    width:100%;
+}
+.buttonsSocial ion-button{
+    height:50px;
+    text-transform: none;
+    box-shadow: none!important;
+    font-size: 13px!important;
+    font-weight: 400!important;
+    --border-color:#fff;
+    --border-style:solid;
+    --border-width:2px;
+    --box-shadow:none;
+}
+/deep/ .buttonsSocial ion-button.fbButton.ion-color-light{
+    --ion-color-base:#38539b!important;
+    --ion-color-contrast:#fff!important;
+}
+/deep/ .buttonsSocial ion-button.googleBtn.ion-color-light{
+    --ion-color-base:#d64134!important;
+    --ion-color-contrast:#fff!important;
+    margin-top:10px;
+}
+.buttonsSocial ion-button img{
+    width: 30px;
+    height: 30px;
+    display: block;
+    position: absolute;
+    left: 10px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    padding: 5px;
+    filter: brightness(0) invert(1);
+    object-fit: contain;
+}
+.getStarted img{
+    max-width:250px;
+    display:block;
+    margin:0 auto 50px;
+}
+.line{
+    height:1px;
+    width:100%;
+    display:block;
+    background:#ccc;
+}
+.locationsList{
+    width:100%;
+}

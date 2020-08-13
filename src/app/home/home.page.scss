@@ -1,0 +1,594 @@
+.box{
+    text-align: center;
+}
+.box img{
+    display: block;
+    margin: 0 auto;
+    width: 35px;
+    max-width: none;
+    height: 35px;
+    object-fit: contain;
+}
+.catTitle{
+    font-size:11px;
+    font-weight:500;
+    color:#333;
+    margin-top:5px;
+}
+.catSlides ion-slide{
+    width:unset!important;
+}
+.catSlides{
+    position: relative;
+    z-index: 1;
+    margin-top:10px;
+}
+.buttonsNav{
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:-10px;
+    right:-10px;
+    z-index: 11;
+    pointer-events: none;
+}
+.buttonsNav ion-icon{
+    font-size: 25px;
+    pointer-events: all;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.offersSlides{
+    //max-height: 200px;
+    margin-top: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    background: #e4e4e4;
+    padding: 4px 3px;
+}
+.videoBanner{
+    width:100%;
+    height:100%;
+    overflow: hidden;
+}
+.videoBanner .youtube{
+    width:100%;
+    height:100%;
+    overflow: hidden;
+}
+.videoBanner iframe, .videoBanner video{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.imageBanner{
+    width:100%;
+    height:100%;
+}
+.imageBanner img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.offersSlides .swiper-container{
+    height:100%;
+}
+.boxed{
+    background: #fff;
+    border-radius:2px;
+    margin:5px -6px 0;
+    padding:6px 0 8px;
+}
+.boxed > ion-title{
+    padding: 10px 0;
+    font-weight: 600;
+    margin: 0;
+    font-size:25px;
+    font-family: "playball";
+    position: static;
+}
+.quickSearch ion-select, ion-datetime{
+    background: #fff;
+    padding-right: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 3px;
+    height: 36px;
+    line-height: 36px;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-left: 28px;
+}
+ion-datetime:after{
+    content:'';
+    position: absolute;
+    right:8px;
+    top:43%;
+    opacity: 0.33;
+    pointer-events: none;
+    border-top: 5px solid;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    color:#000;
+}
+.sBtn{
+    height:36px;
+    line-height: 36px;
+    border-radius: 3px;
+    margin:0;
+}
+.whiteBox{
+    background:#f9f9f9;
+    margin:8px -10px 0;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    padding:5px 0px 8px;
+}
+.whiteBox > h3{
+    margin:0;
+    padding:5px 5px;
+    font-size:16px;
+}
+.catGrid{
+    padding:0;
+}
+.catName{
+    background: #fff;
+    font-size: 10px;
+    padding: 6px 4px;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.imageBox > img{
+    display: block;
+    height: 130px;
+    width: 100%;
+    object-fit: cover;
+}
+.imageBox{
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+}
+.withBtn{
+    position: relative;
+}
+.withBtn ion-button{
+    position: absolute;
+    right:3px;
+    top:-2px;
+    z-index: 1;
+    height:25px;
+    line-height: 25px;
+    font-size:12px!important;
+    border-radius:1px;
+}
+.passportArea{
+    margin:8px -10px 0;
+    background:#e4e4e4;
+    padding:5px;
+    height:200px;
+}
+.passportArea img{
+    display:block;
+    margin:0;
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
+.youtubeArea{
+    margin: 8px -10px 0;
+    background: #e4e4e4;
+    padding: 5px;
+}
+.youtubeArea > h3{
+    font-size:18px;
+    margin: 15px 0 15px 10px;
+    font-weight: 600;
+    color:#333;
+}
+.boxYoutube{
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+.youtubeArea iframe{
+    display:block;
+    margin:0;
+    width:100%;
+    height:100%;
+}
+.youtubeArea img{
+    display:block;
+    margin:0;
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
+.youtubeArea .boxYoutube:before{
+    z-index: 0;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:rgba(0,0,0,0.5);
+    content:'';
+}
+.youtubeArea ion-icon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    z-index: 2;
+    font-size: 40px;
+    background: transparent;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+}
+.walletBalanceArea{
+    margin: 8px -10px 0;
+    padding: 7px 7px;
+    background: #e4e4e4;
+}
+.walletBox{
+    background: #fff;
+    padding: 8px 15px;
+    border-bottom: 4px solid var(--ion-color-px);
+    box-shadow: 0px 0px 11px 3px rgba(0,0,0,0.1);
+}
+.walletBox > h4{
+    margin:0;
+    font-size:16px;
+    font-weight:800;
+    color:#333;
+}
+.walletBox > h4 > sup{
+    padding-left: 5px;
+    font-weight: 600;
+    display: inline-block;
+    top: -2px;
+    color: var(--ion-color-px);
+}
+.walletBox p{
+    margin:3px 0 0;
+    font-size:11px;
+    font-weight:400;
+}
+/deep/ .swiper-pagination-bullet{
+    background: #fff;
+    opacity: 0.8;
+}
+/deep/ .swiper-pagination-bullet-active {
+    background: var(--ion-color-px);
+}
+.eventsAroundMe, .topSellingArea{
+    margin: 8px -10px 0;
+    background: #f5f5f5;
+    padding: 5px 0 15px;
+}
+.topSellingArea ion-slides, .catSlides ion-slides{
+    margin-left: -10px;
+    padding-left: 10px;
+    margin-right: -10px;
+    padding-right: 20px;
+}
+.eventsAroundMe > h3, .topSellingArea > h3{
+    font-size:16px;
+    margin: 8px 0 15px 10px;
+    font-weight: 600;
+    color:#333;
+}
+.eventBox{
+    position: relative;
+    height:120px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.eventBox img{
+    width: 100%;
+    object-fit: cover;
+    height:100%;
+    display:block;
+}
+.eventBox .eventTitle{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    text-align: left;
+    padding: 10px 8px;
+    z-index: 1;
+}
+.eventBox .eventTitle span{
+    display:block;
+    z-index:2;
+    position: relative;
+    color:#fff;
+}
+.eventBox .eventTitle:before{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: inset 0px -35px 16px -13px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    z-index: 0;
+    top: 0;
+}
+.topSellingArea{
+    padding-left:10px;
+    padding-right:10px;
+}
+.occassionsArea{
+    margin: 8px -10px 0;
+    background: #fff;
+    padding: 5px 0 15px;
+}
+.occassionsArea > h3{
+    font-size:16px;
+    margin: 8px 0 15px 10px;
+    font-weight: 600;
+    color:#333;
+}
+.catBox{
+    width: 100%;
+    height: 150px;
+    position: relative;
+    border-radius: 20px;
+}
+.catBox img{
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 100%;
+    display: block;
+    border-radius: inherit;
+    filter: hue-rotate(1deg);
+}
+.catBox:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+    border-radius: inherit;
+}
+.occName{
+    color: #fff;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 15px;
+    text-shadow: 0px 0px 2px rgba(255, 253, 233, 0.88);
+}
+.ratingsArea{
+    margin: 8px -10px 0;
+    background: #fff;
+    padding: 5px 10px 15px;
+    ion-slides{
+        margin-left: -10px;
+        padding-left: 10px;
+        margin-right: -10px;
+        padding-right: 20px;
+    }
+}
+.ratingsArea > h3{
+    font-size:16px;
+    margin: 8px 0 15px 10px;
+    font-weight: 600;
+    color:#333;
+}
+.absIcon{
+    position: absolute;
+    left: 5px;
+    z-index: 11;
+    top: 50%;
+    transform: translate(0,-50%);
+    width:30px;
+    text-align: center;
+    pointer-events: none;
+    color:#615a5a;
+}
+.quickSearch ion-label{
+    position: absolute;
+    z-index: 11;
+    left: 35px;
+    top: 50%;
+    transform: translate(0, -50%);
+    pointer-events: none;
+    font-size: 14px;
+    color: #615a5a;
+    font-weight: 500;
+}
+.whatPlanning.boxed{
+    margin: 5px -10px 0;
+    padding: 6px 0 0px;
+}
+.whatPlanning.boxed ion-grid{
+    padding:0;
+}
+.whatPlanning.boxed .boxPlan{
+    margin: -2px -2px;
+    position: relative;
+    border: 3px solid #fff;
+    box-shadow: 0px 0px 1px rgba(0,0,0,0.1);
+    border-radius: 3px;
+    img{
+        display: block;
+        height: 180px;
+        width: 100%;
+        object-fit: cover;
+        border: 1px solid #111111;    
+    }
+}
+.whatPlanning.boxed .boxPlan.nextBox{
+    img{
+        height:120px;
+    }
+}
+.occNames {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    color: #ffffff;
+    // font-family: "playball";
+    text-align: center;
+    left: 0;
+    right: 0;
+    padding: 20px 30px;
+    font-weight: 800;
+    font-size: 18px;
+    text-shadow: 0px 1px 6px rgba(0, 0, 0, 0.88);
+    background: rgba(0, 0, 0, 0.26);
+    bottom: 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    display:none;
+}
+.whatPlanning.boxed .boxPlan.nextBox .occNames{
+    font-size:12px;
+}
+.timingArea{
+    background: #f9f9f9;
+    margin: 0px -10px;
+    padding: 15px 0;
+    >ion-grid{
+        background: #fff;
+        margin:0 8px;
+        padding:10px 5px;
+        border-radius: 4px;
+        box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
+    }
+    h3{
+        margin:0;
+        font-size:15px;
+    }
+    ion-button{
+        min-width: 0;
+        text-align: center;
+        font-size: 10px;
+        height: 28px;
+        margin:0;
+        letter-spacing: 0px;
+    }
+    .watchBox{
+        display: flex;
+        margin: 6px -5px 0;
+        .boxTime{
+            padding:0 5px;
+            > strong{
+                font-weight: 500;
+                font-size: 22px;
+                color: var(--ion-color-px);
+            }
+            > span{
+                font-size: 14px;
+                padding: 0 0px 0px 2px;
+            }
+        }
+    }
+}
+.passportOffers{
+    margin: 8px -10px 0;
+    background: #fff;
+    padding: 5px 10px 15px;
+    > h3{
+        font-size:16px;
+        margin: 8px 0 2px;
+        font-weight: 600;
+        color:#333;
+    }
+    > p{
+        margin:0 0 0;
+        font-size:12px;
+    }
+    .offersWrap{
+        white-space: nowrap;
+        overflow: hidden;
+        overflow-x: auto;
+        margin-right: -10px;
+        > ul{
+            list-style: none;
+            margin-top:12px;
+            margin-bottom:0;
+            padding-left: 0;
+            > li{
+                margin-right: 10px;
+                display: inline-block;
+                position: relative;
+                img{
+                    width: auto;
+                    max-width: 100%;
+                    height: 170px;
+                    display: block;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+}
+.premium{
+    filter: blur(3px);
+}
+.twoBanners{
+    display: flex;
+    margin:0 -10px;
+    padding:8px 2px;
+    background: #f9f9f9;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    > div{
+        flex:1;
+        padding:0 3px;
+        height:165px;
+        position: relative;
+        overflow: hidden;
+        > img{
+            display:block;
+            max-width: none;
+            width: 100%;
+            height:100%;
+            object-fit: cover;
+            border-radius: 4px;
+            border:3px solid #fff;
+        }
+    }
+}
+.offerTag{
+    font-size:13px;
+    margin-bottom:4px;
+    span{
+        color:var(--ion-color-px);
+        padding-left:5px;
+    }
+}

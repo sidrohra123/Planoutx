@@ -1,0 +1,34 @@
+<ion-content [scrollEvents]="true" (ionScroll)="scrollingMe($event)">
+  <div class="maincontent">
+    <!-- <div class="caraouselVideos" *ngIf="data.topVideos && data.topVideos.length">
+      <ion-slides [options]="topVideos" (ionSlideDidChange)="changed()" style="padding-left:20px;">
+        <ion-slide *ngFor="let video of data.topVideos">
+          <div class="thumbNail" (click)="methods.setVideoUrl(video.snippet.resourceId.videoId)">
+            <iframe *ngIf="data.currVideoId && data.selVidId==video.snippet.resourceId.videoId" [src]="data.currVideoId" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <img [src]="video.snippet.thumbnails.medium.url" />
+            <ion-icon name="play"></ion-icon>
+            <h3>{{ video.snippet.title }}</h3>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <div class="tabsArea">
+      <div class="tabsHead">
+        <a href="javascript:void(0);" [class.active]="data.selectedTrending==1" (click)="methods.selectTrending(1)">News Feed</a>
+        <a href="javascript:void(0);" [class.active]="data.selectedTrending==2" (click)="methods.selectTrending(2)">Ideas</a>
+        <a href="javascript:void(0);" [class.active]="data.selectedTrending==3" (click)="methods.selectTrending(3)">Tiktok</a>
+        <a href="javascript:void(0);" [class.active]="data.selectedTrending==4" (click)="methods.selectTrending(4)">Videos</a>
+      </div>
+      <div class="tabDetails">
+        <app-newsfeed *ngIf="data.selectedTrending==1"></app-newsfeed>
+        <app-ideas *ngIf="data.selectedTrending==2"></app-ideas>
+        <app-tiktok *ngIf="data.selectedTrending==3"></app-tiktok>
+        <app-videos *ngIf="data.selectedTrending==4"></app-videos>
+      </div>
+    </div> -->
+
+    <div class="newsFeeds">
+      <app-blog></app-blog>
+    </div>
+  </div>
+</ion-content>

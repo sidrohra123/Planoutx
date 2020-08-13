@@ -1,0 +1,21 @@
+<ion-content>
+  <div class="maincontent">
+    <div class="walletBlnc text-center" *ngIf="data.userInfo && totalAmt">
+      <h3>Total Wallet Balance</h3>
+      <h5>{{ totalAmt | currency : 'INR' }}</h5>
+    </div>
+    <div class="walletUser" *ngIf="data.userInfo && history.length">
+      <div class="transactBox" *ngFor="let trans of history">
+        <div class="leftDetails">
+          <h3>{{ trans.purpose }}</h3>
+          <!-- <p *ngIf="trans.user_description">{{ trans.user_description }}</p> -->
+          <p>Created on {{ (+trans.created_at*1000) | date:'dd MMM yy hh:mm a' }}</p>
+          <p>Transaction Id: {{ trans.wallet_id }}</p>
+        </div>
+        <div class="rightDetails">
+          <strong [class.colorgreen]="trans.amount[0] != '-'" [class.colorred]="trans.amount[0] == '-'">{{ trans.amount | currency : 'INR' }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

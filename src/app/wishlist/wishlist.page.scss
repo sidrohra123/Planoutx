@@ -1,0 +1,21 @@
+.noWishlist{
+    text-align: center;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    justify-content: center;
+    > img{
+        display: block;
+        width: 70px;
+        border-radius: 50%;
+        height: 70px;
+        object-fit: cover;
+        margin: 0 0 10px;
+    }
+    > h2{
+        font-size:16px;
+        margin:0 0 10px;
+        color:#444;
+    }
+}

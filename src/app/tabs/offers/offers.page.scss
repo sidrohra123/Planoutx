@@ -1,0 +1,36 @@
+.maincontent{
+    background:#f4f4f4;
+}
+ion-card{
+    background:#fff;
+    margin:0 0 15px;
+}
+ion-card-subtitle{
+    color:#797979;
+    font-size:12px;
+}
+ion-card-header{
+    padding-bottom:10px;
+}
+ion-card-title{
+    font-size:18px;
+    margin-top:3px;
+}
+/deep/ ion-card-content p{
+    color:#181818;
+    margin-bottom:10px;
+}
+/deep/ ion-card-content p:before{
+    content:'';
+    display:inline-block;
+    margin-right:4px;
+    height:1px;
+    width:6px;
+    background:#333;
+    border-radius:0%;
+    vertical-align: super;
+}
+.offersList img{
+    max-height:230px;
+    object-fit: cover;
+}

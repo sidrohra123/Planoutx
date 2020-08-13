@@ -1,0 +1,56 @@
+.tagsSec{
+    position: relative;
+    display: flex;
+    white-space: nowrap;
+    padding: 10px 10px;
+    overflow: hidden;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -10px;
+    span{
+        flex: auto;
+        padding: 8px 20px;
+        font-size: 11px;
+        background: #f5444c24;
+        border-radius: 25px;
+        display: inline-block;
+        margin-right: 8px;
+        color: #f5444c;
+        font-weight: 700;
+    }
+    span.active{
+        background: #f5444c;
+        color:#fff;
+    }
+}
+.media{
+    position: relative;
+    iframe{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: block;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+.cardFooter{
+    display:flex;
+    > ion-icon{
+        flex: 1;
+        text-align: center;
+        padding: 8px 0;
+        font-size: 20px;
+        position: relative;
+        overflow: hidden;
+        background: transparent;
+        border-right: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+        &:last-child{
+            border-right: none;
+        }
+    }
+}

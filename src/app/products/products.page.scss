@@ -1,0 +1,110 @@
+.maincontent{
+    padding: 100px 10px 30px;
+    background: #f0f0f0;
+    min-height: 100%;
+}
+ion-grid{
+    padding:5px 5px;
+    margin: 0 -10px;
+}
+.catBox{
+    position: relative;
+    border:5px solid #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    > img{
+        display: block;
+        max-width: 100%;
+        height: 160px;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+.catTitle{
+    position: absolute;
+    top:0;
+    left:0;
+    font-size:13px;
+    font-weight: 700;
+    margin:5px 8px;
+}
+.productsSec{
+    margin-top:5px;
+}
+.productsSec > h3{
+    text-align: center;
+    font-size:16px;
+    margin:0;
+    font-weight: 500;
+}
+.productsSec > p{
+    font-size:13px;
+    text-align: center;
+    color:#101010;
+    margin:0;
+}
+.prodBox{
+    background: #fff;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+.prodImage{
+    position: relative;
+    height:110px;
+    .badge{
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 4px 12px;
+        color: #fff;
+        background: #f5444c;
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 4px 0 4px 0;
+    }
+    img{
+        border-radius: 4px 4px 0 0;
+        display:block;
+        height:100%;
+        object-fit: cover;
+        width: 100%;
+        object-position: top center;
+    }
+}
+.prodDetails{
+    padding:8px 5px;
+    h5{
+        font-size:15px;
+        font-weight: 400;
+        margin:0;
+    }
+    h6{
+        font-size:14px;
+        font-weight: 800;
+        margin:5px 0;
+    }
+    .offerTag{
+        font-size:13px;
+        margin-bottom:4px;
+        span{
+            color:#f5444c;
+            padding-left:5px;
+        }
+    }
+    .ratings{
+        color:#f5444c;
+        span{
+            padding-right:5px;
+            font-size:13px;
+            vertical-align: middle;
+        }
+        ion-icon{
+            font-size:13px;
+            vertical-align: middle;
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Planoutx",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

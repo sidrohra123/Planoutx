@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain>localhost</domain>
+        <domain>choprapriyanka.com</domain>
+        <domain>planoutx.com</domain>
+        <domain>partymaker.ancorathemes.com</domain>
+    </domain-config>
+</network-security-config>

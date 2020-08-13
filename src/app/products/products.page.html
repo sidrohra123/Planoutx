@@ -1,0 +1,79 @@
+<ion-content>
+  <div class="maincontent">
+    <ion-grid class="subcategories" *ngIf="data.selectedSubCat && data.selectedSubCat.subsubcategory && data.selectedSubCat.subsubcategory.length">
+      <ion-row>
+        <ion-col size="6" *ngFor="let subCat of data.selectedSubCat.subsubcategory; let i=index;">
+          <div class="catBox ion-activatable">
+            <ion-ripple-effect></ion-ripple-effect>
+            <div class="catTitle">{{ subCat.vc_title | titlecase }}</div>
+            <img [src]="subCat.vc_image" />
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="subcategories" *ngIf="data.selectedCat && data.selectedCat.subcategory && data.selectedCat.subcategory.length">
+      <ion-row>
+        <ion-col size="6" *ngFor="let subCat of data.selectedCat.subcategory; let i=index;">
+          <div class="catBox ion-activatable">
+            <ion-ripple-effect></ion-ripple-effect>
+            <div class="catTitle">{{ subCat.vc_title | titlecase }}</div>
+            <img [src]="subCat.vc_image" />
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="productsSec"  *ngIf="data.selectedCat && data.selectedCat.products && data.selectedCat.products.length">
+      <h3>Buy {{ data.selectedCat.vc_title | titlecase }} Online</h3>
+      <p>Showing {{ data.selectedCat.products.length }} {{ data.selectedCat.products.length == 1 ? 'product' : 'Products' }}</p>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let product of data.selectedCat.products">
+            <div class="prodBox ion-activatable" [routerLink]="['/product', product.id]">
+              <ion-ripple-effect></ion-ripple-effect>
+              <div class="prodImage">
+                <span class="badge">{{ product.badges }}</span>
+                <img [src]="product.icon" />
+              </div>
+              <div class="prodDetails text-center">
+                <h5>{{ product.name | titlecase }}</h5>
+                <h6>₹ {{ product.dprice }}</h6>
+                <div class="offerTag" *ngIf="product.oprice!=product.dprice"><del>₹ {{ product.oprice }}</del><span>{{ (((+product.oprice - +product.dprice)/+product.oprice)*100).toFixed(0) }}% OFF</span></div>
+                <div class="ratings">
+                  <span>{{ (+product.ratings).toFixed(1) }}</span><ion-icon name="star" *ngFor="let rate of  methods.convertToArray(+product.ratings)"></ion-icon>
+                </div>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="productsSec"  *ngIf="data.selectedSubCat && data.selectedSubCat.products && data.selectedSubCat.products.length">
+      <h3>Buy {{ data.selectedSubCat.vc_title | titlecase }} Online</h3>
+      <p>Showing {{ data.selectedSubCat.products.length }} Product</p>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let product of data.selectedSubCat.products">
+            <div class="prodBox ion-activatable" [routerLink]="['/product', product.id]">
+              <ion-ripple-effect></ion-ripple-effect>
+              <div class="prodImage">
+                <span class="badge">{{ product.badges }}</span>
+                <img [src]="product.icon" />
+              </div>
+              <div class="prodDetails text-center">
+                <h5>{{ product.name | titlecase }}</h5>
+                <h6>₹ {{ product.dprice }}</h6>
+                <div class="offerTag" *ngIf="product.oprice!=product.dprice"><del>₹ {{ product.oprice }}</del><span>{{ (((+product.oprice - +product.dprice)/+product.oprice)*100).toFixed(0) }}% OFF</span></div>
+                <div class="ratings">
+                  <span>{{ (+product.ratings).toFixed(1) }}</span><ion-icon name="star" *ngFor="let rate of  methods.convertToArray(+product.ratings)"></ion-icon>
+                </div>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

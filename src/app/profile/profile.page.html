@@ -1,0 +1,99 @@
+<ion-content *ngIf="data.userInfo">
+  <div class="maincontent">
+    <div class="coverProfile">
+      <img [src]="data.userInfo.customers_picture" />
+      <h3>{{ data.userInfo.customers_firstname }}</h3>
+      <small>{{ data.userInfo.customers_telephone }}</small>
+      <p>{{ data.userInfo.customers_email_address }} <span routerLink="/profile/updateprofile">Edit Profile</span></p>
+    </div>
+    <div class="cardWhite ion-activatable" routerLink="userorders">
+      <ion-ripple-effect></ion-ripple-effect>
+      <div class="cardTitle">My Orders</div>
+      <hr>
+      <div class="text-right viewAll">View All Orders</div>
+    </div>
+    <div class="cardWhite ion-activatable" routerLink="/profile/savedaddresses">
+      <ion-ripple-effect></ion-ripple-effect>
+      <div class="cardTitle">Saved Address(s)</div>
+      <hr>
+      <div class="text-right viewAll">View All Address(s)</div>
+    </div>
+    <div class="cardWhite ion-activatable" routerLink="wallethistory">
+      <ion-ripple-effect></ion-ripple-effect>
+      <div class="cardTitle">Wallet History</div>
+      <hr>
+      <!-- <div class="text-left viewAll">My Tickets Query</div> -->
+      <div class="text-right viewAll">View Full History</div>
+    </div>
+    <div class="cardWhite ion-activatable" routerLink="wishlist">
+      <ion-ripple-effect></ion-ripple-effect>
+      <div class="cardTitle">My Wishlist</div>
+      <hr>
+      <!-- <div class="text-left viewAll">My Tickets Query</div> -->
+      <div class="text-right viewAll">View Wishlist</div>
+    </div>
+    <div class="cardWhite ion-activatable" routerLink="mycoupons">
+      <ion-ripple-effect></ion-ripple-effect>
+      <div class="cardTitle">My Coupons</div>
+      <hr>
+      <!-- <div class="text-left viewAll">My Tickets Query</div> -->
+      <div class="text-right viewAll">View Coupons</div>
+    </div>
+    <div class="cardWhite ion-activatable" routerLink="/refernearn">
+      <ion-ripple-effect></ion-ripple-effect>
+      <div class="cardTitle">Refer n Earn</div>
+      <hr>
+      <!-- <div class="text-left viewAll">My Tickets Query</div> -->
+      <div class="text-right viewAll">Refern and earn amount in your wallet</div>
+    </div>
+    <div class="cardWhite ion-activatable" routerLink="/notifications">
+      <ion-ripple-effect></ion-ripple-effect>
+      <div class="cardTitle">Notifications</div>
+      <hr>
+      <!-- <div class="text-left viewAll">My Tickets Query</div> -->
+      <div class="text-right viewAll">View all Notifications</div>
+    </div>
+    <div class="cardWhite ion-activatable" (click)="methods.logout()">
+      <ion-ripple-effect></ion-ripple-effect>
+      <div class="cardTitle">Logout</div>
+      <ion-icon name="ios-arrow-forward"></ion-icon>
+    </div>
+    <div class="recentlyViewed" *ngIf="data.recentlyViewed.length">
+      <h3>Recently Viewed By You</h3>
+      <ion-slides pager="false" [options]="prodSlide">
+        <ion-slide *ngFor="let product of data.recentlyViewed">
+          <div class="prodBox ion-activatable" [style.paddingBottom]="product.delivery_option_ids ? '50px' : '30px'"
+            [routerLink]="['/product', product.products_id]">
+            <ion-ripple-effect></ion-ripple-effect>
+            <div class="prodImage">
+              <span class="badge" *ngIf="product.products_tags">{{ product.products_tags }}</span>
+              <img [src]="data.apiUrlNew + product.products_image" />
+            </div>
+            <div class="prodDetails text-center">
+              <h5>{{ product.products_name }}</h5>
+              <h6>₹ {{ product.products_price }}</h6>
+              <div class="offerTag" *ngIf="product.oprice!=product.dprice"><del>₹
+                  {{ product.oprice }}</del><span>{{ (((+product.oprice - +product.dprice)/+product.oprice)*100).toFixed(0) }}%
+                  OFF</span></div>
+              <div class="bottomSecProd">
+                <div class="earliestDelivery"
+                  *ngIf="product.delivery_option_ids && product.delivery_option_ids != '4' && product.delivery_option_ids != '5'">
+                  Earliest Delivery:
+                  <span *ngIf="product.delivery_option_ids == '1,2' || product.delivery_option_ids == '1'">Today</span>
+                  <span *ngIf="product.delivery_option_ids == '2' || product.delivery_option_ids == '3'">Tomorrow</span>
+                </div>
+                <div class="ratingsReviews" *ngIf="product.show_review == '1' && product.reviews && product.reviews.length">
+                  <span>{{ (product.allRatings).toFixed(1) }} <ion-icon name="star" color="tertiary"></ion-icon></span>
+                  <span>{{ product.reviews.length }} Reviews</span>
+                </div>
+              </div>
+              <!-- <div class="ratings" *ngIf="product.ratings">
+              <span>{{ (+product.ratings).toFixed(1) }}</span><ion-icon name="star" *ngFor="let rate of  methods.convertToArray(+product.ratings)"></ion-icon>
+            </div> -->
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+  </div>
+</ion-content>

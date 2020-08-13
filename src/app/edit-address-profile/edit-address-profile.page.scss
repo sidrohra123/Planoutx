@@ -1,0 +1,30 @@
+.addressForm{
+    border:1px solid #ccc;
+    width:100%;
+    border-radius:4px;
+    margin-top:10px;
+    input{
+        display:block;
+        border:none;
+        border-bottom:1px solid #ccc;
+        padding:10px 12px;
+        width:100%;
+        &:read-only{
+            background: #ccc;
+            border-color: #797979;
+        }
+        &:first-of-type{
+            border-radius:4px 4px 0 0;
+        }
+    }
+    .mobileNum{
+        display:flex;
+        > input{
+            border-radius: 0;
+        }
+    }
+    .buttonBottom{
+        padding:10px 12px;
+        text-align: center;
+    }
+}

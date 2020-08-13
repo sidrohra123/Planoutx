@@ -1,0 +1,71 @@
+ion-label{
+    font-size:10px;
+}
+ion-tab-button.tab-selected{
+    color:#f5444c;
+}
+ion-tab-button.tab-selected ion-label{
+    font-weight:600;
+}
+.footerTabs{
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    border-top:1px solid #ccc;
+    background:#fff;
+}
+.iconText{
+    text-align: center;
+    &:focus{
+        outline:none;
+    }
+    img{
+        width:18px;
+        height:18px;
+        object-fit: contain;
+    }
+}
+.tabName{
+    font-size: 10px;
+    color:#333;
+    font-weight: 600
+}
+.iconText.active .tabName{
+    color:var(--ion-color-tertiary);
+}
+ion-grid{
+    padding:0;
+}
+ion-icon{
+    color:#797979;
+    font-size:18px;
+}
+.iconText.active ion-icon{
+    color:var(--ion-color-px);
+}
+.offersTab{
+    position: relative;
+}
+.smallImageBox{
+    width: 65px;
+    height: 65px;
+    border: none;
+    border-radius: 50%;
+    position: absolute;
+    top: -27px;
+    background: transparent;
+    overflow: hidden;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+.swiper-container{
+    height:100%;
+}
+.smallImageBox img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    border-radius: 50%;
+}

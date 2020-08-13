@@ -1,0 +1,115 @@
+<ion-content>
+  <div class="maincontent">
+    <div class="cartEmpty" *ngIf="!data.cart.length">
+      <div class="detailsWhy">
+        <img src="assets/images/empty-cart.png" />
+        <h3>Your cart is empty so, its sad and lonely.</h3>
+        <p>Turn its frown upside down: fill it with gift</p>
+        <ion-button color="tertiary" size="block" shape="rounded" routerLink="/">SHOP NOW</ion-button>
+      </div>
+    </div>
+    <div *ngIf="data.userInfo && data.cart && data.cart.length" class="cartFilled">
+      <div *ngIf="data.cartDiscount > 0" class="savedMoney">Congratulations! You have saved {{ data.cartDiscount | currency : 'INR' }} on your order!</div>
+      <ul>
+        <li *ngFor="let prod of data.cart; let i = index;">
+          <div class="fistSec">
+            <div class="catRow">
+              <span>Item {{ i+1 }}</span>
+            </div>
+            <div class="prodRow">
+              <img [src]="data.apiUrlNew + prod.image" />
+              <div class="detailsProd">
+                <h5>{{ prod.products_name }}</h5>
+                <h5 *ngIf="prod.weight != '0'">{{ prod.weight }} gm</h5>
+                <h5>Qty : {{ prod.customers_basket_quantity }}</h5>
+                <div *ngIf="prod.attributes && prod.attributes.length" style="margin-top:3px;white-space: nowrap;">
+                  <h5 *ngFor="let attr of prod.attributes"><strong>{{ attr.attribute_name.split(':').pop() }}</strong> : {{ attr.attribute_value }}</h5>
+                </div>
+              </div>
+              <div class="priceProd">
+                <strong *ngIf="+prod.final_price >= 1">₹ {{ prod.special_price ? (+prod.special_price).toFixed(2) : (+prod.price).toFixed(2) }}</strong>
+                <strong *ngIf="+prod.final_price == 0"><del style="color:#000;font-size:11px;">₹ {{ (+prod.price).toFixed(2) }}</del><div style="color:#f5444c;">Free</div></strong>
+                <!-- <ion-icon name="trash" (click)="methods.removeFromCart(prod)"></ion-icon> -->
+              </div>
+            </div>
+          </div>
+          <div class="deliveryDetails">
+            <h3>DELIVERY DATE</h3>
+            <div class="detailsDate">
+              <strong>{{ prod.shipping_date | date }}</strong>
+              <span>{{ prod.shipping_cost == '200' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == '0' ? 'Free Delivery' : prod.shipping_cost == '250' ? 'Midnight Delivery' : '' }}</span>
+              <span>{{ prod.shipping_date | date:'shortTime' }}</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="addressDetails">
+        <h3>ADDRESS</h3>
+        <div class="noAddress" *ngIf="!data.deliveryAddress && (!data.userInfo.addresses) || (data.userInfo.addresses && !data.userInfo.addresses.length)">
+          <ion-button color="tertiary" [routerLink]="['/addnewaddress']" [queryParams]="{next:'/checkout'}">ADD NEW ADDRESS<ion-icon name="ios-arrow-forward"></ion-icon></ion-button>
+        </div>
+        <div class="hasAddress" *ngIf="data.deliveryAddress">
+          <p>{{ data.deliveryAddress.firstname }}</p>
+          <p>{{ data.deliveryAddress.street }}</p>
+          <p>{{ data.deliveryAddress.city }} {{ data.deliveryAddress.postcode }}</p>
+          <p>Mobile: {{ data.userInfo.customers_telephone }}</p>
+          <div class="changeAddress text-right">
+            <ion-button color="tertiary" fill="clear" [routerLink]="['/saved-address']" [queryParams]="{'next':'/checkout'}">
+              <ion-icon name="create"></ion-icon>
+              Change Address
+            </ion-button>
+          </div>
+        </div>
+      </div>
+      <div class="cakeMessage" *ngIf="data.cartHasCake">
+        <h3>CAKE MESSAGE</h3>
+        <div class="extraMessage">
+          <input type="text" maxlength='25' [(ngModel)]="data.cakeMessage" placeholder="Type cake message...">
+          <span class="hint">left {{ maxCake - data.cakeMessage.length }}</span>
+        </div>
+      </div>
+      <div class="totalsArea">
+        <h3>SUMMARY</h3>
+        <div class="priceSets">
+          <div>
+            <strong>Subtotal</strong>
+            <span>₹ {{ (data.cartSubTotal).toFixed(2) }}</span>
+          </div>
+          <div>
+            <strong>Discount</strong>
+            <span>₹ {{ data.cartDiscount.toFixed(2) }}</span>
+          </div>
+          <div *ngIf="data.appliedCouponData">
+            <strong>Coupon Applied</strong>
+            <span><b style="color:var(--ion-color-px);font-size:13px;">{{ data.appliedCouponData.code }}</b></span>
+          </div>
+          <div>
+            <strong>Shipping</strong>
+            <span>₹ {{ (data.cartShippingTotal).toFixed(2) }}</span>
+          </div>
+          <div class="totalAmount">
+            <strong>GRAND TOTAL</strong>
+            <span>₹ {{ (data.cartTotal).toFixed(2) }}</span>
+          </div>
+          <div class="couponApplyArea" *ngIf="data.cartSubTotal > 0 && !data.appliedCoupon">
+            <ion-button color="tertiary" (click)="toggleCouponForm()">Apply Coupon<ion-icon name="ios-arrow-forward"></ion-icon></ion-button>
+            <div class="couponForm" *ngIf="data.couponFormOpened">
+              <h3>Enter Coupon Code</h3>
+              <input type="text" placeholder="Enter code here" [(ngModel)]="couponcode" id="couponCodeField">
+              <ion-button expand="full" color="tertiary" (click)="applyCoupon()">Apply</ion-button>
+            </div>
+          </div>
+          <div class="couponApplyArea" *ngIf="data.appliedCoupon">
+            <ion-button color="tertiary" (click)="methods.removeCoupon()">Remove Coupon</ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="data.cart.length">
+  <div class="checkoutBtn">
+    <ion-button color="tertiary" expand="full" shape="undefined" size="large" (click)="validateandplace()">PLACE ORDER</ion-button>
+  </div>
+</ion-footer>

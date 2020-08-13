@@ -1,0 +1,36 @@
+<ion-header *ngIf="data.isMobile">
+  <ion-toolbar class="mainHeader" color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text="" style="margin-right: 10px;"></ion-back-button>
+    </ion-buttons>
+    <ion-img class="logo" [src]="'assets/images/logo.png'" routerLink="/"></ion-img>
+    <ion-title>Add Ons</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="maincontent">
+    <div class="addonSec" *ngIf="products.length">
+      <ion-row>
+        <ion-col size="6" *ngFor="let addonProd of products">
+          <div class="prodBox" *ngIf="addonProd">
+            <img [src]="data.apiUrlNew + addonProd.products_image" />
+            <div class="prodDetailsOther">
+              <h5>{{ addonProd.products_name }}</h5>
+              <h6>{{ addonProd.products_price | currency : 'INR' }}</h6>
+            </div>
+            <div class="adonActions">
+              <div class="addonCta">
+                <ion-button color="tertiary" expand="block" (click)="addAddon(cartProduct,addonProd)">ADD</ion-button>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>
+<ion-footer *ngIf="products.length">
+  <ion-button routerLink="/cart" color="tertiary" size="full" style="margin:0;text-transform: uppercase;" *ngIf="!addonCart.length">Continue Without Add ons</ion-button>
+  <ion-button routerLink="/cart" color="tertiary" size="full" style="margin:0;text-transform: uppercase;" *ngIf="addonCart.length">Continue With {{ addonCart.length }} Add ons</ion-button>
+</ion-footer>

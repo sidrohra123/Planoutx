@@ -1,0 +1,23 @@
+<ion-content>
+  <div class="maincontent">
+    <div class="userForm" *ngIf="data.userInfo">
+      <form>
+        <input type="text" placeholder="* First Name" name="fName" [(ngModel)]="userInfo.first_name">
+        <input type="text" placeholder="* Last Name" name="lName" [(ngModel)]="userInfo.last_name">
+        <div class="mobileNum">
+          <input type="text" readonly placeholder="Country Code" value="+91 IND" [(ngModel)]="userInfo.countrycode" name="uCode">
+          <input type="text" placeholder="* Mobile" readonly [(ngModel)]="userInfo.mobilenum" name="uMobile">
+        </div>
+        <input type="text" placeholder="Email Address" readonly [(ngModel)]="userInfo.email" name="uEmail">
+        <ion-select placeholder="Select Gender" [value]="userInfo.gender" (ionChange)="changeGender($event)">
+          <ion-select-option value="m">Male</ion-select-option>
+          <ion-select-option value="f">Female</ion-select-option>
+        </ion-select>
+        <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="changeDOB($event)" [value]="userInfo.dob" placeholder="Select Birth Date"></ion-datetime>
+        <div class="buttonBottom">
+          <ion-button color="tertiary" expand="block" (click)="SaveProfile()">Save</ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

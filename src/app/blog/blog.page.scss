@@ -1,0 +1,26 @@
+.logo{
+    width:35px;
+}
+ion-list{
+    margin-bottom: 25px;
+}
+ion-item{
+    font-size: 14px;
+    font-weight: 600;
+    color:#333;
+}
+.videoCardSec{
+    margin-bottom:80px;
+}
+.cardFooter{
+    // display: flex;
+    // align-items: center;
+    // justify-content: space-between;
+    padding: 0 15px 10px;
+    ion-button{
+        text-transform: none;
+        ion-icon{
+            padding-left:4px;
+        }
+    }
+}

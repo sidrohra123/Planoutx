@@ -1,0 +1,58 @@
+<ion-content *ngIf="!data.userInfo" class="loginContent">
+  <div class="flex" *ngIf="!data.isNewUser && !data.receivedOtp">
+    <div class="getStarted text-center">
+      <img src="assets/images/logoColored.png" />
+      <div class="line"></div>
+      <h3>Welcome to Planoutx</h3>
+      <p>Login to get personalized experience and quick checkout.</p>
+    </div>
+    <div class="buttonsSocial">
+      <!-- <ion-button (click)="methods.trueCallerLogin()" expand="block" shape="round" class="truButton">
+        <img src="https://workshub.imgix.net/4e58042c757bed1c17c2db7458337c09?fit=crop&crop=entropy&auto=format" />
+        One Touch login with True caller</ion-button> -->
+      <ion-button color="light" class="fbButton" shape="round" expand="block" (click)="methods.signInFb()">
+        <img src="https://cdn.worldvectorlogo.com/logos/facebook-2.svg" />
+        Connect With Facebook</ion-button>
+      <ion-button color="light" class="googleBtn" shape="round" expand="block" (click)="methods.signInGoogle()">
+        <img src="https://cdn3.iconfinder.com/data/icons/google-suits-1/32/1_google_search_logo_engine_service_suits-512.png">
+        Connect With Google</ion-button>
+    </div>
+  </div>
+  <div class="flex" *ngIf="data.isNewUser && !data.receivedOtp">
+    <div class="getStarted text-center">
+      <img src="assets/images/logoColored.png" />
+      <div class="line"></div>
+      <h3>Welcome to Planoutx</h3>
+      <p>Please enter your mobile number to continue.</p>
+    </div>
+    <div class="buttonsSocial">
+      <ion-input type="number" placeholder="Enter Mobile Number" [value]="data.phoneNum" (change)="methods.setValue('phoneNum', $event.target.value)"></ion-input>
+      <ion-input type="text" placeholder="Have a referral code? Enter here" style="text-transform: uppercase;" [(ngModel)]="data.referralCode"></ion-input>
+      <ion-button shape="round" (click)="methods.sendOtp()" expand="block" color="tertiary" >Continue</ion-button>
+    </div>
+    <div class="goBack" style="margin-top:30px;">
+      <p>Change Login Method ? </p>
+      <ion-button color="light" (click)="methods.goBackToSocial()" expand="block" shape="round">Go Back</ion-button>
+    </div>
+  </div>
+  <div class="flex" *ngIf="data.receivedOtp">
+    <div class="getStarted text-center">
+      <img src="assets/images/logoColored.png" />
+      <div class="line"></div>
+      <h3>Welcome to Planoutx</h3>
+      <p>Please enter the otp sent to {{ data.phoneNum }}</p>
+    </div>
+    <div class="buttonsSocial">
+      <ion-input type="number" maxLength=4 placeholder="Enter OTP here" [value]="data.otpToSend" (change)="methods.setValue('otpToSend', $event.target.value)"></ion-input>
+      <div class="retryOtp">
+        <span *ngIf="data.otp_secondsLeft > 0">Did not receive the otp yet? Retry in 00:{{ data.otp_secondsLeft }} seconds</span>
+        <span *ngIf="data.otp_secondsLeft == 0"><a href="javascript:void(0)" (click)="methods.sendOtp()">Retry sending otp here</a></span>
+      </div>
+      <ion-button shape="round" (click)="methods.verifyOtp()" expand="block" color="tertiary" >Verify</ion-button>
+    </div>
+    <div class="goBack" style="margin-top:30px;">
+      <p>Mobile number not correct ? </p>
+      <ion-button color="light" (click)="methods.goBackToPhoneNumber()" expand="block" shape="round">Change Mobile number</ion-button>
+    </div>
+  </div>
+</ion-content>

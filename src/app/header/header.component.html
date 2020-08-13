@@ -1,0 +1,95 @@
+<div class="tempBanner" *ngIf="!data.isPopupSeen && data.passOffers.length && data.hasTempBanner">
+  <div class="cont">
+    <span class="msg" *ngFor="let off of data.passOffers" [hidden]="off.banners_url != 'temporary'">{{ off.banners_title }}</span>
+    <ion-button color="tertiary" (click)="methods.closeTempPopup()">Ok</ion-button>
+  </div>
+</div>
+<ion-header [class.openedSearch]="data.isSubHeaderOpened">
+  <ion-toolbar class="mainHeader" color="tertiary">
+    <ion-buttons slot="start">
+      <!-- <ion-back-button></ion-back-button> -->
+      <ion-button (click)="methods.openMenu()" class="p-l-0" id="step2">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+        
+      </ion-button>
+    </ion-buttons>
+    <ion-img class="logo" [src]="'assets/images/logo.png'" routerLink="/"></ion-img>
+    <div class="desktopOnly inline-bl">
+      <div class="desktopSearch">
+        <div class="searchWrapper">
+          <input type="text" placeholder="Seacrh here..." [(ngModel)]="data.filterInput" (keyup)="methods.findElementsByName($event)">
+          <div class="searchUiDesktop" *ngIf="data.filteredSearch.categories.length || data.filteredSearch.products.length || data.filteredSearch.occasions.length">
+            <ion-list>
+              <!-- <ion-item-divider>Categories</ion-item-divider> -->
+              <ion-item [routerLink]="['/shop', cat.name | urlSlug]" (click)="methods.closeSearch()" *ngFor="let cat of this.data.filteredSearch.categories"><ion-icon name="search" style="font-size: 18px;padding-right: 10px;"></ion-icon> {{ cat.name }}</ion-item>
+              <!-- <ion-item-divider>Products</ion-item-divider> -->
+              <ion-item (click)="methods.closeSearch()" [routerLink]="['/product', prod.products_name | urlSlug]" *ngFor="let prod of this.data.filteredSearch.products"><ion-icon name="search" style="font-size: 18px;padding-right: 10px;"></ion-icon> {{ prod.products_name }}</ion-item>
+              <!-- <ion-item-divider>Occasions</ion-item-divider> -->
+              <ion-item (click)="methods.closeSearch()" [routerLink]="['/eveyrthing']" [queryParams]="{'occasion':occ.nid}" *ngFor="let occ of this.data.filteredSearch.occasions"><ion-icon name="search" style="font-size: 18px;padding-right: 10px;"></ion-icon> {{ occ.categories_name | titlecase }}</ion-item>
+          
+              <ion-item-divider *ngIf="!data.filteredSearch.categories.length && !data.filteredSearch.products.length && !data.filteredSearch.occasions.length">Nothing found! Please try again</ion-item-divider>
+            </ion-list>
+          </div>
+        </div>
+      </div>
+      <ul class="right-menu">
+        <li><strong>Party Ideas</strong></li>
+        <li>Delivery in 2 Hours</li>
+        <li>My Profile</li>
+        <li>Cart</li>
+      </ul>
+    </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleSearch()" class="searchHeader">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+      <ion-button class="p-r-0" routerLink="/cart">
+        <ion-badge color="px" *ngIf="data.cart.length">{{ data.cart.length }}</ion-badge>
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar mode="md" color="tertiary" class="subHeader" [hidden]="!data.isSubHeaderOpened">
+    <ion-grid>
+      <ion-row>
+        <!-- <ion-col size="4">
+          <div class="p-btn ion-activatable" routerLink="/occasions" id="step3">
+            <ion-ripple-effect></ion-ripple-effect>
+            <small>Shop By</small>
+            <div>Occasion</div>
+          </div>
+        </ion-col> -->
+        <ion-col size="12">
+          <ion-icon class="speech" name="mic" (click)="startSpeech()" *ngIf="!isRecording"></ion-icon>
+          <ion-icon class="speech" name="mic-off" (click)="stopSpeech()" *ngIf="isRecording"></ion-icon>
+          <ion-searchbar mode="md" showCancelButton="never" placeholder="I am looking for..." [(ngModel)]="data.filterInput" (ionInput)="methods.findElementsByName($event)"  #headerSearch></ion-searchbar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<div class="catHeader">
+  <ul>
+    <li *ngFor="let cat of this.data.categories | filterBy : data.homeCats; let i=index;" [class.hasSubMenu]="cat.sub_categories && cat.sub_categories.length">
+      <span [routerLink]="['/shop', cat.name | urlSlug]">{{ cat.name | titlecase }}</span>
+      <div class="subMenu" *ngIf="cat.sub_categories && cat.sub_categories.length">
+        <span *ngFor="let subCat of cat.sub_categories" [routerLink]="['/shop', cat.name | urlSlug, subCat.name | urlSlug]">
+          {{ subCat.name | titlecase }}
+        </span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="searchUI" *ngIf="data.filterInput && (data.filteredSearch.categories.length || data.filteredSearch.products.length || data.filteredSearch.occasions.length)">
+  <ion-list>
+    <!-- <ion-item-divider>Categories</ion-item-divider> -->
+    <ion-item [routerLink]="['/shop', cat.name | urlSlug]" (click)="methods.closeSearch()" *ngFor="let cat of this.data.filteredSearch.categories"><ion-icon name="search" style="font-size: 18px;padding-right: 10px;"></ion-icon> {{ cat.name }}</ion-item>
+    <!-- <ion-item-divider>Products</ion-item-divider> -->
+    <ion-item (click)="methods.closeSearch()" [routerLink]="['/product', prod.products_name | urlSlug]" *ngFor="let prod of this.data.filteredSearch.products"><ion-icon name="search" style="font-size: 18px;padding-right: 10px;"></ion-icon> {{ prod.products_name }}</ion-item>
+    <!-- <ion-item-divider>Occasions</ion-item-divider> -->
+    <ion-item (click)="methods.closeSearch()" [routerLink]="['/eveyrthing']" [queryParams]="{'occasion':occ.nid}" *ngFor="let occ of this.data.filteredSearch.occasions"><ion-icon name="search" style="font-size: 18px;padding-right: 10px;"></ion-icon> {{ occ.categories_name | titlecase }}</ion-item>
+
+    <ion-item-divider *ngIf="!data.filteredSearch.categories.length && !data.filteredSearch.products.length && !data.filteredSearch.occasions.length">Nothing found! Please try again</ion-item-divider>
+  </ion-list>
+</div>

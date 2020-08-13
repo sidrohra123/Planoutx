@@ -1,0 +1,22 @@
+<ion-content>
+  <div class="maincontent">
+    <div class="addressForm" *ngIf="userFullLoc">
+      <form>
+        <input type="text" placeholder="* Recipient's name" name="uName" [(ngModel)]="address.username">
+        <input type="text" placeholder="* Recipient's Address" name="uAddress" [(ngModel)]="address.address">
+        <input type="text" placeholder="(Landmark)" [(ngModel)]="address.landmark" name="uLandMark">
+        <input type="text" placeholder="pincode" [(ngModel)]="address.pincode" name="uPincode">
+        <input type="text" placeholder="city" [(ngModel)]="address.city" name="uCity">
+        <input type="text" placeholder="country" [(ngModel)]="address.country" name="uCountry">
+        <div class="mobileNum">
+          <input type="text" readonly placeholder="Country Code" value="+91 IND" [(ngModel)]="address.countrycode" name="uCode">
+          <input type="text" placeholder="* Recipient's Mobile" [(ngModel)]="address.mobilenum" name="uMobile">
+        </div>
+        <input type="text" placeholder="Recipient's email (optional)" [(ngModel)]="address.email" name="uEmail">
+        <div class="buttonBottom">
+          <ion-button color="tertiary" expand="block" (click)="useAddress()">ADD THIS ADDRESS</ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>
