@@ -6,8 +6,10 @@
 <meta charset="utf-8"/>
 <title>India's First Party Planning Platform | Party Supplies Online – Planoutx</title>
 
-<base href="/production/">
+<base href="/"/>
+
 <link rel="canonical" href="https://www.planoutx.com" id="canonical" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 
 <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
 <meta http-equiv="expires" content="0">
@@ -40,11 +42,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 <meta name="theme-color" content="#111111">
-  <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.0cf5dd0c4761abf81a17.css"><link rel="stylesheet" href="styles.0cf5dd0c4761abf81a17.css"></head>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="styles.0cf5dd0c4761abf81a17.css"></head>
 
 <body>
 <app-root></app-root>
+<div id="cookieconsent"></div>
 <noscript>Please enable JavaScript to continue using this application.</noscript>
 <script>
 function checkDevice(){
@@ -105,6 +108,35 @@ fbq('track', 'PageView');
 /></noscript>
 <!-- End Facebook Pixel Code -->
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4rtsaqtVTtxtLpxF6DKWpjE2BYKOeOGM&libraries=places"></script> -->
-<script type="text/javascript" src="runtime.29f8db27a5cf6f90e981.js"></script><script type="text/javascript" src="es2015-polyfills.04461412da80bbdae112.js" nomodule></script><script type="text/javascript" src="polyfills.34104b0c7bad74691803.js"></script><script type="text/javascript" src="main.07c0ee4bfb8b7d2d3c1b.js"></script><script type="text/javascript" src="runtime.29f8db27a5cf6f90e981.js"></script><script type="text/javascript" src="es2015-polyfills.04461412da80bbdae112.js" nomodule></script><script type="text/javascript" src="polyfills.dc7b35f442465740978c.js"></script><script type="text/javascript" src="main.8f94528505771066a6e2.js"></script></body>
-
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+<script>window.cookieconsent.initialise({
+  container: document.getElementById("cookieconsent"),
+  palette:{
+   popup: {background: "#111111"},
+   button: {background: "#f7c115"},
+  },
+  revokable: false,
+  onStatusChange: function(status) {
+   console.log(this.hasConsented() ?
+    'enable cookies' : 'disable cookies');
+  },
+  "position": "bottom-left",
+  "theme": "classic",
+  "domain": "https://planoutx.com",
+  "secure": true,
+  "content": {
+    "header": 'Cookies used on the website!',
+    "message": 'This website uses cookies to improve your experience.',
+    "dismiss": 'Got it!',
+    "allow": 'Allow cookies',
+    "deny": 'Decline',
+    "link": 'Learn more',
+    "href": 'https://www.cookiesandyou.com',
+    "close": '&#x274c;',
+    "policy": 'Cookie Policy',
+    "target": '_blank',
+    }
+ });
+</script>
+<script type="text/javascript" src="runtime.29f8db27a5cf6f90e981.js"></script><script type="text/javascript" src="es2015-polyfills.04461412da80bbdae112.js" nomodule></script><script type="text/javascript" src="polyfills.dc7b35f442465740978c.js"></script><script type="text/javascript" src="main.8bf1400580dd500fe62c.js"></script></body>
 </html>
