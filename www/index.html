@@ -55,7 +55,7 @@ if (
 window.matchMedia('(min-width:1024px)').matches &&
 !document.body.classList.contains('desktop')
 ) {
-    self.location.href = 'https://www.planoutx.com/home/index.html';
+    self.location.href = location.origin+'/home/index.html';
   document.body.classList.add('desktop');
   document.body.classList.remove('mobile');
 }

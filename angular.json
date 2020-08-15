@@ -31,7 +31,8 @@
                 "output": "./svg"
               },
               "src/manifest.json",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/home"
             ],
             "styles": [
               {
