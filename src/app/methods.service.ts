@@ -445,10 +445,10 @@ export class MethodsService {
         this.showToast('Welcome ' + res.data.user.customers_firstname + '! You are logged in successfully');
         res.data.membership ? res.data.user['membership'] = res.data.membership : null;
         res.data.user['customers_picture'] = params.picture ? params.picture : res.data.user.customers_picture;
+        this.saveToDb('user', res.data.user);
         this.getUserBalance();
         this.getUserAddresses();
         this.getCart();
-        this.saveToDb('user', res.data.user);
         this.data.userInfo = res.data.user;
         this.data.qParams && this.data.qParams.next ? this.router.navigateByUrl(this.data.qParams.next) : this.router.navigate(['/']);
       }

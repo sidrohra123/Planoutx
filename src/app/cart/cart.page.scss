@@ -3,6 +3,22 @@
     position: relative;
     top: -3px;
 }
+.addonHead{
+    font-size: 14px;
+    color: #5a5a5a;
+    margin: 2px 0 5px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 3px;
+}
+.dotted{
+    font-size: 22px;
+    padding-right: 2px;
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    line-height: 10px;
+    color: #333333;
+}
 .cartEmpty{
     height: 100%;
     display: flex;
@@ -66,9 +82,8 @@
 }
 
 .prodRow img{
-    width:70px;
-    height:70px;
-    border-radius: 3px;
+    width: 60px;
+    height: 60px;
     display:inline-block;
     object-fit: cover;
 }
@@ -77,9 +92,10 @@
 }
 .detailsProd{
     display:flex;
-    padding-left:10px;
+    padding-left:15px;
     flex-flow: column;
     justify-content: space-between;
+    flex:auto;
 }
 .detailsProd h5{
     font-size:12px;
@@ -94,7 +110,7 @@
     flex-flow: column;
     justify-content: space-between;
     align-items: flex-end;
-    flex:150px 0 1;
+    flex:auto;
 }
 .priceProd strong{
     font-size:13px;

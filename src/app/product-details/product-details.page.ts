@@ -299,4 +299,20 @@ export class ProductDetailsPage implements OnInit {
       document.body.classList.remove('animatingProduct');
     },700);
   }
+
+  notifyMe(){
+    let data = {
+      name:'',
+      email:'',
+      feedback:''
+    }
+    this.methods.checkIfLoggedIn().then((usr)=>{
+      data.name = this.data.userInfo.customers_firstname + ' ' + this.data.userInfo.customers_lastname;
+      data.email = this.data.userInfo.customers_email_address;
+      data.feedback = 'I want this product back in stock '+JSON.stringify(this.data.selectedProduct);
+    });
+    this.methods.sendForm(data).then((dat)=>{
+      
+    });
+  }
 }

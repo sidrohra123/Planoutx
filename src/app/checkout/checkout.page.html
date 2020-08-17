@@ -23,7 +23,8 @@
                 <h5 *ngIf="prod.weight != '0'">{{ prod.weight }} gm</h5>
                 <h5>Qty : {{ prod.customers_basket_quantity }}</h5>
                 <div *ngIf="prod.attributes && prod.attributes.length" style="margin-top:3px;white-space: nowrap;">
-                  <h5 *ngFor="let attr of prod.attributes"><strong>{{ attr.attribute_name.split(':').pop() }}</strong> : {{ attr.attribute_value }}</h5>
+                  <h3 class="addonHead">- Add on Options</h3>
+                  <h5 *ngFor="let attr of prod.attributes"><strong><span class="dotted">•</span> {{ attr.attribute_value }}</strong>, + {{ attr.options_values_price | currency : 'INR' }}</h5>
                 </div>
               </div>
               <div class="priceProd">
