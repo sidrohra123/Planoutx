@@ -183,8 +183,8 @@
             <ion-icon name="create"></ion-icon>
           </div>
           <p *ngIf="data.userGeoLocation && !data.isEligibleLocation">Sorry we do not deliver in {{ data.userGeoLocation  }}</p>
-          <h4 *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167')">Delivery on</h4>
-          <div class="deliveryDayTabs" *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167')">
+          <h4 *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167') && !data.selectedProduct.category_ids.includes('36')">Delivery on</h4>
+          <div class="deliveryDayTabs" *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167') && !data.selectedProduct.category_ids.includes('36')">
             <div class="rowHead">
               <a href="javascript:void(0);" (click)="methods.changeDeliveryOpts('today')" [class.active]="data.selectedDay.name=='today'" *ngIf="currentTimeHour < (data.deliveryHours.to - 3)">Today</a>
               <a href="javascript:void(0);" (click)="methods.changeDeliveryOpts('tomorrow')" [class.active]="data.selectedDay.name=='tomorrow'">Tomorrow</a>
@@ -288,14 +288,17 @@
               </ion-list>
             </div>
           </div>
-          <h4 *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167'))">Expected Delivery</h4>
-          <div class="deliveryDatTabs" *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167'))">
-            <div class="shippingBox" *ngIf="!data.selectedProduct.category_ids.includes('167')">
+          <h4 *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167') || data.selectedProduct.category_ids.includes('36'))">Expected Delivery</h4>
+          <div class="deliveryDatTabs" *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167') || data.selectedProduct.category_ids.includes('36'))">
+            <div class="shippingBox" *ngIf="!data.selectedProduct.category_ids.includes('167') && !data.selectedProduct.category_ids.includes('36')">
               Within 4 days | Expect it by {{ shippingDelivery | date:'mediumDate' }}
               <!-- Expect it by 30th June -->
             </div>
             <div class="shippingBox" *ngIf="data.selectedProduct.category_ids.includes('167')">
               Expect it by {{ shippingDeliveryDigital | date:'dd MMM yyyy' }} between 6:00pm-9:00pm
+            </div>
+            <div class="shippingBox" *ngIf="data.selectedProduct.category_ids.includes('36')">
+              Expect it by {{ shippingDeliverySurprises | date:'dd MMM yyyy' }}
             </div>
           </div>
         </div>

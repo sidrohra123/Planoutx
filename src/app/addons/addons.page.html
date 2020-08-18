@@ -12,7 +12,7 @@
   <div class="maincontent">
     <div class="addonSec" *ngIf="products.length">
       <ion-row>
-        <ion-col size="6" *ngFor="let addonProd of products">
+        <ion-col size="6" [hidden]="!addonProd" *ngFor="let addonProd of products">
           <div class="prodBox" *ngIf="addonProd">
             <img [src]="data.apiUrlNew + addonProd.products_image" />
             <div class="prodDetailsOther">

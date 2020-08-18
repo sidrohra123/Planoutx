@@ -74,7 +74,7 @@
           <h3>DELIVERY DATE</h3>
           <div class="detailsDate">
             <strong *ngIf="prod.shipping_date && prod.shipping_date !== 'undefined'">{{ prod.shipping_date | date }}</strong>
-            <span *ngIf="prod.shipping_cost && prod.shipping_cost !== 'undefined'">{{ prod.shipping_cost == '200' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == '0' ? 'Free Delivery' : prod.shipping_cost == '250' ? 'Midnight Delivery' : prod.shipping_cost == '149' ? 'Third Party Delivery' : '' }}</span>
+            <span *ngIf="prod.shipping_cost == 0 || (prod.shipping_cost && prod.shipping_cost !== 'undefined')">{{ prod.shipping_cost == '200' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == 0 ? 'Free Delivery' : prod.shipping_cost == '250' ? 'Midnight Delivery' : prod.shipping_cost == '149' ? 'Third Party Delivery' : '' }}</span>
             <span *ngIf="prod.shipping_time && prod.shipping_time !== 'undefined'">Between {{ prod.shipping_time.from }}:00 to {{ prod.shipping_time.to }}:00</span>
           </div>
         </div>
@@ -89,7 +89,8 @@
         </div>
         <div>
           <strong>Shipping</strong>
-          <span>₹ {{ (data.cartShippingTotal).toFixed(2) }}</span>
+          <span *ngIf="data.cartShippingTotal != '0'">₹ {{ (data.cartShippingTotal).toFixed(2) }}</span>
+          <span *ngIf="data.cartShippingTotal == '0'">Free Delivery</span>
         </div>
         <div class="totalAmount">
           <strong>TOTAL</strong>

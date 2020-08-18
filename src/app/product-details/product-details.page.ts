@@ -40,6 +40,7 @@ export class ProductDetailsPage implements OnInit {
   isWishlisted:boolean = false;
   public shippingDelivery = new Date();
   public shippingDeliveryDigital = new Date();
+  public shippingDeliverySurprises = new Date();
   public topPos = 0;
   public getProducts:any;
   public currentVideo:any = '';
@@ -71,6 +72,7 @@ export class ProductDetailsPage implements OnInit {
     let currentDate = new Date();
     this.shippingDelivery.setDate(this.shippingDelivery.getDate()+5);
     this.shippingDeliveryDigital.setDate(this.shippingDeliveryDigital.getDate()+1);
+    this.shippingDeliverySurprises.setDate(this.shippingDeliverySurprises.getDate()+3);
     this.isWishlisted = false;
     this.keepGettingProducts((prods)=>{
       this.route.params.subscribe((params)=>{
@@ -88,7 +90,7 @@ export class ProductDetailsPage implements OnInit {
                 this.data.selectedProduct.isWishlisted = false;
                 this.methods.checkIfWishlisted(prod);
                 this.methods.checkIfProductEligibleForPassport();
-                if(!this.data.selectedProduct.category_ids.includes('167')){
+                if(!this.data.selectedProduct.category_ids.includes('167') && !this.data.selectedProduct.category_ids.includes('36')){
                   if(this.data.selectedProduct.delivery_option_ids!='3'){
                     if(this.currentTimeHour < (this.data.deliveryHours.to - 3)){
                       this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
@@ -110,16 +112,38 @@ export class ProductDetailsPage implements OnInit {
                       from:this.data.deliveryHours.from,
                       to:this.data.deliveryHours.to
                     };
-                    this.data.selectedProduct.shipping_cost = '149';
+                    if(this.data.shippingRates.names){
+                      let productWeight = +this.data.selectedProduct.products_weight;
+                      this.data.shippingRates.names.forEach((name, i) => {
+                        if(productWeight != 0){
+                          let lowRange = +name.split('-').shift();
+                          let highRange = +name.split('-').pop();
+                          if(productWeight >= lowRange && productWeight <= highRange){
+                            this.data.selectedProduct.shipping_cost = this.data.shippingRates.price[i];
+                          }
+                        } else {
+                          this.data.selectedProduct.shipping_cost = '0';
+                        }
+                      });
+                      console.log(this.data.selectedProduct.shipping_cost);
+                    }
                   }
                 }
                 else{
-                  this.data.selectedProduct.shipping_date = currentDate.setHours(currentDate.getHours()+16);
+                  if(this.data.selectedProduct.category_ids.includes('36')){
+                    this.data.selectedProduct.shipping_date = this.shippingDeliverySurprises;
+                    this.data.selectedProduct.shipping_time = {
+                      from:9,
+                      to:22
+                    };
+                  } else {
+                    this.data.selectedProduct.shipping_date = currentDate.setHours(currentDate.getHours()+16);
+                    this.data.selectedProduct.shipping_time = {
+                      from:currentDate.getHours(),
+                      to:24 - (24 - currentDate.getHours()+16)
+                    };
+                  }
                   this.data.selectedDeliveryType.type = 'Free Shipping';
-                  this.data.selectedProduct.shipping_time = {
-                    from:currentDate.getHours(),
-                    to:24 - (24 - currentDate.getHours()+16)
-                  };
                   this.data.selectedProduct.shipping_cost = '0';
                 }
                 this.methods.getRecommendedProductsByCatId(prod.categories_id);

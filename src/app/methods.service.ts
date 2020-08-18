@@ -887,6 +887,7 @@ export class MethodsService {
                 this.sortReviews();
                 this.sortVideos();
                 this.setAddonsProds();
+                this.setShippingRates(res.product_data);
                 // this.generateProductsSitemapXml();
                 // this.generateCategoriesSitemapXml();
                 this.data.occasions = res.product_data.occasionCategories;
@@ -903,6 +904,13 @@ export class MethodsService {
             resolve(this.data.categories);
           }
       });
+  }
+
+  setShippingRates(catData){
+    if(catData.setting && catData.setting.length){
+      this.data.shippingRates = catData.setting[0].standard_rates;
+      console.log(this.data.shippingRates);
+    }
   }
 
   setAddonsProds(){

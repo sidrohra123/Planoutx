@@ -15,6 +15,7 @@ export class DataService {
     speed: 200,
     pagination:false
   };
+  shippingRates:any;
   google_api_key = 'AIzaSyD4rtsaqtVTtxtLpxF6DKWpjE2BYKOeOGM';
   public selectedDay = {
     date:Date.now(),

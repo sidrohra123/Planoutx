@@ -86,7 +86,8 @@
           </div>
           <div>
             <strong>Shipping</strong>
-            <span>₹ {{ (data.cartShippingTotal).toFixed(2) }}</span>
+            <span *ngIf="data.cartShippingTotal != '0'">₹ {{ (data.cartShippingTotal).toFixed(2) }}</span>
+          <span *ngIf="data.cartShippingTotal == '0'">Free Delivery</span>
           </div>
           <div class="totalAmount">
             <strong>GRAND TOTAL</strong>
