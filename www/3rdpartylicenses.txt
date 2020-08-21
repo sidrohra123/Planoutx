@@ -259,19 +259,22 @@ Apache-2.0
 @firebase/util
 Apache-2.0
 
+@ionic-native/contacts
+MIT
+
 @ionic-native/facebook
 MIT
 
 @ionic-native/geolocation
 MIT
 
-@ionic-native/google-plus
-MIT
-
 @ionic-native/native-geocoder
 MIT
 
-@ionic-native/onesignal
+@ionic-native/toast
+MIT
+
+@ionic-native/youtube-video-player
 MIT
 
 @ionic/core
@@ -326,10 +329,10 @@ THE SOFTWARE.
 
 undefined
 
-@ionic-native/contacts
+@ionic-native/core
 MIT
 
-@ionic-native/core
+@ionic-native/google-plus
 MIT
 
 @ionic-native/native-storage
@@ -342,12 +345,6 @@ MIT
 MIT
 
 @ionic-native/status-bar
-MIT
-
-@ionic-native/toast
-MIT
-
-@ionic-native/youtube-video-player
 MIT
 
 @ionic/angular
