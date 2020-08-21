@@ -15,7 +15,6 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@io
 import introJs from 'intro.js/intro.js';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { DomSanitizer, Meta, Title } from '@angular/platform-browser';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
 import * as _ from "lodash";
 import { UrlSlugPipe } from './url-slug.pipe';
 declare var AccountKit:any;
@@ -26,7 +25,7 @@ declare var zESettings:any;
 })
 export class MethodsService {
   
-  constructor(private menu:MenuController, private data:DataService, private geolocation: Geolocation, private contacts: Contacts, private youtube: YoutubeVideoPlayer, private api:ApiService, private toast: ToastController, private platform:Platform, private fb: Facebook, private router:Router, private nativeStorage: NativeStorage, private googlePlus: GooglePlus, private alertController:AlertController, private nativeGeocoder: NativeGeocoder, public actionSheetController: ActionSheetController, private socialSharing: SocialSharing, public san:DomSanitizer, private oneSignal: OneSignal, private loadingController: LoadingController, public route:ActivatedRoute, private titleService: Title, private metaService: Meta) { }
+  constructor(private menu:MenuController, private data:DataService, private geolocation: Geolocation, private contacts: Contacts, private youtube: YoutubeVideoPlayer, private api:ApiService, private toast: ToastController, private platform:Platform, private fb: Facebook, private router:Router, private nativeStorage: NativeStorage, private googlePlus: GooglePlus, private alertController:AlertController, private nativeGeocoder: NativeGeocoder, public actionSheetController: ActionSheetController, private socialSharing: SocialSharing, public san:DomSanitizer, private loadingController: LoadingController, public route:ActivatedRoute, private titleService: Title, private metaService: Meta) { }
 
   initZenDesk(){
     var scriptSrc = document.createElement('script');
@@ -255,20 +254,6 @@ export class MethodsService {
         }
       });
     }
-  }
-
-  initOneSignal(){
-    this.oneSignal.startInit('cb8cac2f-670b-41b3-96dd-f56bf89ee534', '956820123214');
-    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
-    this.oneSignal.handleNotificationReceived().subscribe((data) => {
-      // do something when notification is received
-      alert(JSON.stringify(data));
-    });
-    this.oneSignal.handleNotificationOpened().subscribe((dataOpened) => {
-      // do something when a notification is opened
-      alert(JSON.stringify(dataOpened));
-    });
-    this.oneSignal.endInit();
   }
 
   initFirebase(){
@@ -3220,6 +3205,7 @@ export class MethodsService {
               }
             });
             this.data.cartSubTotal = cartSubTotal;
+            this.setSubTotalIfAddons();
             this.data.cartShippingTotal = shipping;
             this.data.cartTotal = this.data.cartShippingTotal + this.data.cartSubTotal;
             this.setCartDiscount();
@@ -3236,6 +3222,21 @@ export class MethodsService {
         this.data.isProcessing = false;
       });
     });
+  }
+
+  setSubTotalIfAddons(){
+    let addonsTotal = 0;
+    if(this.data.cart.length){
+      this.data.cart.forEach((prod:any) => {
+        if(prod.attributes && prod.attributes.length){
+          prod.attributes.forEach((attr:any) => {
+            addonsTotal += +attr.options_values_price;
+          });
+        }
+      });
+      console.log(addonsTotal);
+      this.data.cartSubTotal += addonsTotal;
+    }
   }
 
   setCartDiscount(){

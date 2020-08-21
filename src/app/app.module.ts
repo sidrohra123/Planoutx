@@ -50,7 +50,6 @@ import { IdeasPage } from './trending/ideas/ideas.page';
 import { TiktokPage } from './trending/tiktok/tiktok.page';
 import { VideosPage } from './trending/videos/videos.page';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { PassportPage } from './passport/passport.page';
 import { ContentPage } from './content/content.page';
 import { OccasionsPage } from './occasions/occasions.page';
@@ -197,7 +196,6 @@ import { AddonsPage } from './addons/addons.page';
     GooglePlus,
     NativeGeocoder,
     SocialSharing,
-    OneSignal,
     {provide: HTTP_INTERCEPTORS, useClass: RequestinterceptorService, multi: true},
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
