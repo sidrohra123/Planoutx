@@ -1584,11 +1584,11 @@ export class MethodsService {
         if(this.data.occasions.length){
           this.data.occasions.forEach((occ:any)=>{
             if(occ.nid == paramsPar.occasion){
-              // filtered.selectedOccasion = occ;
+              filtered.selectedOccasion = occ;
               if(occ.sub_sub_occasion_categories && occ.sub_sub_occasion_categories.length){
                 occ.sub_sub_occasion_categories.forEach((subOcc)=>{
                   if(subOcc.id == paramsPar.subOccasion){
-                    // filtered.selectedSubOccasion = subOcc;
+                    filtered.selectedSubOccasion = subOcc;
                     let subCatsFromOcc = subOcc.sub_categories_ids.split(',');
                       this.data.categories.forEach((cat)=>{
                         if(cat.id == paramsPar.category){

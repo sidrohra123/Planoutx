@@ -64,6 +64,7 @@ export class EnterpincodePage implements OnInit {
       this.methods.saveToDb('userLocation', this.address);
       this.data.userGeoLocation = this.address.formatted_address;
       this.router.navigate([this.qParams.next.indexOf('lite') != -1 ? this.qParams.next.split('/lite').pop() : this.qParams.next]);
+      this.data.isSelectedLocation = true;
     }
   }
 

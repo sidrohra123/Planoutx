@@ -35,6 +35,16 @@
     </div>
 
     <div class="productDetails" *ngIf="data.selectedProduct">
+      <div class="histories">
+        <ul>
+          <li><a href="javascript:void(0);" routerLink="/">Home</a></li>
+          <li *ngIf="data.allFiltered.selectedOccasion && data.allFiltered.selectedOccasion.categories_name"><a href="javascript:void(0);" data-type="occasion" [routerLink]="['/eveyrthing']" [queryParams]="{'occasion':data.allFiltered.selectedOccasion.nid}">{{ data.allFiltered.selectedOccasion.categories_name }}</a></li>
+          <li *ngIf="data.allFiltered.selectedSubOccasion && data.allFiltered.selectedSubOccasion.categories_name"><a href="javascript:void(0);" data-type="suboccasion" [routerLink]="['/eveyrthing']" [queryParams]="{'occasion':data.allFiltered.selectedOccasion.nid, 'subOccasion':data.allFiltered.selectedSubOccasion.id}">{{ data.allFiltered.selectedSubOccasion.categories_name }}</a></li>
+          <li *ngIf="data.allFiltered.selectedCategory && data.allFiltered.selectedCategory.name"><a href="javascript:void(0);" data-type="category" [routerLink]="['/eveyrthing']" [queryParams]="getMainCatParams(data.allFiltered.selectedCategory)">{{ data.allFiltered.selectedCategory.name }}</a></li>
+          <li *ngIf="data.allFiltered.selectedSubCategory && data.allFiltered.selectedSubCategory.name"><a href="javascript:void(0);" data-type="subcategory" [routerLink]="['/eveyrthing']" [queryParams]="getsubCatParams(data.allFiltered.selectedCategory, data.allFiltered.selectedSubCategory)">{{ data.allFiltered.selectedSubCategory.name }}</a></li>
+          <li *ngIf="data.selectedProduct"><a href="javascript:void(0)">{{ data.selectedProduct.products_name }}</a></li>
+        </ul>
+      </div>
       <div class="imageArea">
         <div class="imageProd" *ngIf="!data.selectedProduct.images.length && !data.selectedProduct.products_videos.length">
           <img [src]="data.apiUrlNew + data.selectedProduct.products_image" />

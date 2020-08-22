@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MethodsService } from '../methods.service';
 import { DataService } from '../data.service';
@@ -63,6 +63,9 @@ export class ProductDetailsPage implements OnInit {
     this.currentVideo = '';
     this.data.currentVideoUrl = undefined;
     this.data.isProductVideoPlaying = false;
+    if(!this.data.isSelectedLocation){
+      this.data.userGeoLocation = undefined;
+    }
     // this.methods.fetchUserLocationFromDb();
   }
 
@@ -86,7 +89,7 @@ export class ProductDetailsPage implements OnInit {
                 this.data.selectedProduct = prod;
                 this.methods.generateMetaDetails('product', this.data.selectedProduct.products_id);
                 this.slideChanged();
-                this.methods.fetchUserLocationFromDb();
+                //this.methods.fetchUserLocationFromDb();
                 this.data.selectedProduct.isWishlisted = false;
                 this.methods.checkIfWishlisted(prod);
                 this.methods.checkIfProductEligibleForPassport();
@@ -138,9 +141,13 @@ export class ProductDetailsPage implements OnInit {
                     };
                   } else {
                     this.data.selectedProduct.shipping_date = currentDate.setHours(currentDate.getHours()+16);
+                    // this.data.selectedProduct.shipping_time = {
+                    //   from:currentDate.getHours(),
+                    //   to:24 - (24 - currentDate.getHours()+16)
+                    // };
                     this.data.selectedProduct.shipping_time = {
-                      from:currentDate.getHours(),
-                      to:24 - (24 - currentDate.getHours()+16)
+                      from:6,
+                      to:21
                     };
                   }
                   this.data.selectedDeliveryType.type = 'Free Shipping';
@@ -338,5 +345,39 @@ export class ProductDetailsPage implements OnInit {
     this.methods.sendForm(data).then((dat)=>{
       
     });
+  }
+
+  ionViewWillLeave(){
+    this.data.isSelectedLocation = false;
+  }
+
+  getMainCatParams(cat){
+    var objReturn;
+    if(this.data.allFiltered){
+      if(this.data.allFiltered.selectedOccasion && !this.data.allFiltered.selectedSubOccasion){
+        objReturn = {'category':cat.id, 'occasion' : this.data.allFiltered.selectedOccasion.nid};
+      }
+      else if(this.data.allFiltered.selectedOccasion && this.data.allFiltered.selectedSubOccasion){
+        objReturn = {'category':cat.id, 'occasion' : this.data.allFiltered.selectedOccasion.nid, 'subOccasion': this.data.allFiltered.selectedSubOccasion.id};
+      } else {
+        objReturn = {'category':cat.id};
+      }
+    }
+    return objReturn;
+  }
+
+  getsubCatParams(cat, subCat){
+    var objReturn;
+    if(this.data.allFiltered){
+      if(this.data.allFiltered.selectedOccasion && !this.data.allFiltered.selectedSubOccasion){
+        objReturn = {'category':cat.id, 'subcategory':subCat.id, 'occasion' : this.data.allFiltered.selectedOccasion.nid};
+      }
+      else if(this.data.allFiltered.selectedOccasion && this.data.allFiltered.selectedSubOccasion){
+        objReturn = {'category':cat.id, 'subcategory':subCat.id, 'occasion' : this.data.allFiltered.selectedOccasion.nid, 'subOccasion': this.data.allFiltered.selectedSubOccasion.id};
+      } else {
+        objReturn = {'category':cat.id, 'subcategory':subCat.id};
+      }
+    }
+    return objReturn;
   }
 }

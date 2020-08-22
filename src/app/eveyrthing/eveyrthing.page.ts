@@ -83,6 +83,23 @@ export class EveyrthingPage implements OnInit,OnDestroy {
       }
       else if(this.qParams.occasion && this.qParams.subOccasion){
         objReturn = {'category':cat.id, 'occasion' : this.qParams.occasion, 'subOccasion': this.qParams.subOccasion};
+      } else {
+        objReturn = {'category':cat.id};
+      }
+    }
+    return objReturn;
+  }
+
+  getsubCatParams(cat, subCat){
+    var objReturn;
+    if(this.qParams){
+      if(this.qParams.occasion && !this.qParams.subOccasion){
+        objReturn = {'category':cat.id, 'subcategory':subCat.id, 'occasion' : this.qParams.occasion};
+      }
+      else if(this.qParams.occasion && this.qParams.subOccasion){
+        objReturn = {'category':cat.id, 'subcategory':subCat.id, 'occasion' : this.qParams.occasion, 'subOccasion': this.qParams.subOccasion};
+      } else {
+        objReturn = {'category':cat.id, 'subcategory':subCat.id};
       }
     }
     return objReturn;

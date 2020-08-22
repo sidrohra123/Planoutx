@@ -5,7 +5,10 @@ import { Address } from 'ngx-google-places-autocomplete/objects/address';
 @Injectable({
   providedIn: 'root'
 })
+
 export class DataService {
+  public isSelectedLocation:boolean = false;
+  public journey:[] = [];
   public catalogApiCalled = 0;
   public catSlide = {
     initialSlide: 0,
