@@ -117,7 +117,7 @@
         <ion-row>
           <ion-col size="6" *ngFor="let product of data.allFiltered.products | slice:0:perPage">
             <div class="prodBox ion-activatable" (click)="goToProduct(product)"
-              [style.paddingBottom]="product.delivery_option_ids && (product.delivery_option_ids.includes('1,2') || product.delivery_option_ids.includes(',1') || product.delivery_option_ids.includes('2') || product.delivery_option_ids.includes('1,') || product.delivery_option_ids == '1' || product.delivery_option_ids == '2') ? '50px' : '30px'">
+              [style.paddingBottom]="product.delivery_option_ids && (product.delivery_option_ids.includes('1,2') || product.delivery_option_ids.includes(',1') || product.delivery_option_ids.includes('2') || product.delivery_option_ids.includes('1,') || product.delivery_option_ids == '1' || product.delivery_option_ids == '2' || product.delivery_option_ids.includes('4')) ? '50px' : '30px'">
               <ion-ripple-effect></ion-ripple-effect>
               <div class="prodImage">
                 <span class="badge" *ngIf="product.products_tags">{{ product.products_tags }}</span>
@@ -128,9 +128,12 @@
                 <h6>₹ {{ product.specials_new_products_price ? product.specials_new_products_price : product.products_price }}</h6>
                 <div class="offerTag" *ngIf="product.specials_new_products_price && product.products_price!=product.specials_new_products_price"><del>₹ {{ product.products_price }}</del><span>{{ (((+product.products_price - +product.specials_new_products_price)/+product.products_price)*100).toFixed(0) }}% OFF</span></div>
                 <div class="bottomSecProd">
-                  <div class="earliestDelivery" *ngIf="product.delivery_option_ids && (product.delivery_option_ids.includes('1,2') || product.delivery_option_ids.includes(',1') || product.delivery_option_ids.includes('2') || product.delivery_option_ids.includes('1,') || product.delivery_option_ids == '1' || product.delivery_option_ids == '2' || product.delivery_option_ids == '4' || product.delivery_option_ids == '3')">Earliest Delivery:
+                  <div class="earliestDelivery" *ngIf="product.delivery_option_ids && (product.delivery_option_ids.includes('1,2') || product.delivery_option_ids.includes(',1') || product.delivery_option_ids.includes('2') || product.delivery_option_ids.includes('1,') || product.delivery_option_ids == '1' || product.delivery_option_ids == '2' || product.delivery_option_ids == '4' || product.delivery_option_ids.includes('3'))">Earliest Delivery:
                     <span *ngIf="product.delivery_option_ids.includes('1,2') || product.delivery_option_ids == '1'">Today</span>
-                    <span *ngIf="(product.delivery_option_ids == '2' || product.delivery_option_ids == '4' || product.delivery_option_ids == '3' || product.delivery_option_ids.includes(',2') || product.delivery_option_ids.includes('2,')) && (!product.delivery_option_ids.includes('1') && !product.delivery_option_ids.includes('1,') && !product.delivery_option_ids.includes(',1'))">Tomorrow</span>
+                    <span *ngIf="(product.delivery_option_ids == '2' || product.delivery_option_ids == '4' || product.delivery_option_ids.includes('3') || product.delivery_option_ids.includes(',2') || product.delivery_option_ids.includes('2,')) && (!product.delivery_option_ids.includes('1') && !product.delivery_option_ids.includes('1,') && !product.delivery_option_ids.includes(',1'))">Tomorrow</span>
+                  </div>
+                  <div class="earliestDelivery freeShipping" *ngIf="product.delivery_option_ids.includes('4')">
+                    <span>Free Delivery Available</span>
                   </div>
                   <div class="ratingsReviews" *ngIf="product.show_review == '1' && product.reviews && product.reviews.length">
                     <span>{{ (product.allRatings).toFixed(1) }} <ion-icon name="star" color="tertiary"></ion-icon></span>
