@@ -17,6 +17,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { DomSanitizer, Meta, Title } from '@angular/platform-browser';
 import * as _ from "lodash";
 import { UrlSlugPipe } from './url-slug.pipe';
+import { SwUpdate } from '@angular/service-worker';
 declare var AccountKit:any;
 declare var zESettings:any;
 
@@ -25,7 +26,7 @@ declare var zESettings:any;
 })
 export class MethodsService {
   
-  constructor(private menu:MenuController, private data:DataService, private geolocation: Geolocation, private contacts: Contacts, private youtube: YoutubeVideoPlayer, private api:ApiService, private toast: ToastController, private platform:Platform, private fb: Facebook, private router:Router, private nativeStorage: NativeStorage, private googlePlus: GooglePlus, private alertController:AlertController, private nativeGeocoder: NativeGeocoder, public actionSheetController: ActionSheetController, private socialSharing: SocialSharing, public san:DomSanitizer, private loadingController: LoadingController, public route:ActivatedRoute, private titleService: Title, private metaService: Meta) { }
+  constructor(private menu:MenuController, private data:DataService, private geolocation: Geolocation, private contacts: Contacts, private youtube: YoutubeVideoPlayer, private api:ApiService, private toast: ToastController, private platform:Platform, private fb: Facebook, private router:Router, private nativeStorage: NativeStorage, private googlePlus: GooglePlus, private alertController:AlertController, private nativeGeocoder: NativeGeocoder, public actionSheetController: ActionSheetController, private socialSharing: SocialSharing, public san:DomSanitizer, private loadingController: LoadingController, public route:ActivatedRoute, private titleService: Title, private metaService: Meta, private sw:SwUpdate) { }
 
   initZenDesk(){
     var scriptSrc = document.createElement('script');
@@ -4420,6 +4421,25 @@ export class MethodsService {
   generateCanonical(){
     let path = location.pathname;
     document.getElementById('canonical').setAttribute('href', 'https://www.planoutx.com'+path);
+  }
+
+  updateAppIfAvailable(){
+    if(!this.sw.isEnabled){
+      return;
+    }
+    this.sw.available.subscribe((event) => {
+      console.log('current', event.current, 'available', event.available);
+      this.sw.activateUpdate().then(() => {
+        this.showToast('Update available for the app, reloading the page', 5000);
+        setTimeout(() => {
+          location.reload();
+        }, 5000);
+      });
+    });
+
+    this.sw.activated.subscribe((event) => {
+      console.log('current', event.previous, 'available', event.current);
+    });
   }
 }
 

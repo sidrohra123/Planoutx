@@ -24,6 +24,7 @@ export class AppComponent {
     public router:Router,
     public data:DataService
   ) {
+    this.methods.updateAppIfAvailable();
     this.data.multilottieConfig = {
       path: this.data.loadingAnimPaths[Math.floor(Math.random()*this.loadingAnimPaths.length)],
       autoplay: true,
