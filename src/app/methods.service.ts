@@ -3202,7 +3202,7 @@ export class MethodsService {
                 this.data.appliedCoupon = cartItem.applied_coupons[0]; 
               }
               if(+cartItem.final_price > 0){
-                cartSubTotal += cartItem.special_price ? +cartItem.special_price : +cartItem.final_price;
+                cartSubTotal += cartItem.special_price ? +cartItem.special_price : +cartItem.price;
               }
             });
             this.data.cartSubTotal = cartSubTotal;
