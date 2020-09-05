@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { IonSlides, Platform, MenuController } from '@ionic/angular';
+import { IonSlides, Platform, MenuController, IonContent } from '@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MethodsService } from '../methods.service';
 import { Router } from '@angular/router';
@@ -17,6 +17,8 @@ export class HomePage implements OnInit, AfterViewInit {
   @ViewChild('offSlides') offSlides:IonSlides;
   @ViewChild('prodSlides') prodSlides:IonSlides;
   @ViewChild('ratingSlides') ratingSlides:IonSlides;
+  @ViewChild('homeContent') homContent:IonContent;
+
   catSlide = {
     initialSlide: 0,
     slidesPerView:4,
@@ -195,6 +197,7 @@ export class HomePage implements OnInit, AfterViewInit {
       this.ratingSlides ? this.ratingSlides.update() : '';
     },200);
     this.methods.setMetaTags('India\'s First Party Planning Platform | Party Supplies Online – Planoutx', 'One stop shop for all party planning needs. Starting from cakes, decorations, party supplies, personalized gifts and surprises.');
+    this.data.allFiltered = {};
   }
 
   ionViewWillLeave(){
@@ -205,6 +208,38 @@ export class HomePage implements OnInit, AfterViewInit {
     let slugPipe = new UrlSlugPipe();
     let name = slugPipe.transform(product.products_name);
     this.router.navigate(['/product', name]);
+  }
+
+  checkScrolling(e){
+    let isInteracted = sessionStorage.getItem('planningInteracted');
+    if(isInteracted == null){
+      if(this.data.allProducts.length){
+        let scrollTop = e.detail.scrollTop;
+        let whtplannig:HTMLElement = document.querySelector('#step4');
+        let whtTop = whtplannig.offsetTop-50;
+        let whtHeight = whtplannig.offsetHeight;
+        if(scrollTop > whtTop && scrollTop < whtHeight){
+          this.homContent.scrollToPoint(undefined, whtTop+5);
+          document.body.classList.add('stopHere');
+        } else {
+          document.body.classList.remove('stopHere');
+        }
+      }
+    }
+  }
+
+  goToOccasion(){
+    let whtplannig:HTMLElement = document.querySelector('#step4');
+    let whtTop = whtplannig.offsetTop-50;
+    this.homContent.scrollToPoint(undefined, whtTop);
+    document.body.classList.remove('stopHere');
+    // sessionStorage.setItem('planningInteracted', 'true');
+  }
+
+  skipToContent(){
+    document.body.classList.remove('stopHere');
+    sessionStorage.setItem('planningInteracted', 'true');
+    this.homContent.scrollToTop(0);
   }
 
 }

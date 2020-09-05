@@ -731,6 +731,7 @@ export class MethodsService {
     this.data.filteredSearch.subSubCategories = [];
     this.data.filterInput = '';
     this.noSubHeader();
+    this.data.allFiltered = {};
   }
 
   noSubHeader(){
@@ -3160,6 +3161,12 @@ export class MethodsService {
               }
               let id = cartItem.products_id;
               let cartProductId = cartItem.categories_product_id.split(',');
+              let cartCategoryId = cartItem.categories_product_id.split(',');
+              cartCategoryId.forEach((catId) => {
+                if(catId == '1'){
+                  this.data.cartHasCake = true;
+                }
+              })
               let products = [];
               if(this.data.allProducts.length != 0){
                 this.data.categories.forEach((cat:any)=>{
