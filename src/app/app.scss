@@ -718,3 +718,21 @@ ion-toast {
         display: none!important;
     }
 }
+
+.noCat {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: var(--ion-color-px)!important;
+}
+
+.partyMode {
+    margin: 0;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 900;
+    color: #000000;
+    line-height: 1.4;
+}

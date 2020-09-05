@@ -35,6 +35,12 @@
                         <div class="catTitle">{{ subOcc.categories_name }}</div>
                     </div>
                 </ion-col>
+                <ion-col size="6" *ngIf="data.allFiltered.subOccasions.length % 2 !== 0">
+                    <div class="catBox noCat ion-activatable">
+                        <ion-ripple-effect></ion-ripple-effect>
+                        <h3 class="partyMode">Party Mode On! Stay Tuned.</h3>
+                    </div>
+                </ion-col>
             </ion-row>
         </ion-grid>
 
@@ -45,6 +51,12 @@
                         <ion-ripple-effect></ion-ripple-effect>
                         <img [src]="data.apiUrlNew + cat.image" />
                         <div class="catTitle">{{ cat.name }}</div>
+                    </div>
+                </ion-col>
+                <ion-col size="6" *ngIf="data.allFiltered.categories.length % 2 !== 0">
+                    <div class="catBox noCat ion-activatable">
+                        <ion-ripple-effect></ion-ripple-effect>
+                        <h3 class="partyMode">Party Mode On! Stay Tuned.</h3>
                     </div>
                 </ion-col>
             </ion-row>
@@ -63,6 +75,12 @@
                         <ion-ripple-effect></ion-ripple-effect>
                         <img [src]="data.apiUrlNew + cat.image" />
                         <div class="catTitle">{{ cat.name }}</div>
+                    </div>
+                </ion-col>
+                <ion-col size="6" *ngIf="data.allFiltered.subcategories.length % 2 !== 0">
+                    <div class="catBox noCat ion-activatable">
+                        <ion-ripple-effect></ion-ripple-effect>
+                        <h3 class="partyMode">Party Mode On! Stay Tuned.</h3>
                     </div>
                 </ion-col>
             </ion-row>
@@ -144,6 +162,12 @@
                   <ion-icon name="star" *ngFor="let rate of  methods.convertToArray(+product.ratings)"></ion-icon>
                 </div> -->
                             </div>
+                        </div>
+                    </ion-col>
+                    <ion-col size="6" *ngIf="data.allFiltered.products.length % 2 !== 0">
+                        <div class="prodBox noCat ion-activatable">
+                            <ion-ripple-effect></ion-ripple-effect>
+                            <h3 class="partyMode">Party Mode On! Stay Tuned.</h3>
                         </div>
                     </ion-col>
                 </ion-row>
