@@ -23,29 +23,31 @@ export class MycouponsPage implements OnInit {
   getUserCoupons(){
     this.userCoupons = [];
     this.methods.getAllCoupons().then((coupons:any)=>{
-      console.log(coupons);
-      if(coupons.length){
-        coupons.forEach((coupon)=>{
-          //check for user specific coupons
-          if(coupon.email_restrictions){
-            let emailsOfCoupon = coupon.email_restrictions.split(',');
-            emailsOfCoupon.forEach((coupEmail)=>{
-              if(coupEmail==this.data.userInfo.customers_email_address && coupon.discount_type!='membership_coupon'){
-                this.userCoupons.push(coupon);
-              }
-            });
-          }
-          //check for common coupons but not for members only coupons
-          if(!coupon.email_restrictions && coupon.discount_type!='membership_coupon'){
-            this.userCoupons.push(coupon);
-          }
-          //check for members only coupons
-          if(coupon.discount_type=='membership_coupon' && coupon.coupon_mem!='1' && this.data.userInfo.membership && this.data.userInfo.membership.length){
-            this.userCoupons.push(coupon);
-          }
-        });
-        console.log(this.userCoupons);
-      }
+      this.methods.checkIfLoggedIn().then((usr) => {
+        console.log(coupons);
+        if(coupons.length){
+          coupons.forEach((coupon)=>{
+            //check for user specific coupons
+            if(coupon.email_restrictions){
+              let emailsOfCoupon = coupon.email_restrictions.split(',');
+              emailsOfCoupon.forEach((coupEmail)=>{
+                if(coupEmail==this.data.userInfo.customers_email_address && coupon.discount_type!='membership_coupon'){
+                  this.userCoupons.push(coupon);
+                }
+              });
+            }
+            //check for common coupons but not for members only coupons
+            if(!coupon.email_restrictions && coupon.discount_type!='membership_coupon'){
+              this.userCoupons.push(coupon);
+            }
+            //check for members only coupons
+            if(coupon.discount_type=='membership_coupon' && coupon.coupon_mem!='1' && this.data.userInfo.membership && this.data.userInfo.membership.length){
+              this.userCoupons.push(coupon);
+            }
+          });
+          console.log(this.userCoupons);
+        }
+      });
     });
   }
 
@@ -53,7 +55,22 @@ export class MycouponsPage implements OnInit {
     let nav:any = navigator;
     nav.clipboard.writeText(coupon.code).then((code)=>{
       this.methods.showToast('Code '+coupon.code+' copied successfully. Use this code in checkout.', 5000);
+      this.data.couponFormOpened = true;
+      this.data.couponCode = coupon.code;
+      if(this.data.couponFormOpened){
+        setTimeout(()=>{
+          document.getElementById('couponCodeField') ? document.getElementById('couponCodeField').focus() : null;
+        },100);
+      }
+      this.dismissModal();
     });
+  }
+
+  dismissModal(){
+    this.data.couponsModal ? this.data.couponsModal.dismiss() : null;
+    if(this.data.isCouponPopup){
+      sessionStorage.setItem('couponPopupInteracted', 'true');
+    }
   }
 
 }

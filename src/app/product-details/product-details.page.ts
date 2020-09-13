@@ -41,6 +41,8 @@ export class ProductDetailsPage implements OnInit {
   public shippingDelivery = new Date();
   public shippingDeliveryDigital = new Date();
   public shippingDeliverySurprises = new Date();
+  public shippingPartySupplies = new Date();
+  public shippingGifts = new Date();
   public topPos = 0;
   public getProducts:any;
   public currentVideo:any = '';
@@ -63,7 +65,7 @@ export class ProductDetailsPage implements OnInit {
     this.currentVideo = '';
     this.data.currentVideoUrl = undefined;
     this.data.isProductVideoPlaying = false;
-    if(!this.data.isSelectedLocation){
+    if(!this.data.isSelectedLocation && !this.data.isSelectedLater){
       this.data.userGeoLocation = undefined;
     }
     // this.methods.fetchUserLocationFromDb();
@@ -76,6 +78,8 @@ export class ProductDetailsPage implements OnInit {
     this.shippingDelivery.setDate(this.shippingDelivery.getDate()+5);
     this.shippingDeliveryDigital.setDate(this.shippingDeliveryDigital.getDate()+1);
     this.shippingDeliverySurprises.setDate(this.shippingDeliverySurprises.getDate()+3);
+    this.shippingPartySupplies.setDate(this.shippingPartySupplies.getDate()+5);
+    this.shippingGifts.setDate(this.shippingGifts.getDate()+5);
     this.isWishlisted = false;
     this.keepGettingProducts((prods)=>{
       this.route.params.subscribe((params)=>{
@@ -93,19 +97,34 @@ export class ProductDetailsPage implements OnInit {
                 this.data.selectedProduct.isWishlisted = false;
                 this.methods.checkIfWishlisted(prod);
                 this.methods.checkIfProductEligibleForPassport();
-                if(!this.data.selectedProduct.category_ids.includes('167') && !this.data.selectedProduct.category_ids.includes('36')){
+                if(!this.data.selectedProduct.category_ids.includes('167') && !this.data.selectedProduct.category_ids.includes('33')){
                   if(this.data.selectedProduct.delivery_option_ids!='3'){
-                    if(this.currentTimeHour < (this.data.deliveryHours.to - 3)){
-                      this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
-                      this.data.selectedDeliveryType.type = 'stdDel';
-                      !this.data.selectedProduct.availableSlots ? this.methods.createSlots('today', 'stdDel') : null;
-                    }
-                    else{
-                      this.data.selectedDay.name = 'tomorrow';
-                      this.data.selectedDay.date = Date.now() + 24 * 60 * 60 * 1000;
-                      this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
-                      this.data.selectedDeliveryType.type = 'stdDel';
-                      !this.data.selectedProduct.availableSlots ? this.methods.createSlots('tomorrow', 'stdDel') : null;
+                    if(this.data.selectedProduct.delivery_option_ids != '4'){
+                      if(this.currentTimeHour < (this.data.deliveryHours.to - 3)){
+                        this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
+                        this.data.selectedDeliveryType.type = 'stdDel';
+                        !this.data.selectedProduct.availableSlots ? this.methods.createSlots('today', 'stdDel') : null;
+                      }
+                      else{
+                        this.data.selectedDay.name = 'tomorrow';
+                        this.data.selectedDay.date = Date.now() + 24 * 60 * 60 * 1000;
+                        this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
+                        this.data.selectedDeliveryType.type = 'stdDel';
+                        !this.data.selectedProduct.availableSlots ? this.methods.createSlots('tomorrow', 'stdDel') : null;
+                      }
+                    } else {
+                      if(this.currentTimeHour < (this.data.deliveryHours.to - 3)){
+                        this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
+                        this.data.selectedDeliveryType.type = 'freedel';
+                        !this.data.selectedProduct.availableSlots ? this.methods.createSlots('today', 'freedel') : null;
+                      }
+                      else{
+                        this.data.selectedDay.name = 'tomorrow';
+                        this.data.selectedDay.date = Date.now() + 24 * 60 * 60 * 1000;
+                        this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
+                        this.data.selectedDeliveryType.type = 'freedel';
+                        !this.data.selectedProduct.availableSlots ? this.methods.createSlots('tomorrow', 'freedel') : null;
+                      }
                     }
                   }
                   else{
@@ -133,8 +152,20 @@ export class ProductDetailsPage implements OnInit {
                   }
                 }
                 else{
-                  if(this.data.selectedProduct.category_ids.includes('36')){
-                    this.data.selectedProduct.shipping_date = this.shippingDeliverySurprises;
+                   if(this.data.selectedProduct.category_ids.includes('2')){
+                    this.data.selectedProduct.shipping_date = this.shippingPartySupplies;
+                    this.data.selectedProduct.shipping_time = {
+                      from:9,
+                      to:22
+                    };
+                  } else if(this.data.selectedProduct.category_ids.includes('167')){
+                    this.data.selectedProduct.shipping_date = this.shippingDeliveryDigital;
+                    this.data.selectedProduct.shipping_time = {
+                      from:18,
+                      to:21
+                    };
+                  } else if(this.data.selectedProduct.category_ids.includes('33')){
+                    this.data.selectedProduct.shipping_date = this.shippingGifts;
                     this.data.selectedProduct.shipping_time = {
                       from:9,
                       to:22
@@ -146,8 +177,8 @@ export class ProductDetailsPage implements OnInit {
                     //   to:24 - (24 - currentDate.getHours()+16)
                     // };
                     this.data.selectedProduct.shipping_time = {
-                      from:6,
-                      to:21
+                      from:9,
+                      to:22
                     };
                   }
                   this.data.selectedDeliveryType.type = 'Free Shipping';
@@ -349,6 +380,8 @@ export class ProductDetailsPage implements OnInit {
 
   ionViewWillLeave(){
     this.data.isSelectedLocation = false;
+    this.data.isSelectedLater = false;
+    // this.data.selectedDay.name = undefined;
   }
 
   getMainCatParams(cat){

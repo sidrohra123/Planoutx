@@ -32,7 +32,7 @@ export class EnterpincodePage implements OnInit {
   handleAddressChange(address: Address){
     console.log(address);
     this.data.isEligibleLocation = false;
-    if(!this.qParams.categoryname.includes('167')){
+    if(!this.qParams.categoryname.includes('167') && !this.qParams.categoryname.includes('2') && !this.qParams.categoryname.includes('33')){
       this.methods.getZones().then((states:any)=>{
         let hasPostalCode = false;
         if(address && address.address_components && address.address_components.length){

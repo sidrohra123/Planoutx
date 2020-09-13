@@ -134,6 +134,7 @@ export class CalendarPage {
     this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
     this.data.selectedDay.name = 'later';
     this.methods.createSlots('later', 'stdDel');
+    this.data.isSelectedLater = true;
     this._location.back();
   }
 

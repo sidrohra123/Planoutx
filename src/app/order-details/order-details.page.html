@@ -35,7 +35,7 @@
       <div class="whiteCard orderStatus">
         <h3 style="margin-bottom:5px;">Order Status</h3>
         <p><strong>Order placed on:</strong><span> {{ order.date_purchased | date:'dd MMM yyyy' }}</span></p>
-        <p><strong>Current Status:</strong><span> {{ order.orders_status == 'Pending' ? 'Order Placed' : order.orders_status == 'Delivered' ? 'Delivered on '+(order.last_modified | date:'dd MMM yyyy') : order.orders_status }}</span></p>
+        <p><strong>Current Status:</strong><span> {{ order.orders_status == 'Pending' ? 'Order Placed' : order.orders_status == 'Delivered' ? 'Delivered on '+(order.date_added | date:'dd MMM yyyy') : order.orders_status }}</span></p>
       </div>
       <div class="actions">
         <ion-button expand="block" color="tertiary" (click)="openRaiseQueryForm()">Raise Query</ion-button>

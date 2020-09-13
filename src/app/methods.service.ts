@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ViewChild } from '@angular/core';
 import { MenuController, Platform, AlertController, ToastController, ActionSheetController, LoadingController, PopoverController } from '@ionic/angular';
 import { DataService } from './data.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -25,8 +25,9 @@ declare var zESettings:any;
   providedIn: 'root'
 })
 export class MethodsService {
-  
-  constructor(private menu:MenuController, private data:DataService, private geolocation: Geolocation, private contacts: Contacts, private youtube: YoutubeVideoPlayer, private api:ApiService, private toast: ToastController, private platform:Platform, private fb: Facebook, private router:Router, private nativeStorage: NativeStorage, private googlePlus: GooglePlus, private alertController:AlertController, private nativeGeocoder: NativeGeocoder, public actionSheetController: ActionSheetController, private socialSharing: SocialSharing, public san:DomSanitizer, private loadingController: LoadingController, public route:ActivatedRoute, private titleService: Title, private metaService: Meta, private sw:SwUpdate) { }
+  constructor(private menu:MenuController, private data:DataService, private geolocation: Geolocation, private contacts: Contacts, private youtube: YoutubeVideoPlayer, private api:ApiService, private toast: ToastController, private platform:Platform, private fb: Facebook, private router:Router, private nativeStorage: NativeStorage, private googlePlus: GooglePlus, private alertController:AlertController, private nativeGeocoder: NativeGeocoder, public actionSheetController: ActionSheetController, private socialSharing: SocialSharing, public san:DomSanitizer, private loadingController: LoadingController, public route:ActivatedRoute, private titleService: Title, private metaService: Meta, private sw:SwUpdate) {
+    
+   }
 
   initZenDesk(){
     var scriptSrc = document.createElement('script');
@@ -672,13 +673,16 @@ export class MethodsService {
   }
 
   manageSlots(day,shipping_cost, slotsGap){
+    console.log(day,shipping_cost, slotsGap);
     this.data.selectedProduct.shipping_cost = shipping_cost;
     let from = this.data.deliveryHours.from;
     let to = this.data.deliveryHours.to;
     let currentHour = new Date().getHours();
     let slotsArray = [];
+    var i = from;
     if((i+slotsGap) != from){
-      for(var i = from; i < to; i+=slotsGap){
+      for(i = from; i < to; i+=slotsGap){
+        console.log(currentHour, i);
         if(day=='today' && i > currentHour){
           slotsArray.push({
             from:i,
@@ -693,6 +697,7 @@ export class MethodsService {
         }
       }
     }
+    console.log(slotsArray);
     this.data.selectedProduct.availableSlots = slotsArray;
     this.data.selectedDeliveryType.slot = 0;
     this.data.selectedProduct.shipping_time = slotsArray[0];
@@ -706,16 +711,35 @@ export class MethodsService {
 
   changeDeliveryOpts(day){
     this.data.selectedDay.name = day;
+    let stdDel:any = document.querySelectorAll('[value="stdDel"]');
+    let freeDel:any = document.querySelectorAll('[value="freedel"]');
+    if(stdDel.length){
+      stdDel[0].click();
+    } else if(freeDel.length){
+      freeDel[0].click();
+    }
     switch(day){
       case 'today' :
         this.data.selectedDay.date = Date.now();
         this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
-        this.createSlots('today', 'stdDel');
+        if(this.data.selectedProduct.delivery_option_ids != '4'){
+          this.data.selectedDeliveryType.type=='stdDel';
+          this.createSlots('today', 'stdDel');
+        } else {
+          this.data.selectedDeliveryType.type=='freedel';
+          this.createSlots('today', 'freedel');
+        }
         break;
       case 'tomorrow' :
         this.data.selectedDay.date = Date.now() + 24 * 60 * 60 * 1000;
         this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
-        this.createSlots('tomorrow', 'stdDel');
+        if(this.data.selectedProduct.delivery_option_ids != '4'){
+          this.data.selectedDeliveryType.type=='stdDel';
+          this.createSlots('tomorrow', 'stdDel');
+        } else {
+          this.data.selectedDeliveryType.type=='freedel';
+          this.createSlots('tomorrow', 'freedel');
+        }
         break;
       case 'later' :
         this.router.navigate(['/calendar']);
@@ -875,6 +899,7 @@ export class MethodsService {
                 this.sortVideos();
                 this.setAddonsProds();
                 this.setShippingRates(res.product_data);
+                this.getUpsellProducts();
                 // this.generateProductsSitemapXml();
                 // this.generateCategoriesSitemapXml();
                 this.data.occasions = res.product_data.occasionCategories;
@@ -891,6 +916,15 @@ export class MethodsService {
             resolve(this.data.categories);
           }
       });
+  }
+
+  getUpsellProducts(){
+    this.data.upsell_products = [];
+    this.data.allProducts.forEach((prod:any) => {
+      if(prod.up_sell == 1){
+        this.data.upsell_products.push(prod);
+      }
+    })
   }
 
   setShippingRates(catData){
@@ -2706,7 +2740,7 @@ export class MethodsService {
           console.log(res);
           if(res.status=="OK"){
             // this.showToast(res.error_message);
-            if(!this.data.selectedProduct.category_ids.includes('167')){
+            if(!this.data.selectedProduct.category_ids.includes('167') && !this.data.selectedProduct.category_ids.includes('2') && !this.data.selectedProduct.category_ids.includes('33')){
               this.getZones().then((states:any)=>{
                 let hasPostalCode = false;
                 this.data.isEligibleLocation = false;
@@ -3153,6 +3187,7 @@ export class MethodsService {
             let shipping = 0;
             let cartSubTotal = 0;
             this.data.cart.forEach((cartItem:any)=>{
+              cartItem.addonSubProducts = [];
               if(cartItem.shipping_cost){
                 shipping+= +cartItem.shipping_cost;
               }
@@ -3217,6 +3252,8 @@ export class MethodsService {
             this.data.cartShippingTotal = shipping;
             this.data.cartTotal = this.data.cartShippingTotal + this.data.cartSubTotal;
             this.setCartDiscount();
+            this.setCartAddons();
+            this.checkIfUpsellAdded();
             resolve(res.data);
           }
           else{
@@ -3230,6 +3267,32 @@ export class MethodsService {
         this.data.isProcessing = false;
       });
     });
+  }
+
+  checkIfUpsellAdded(){
+    this.data.allProducts.forEach((catProd:any) => {
+      this.data.cart.forEach((prod:any) => {
+        if(prod.products_id == catProd.products_id && prod.product_parent == 'upsell'){
+          catProd.isUpsellAdded = true;
+          catProd.customers_basket_id = prod.customers_basket_id;
+        }
+      });
+    });
+  }
+
+  setCartAddons(){
+    this.data.cart.forEach((prod:any) => {
+      if(prod.type == 'addon'){
+        let parentProduct = JSON.parse(prod.product_parent);
+        console.log(parentProduct);
+        this.data.cart.forEach((prodSub:any) => {
+          if(prodSub.customers_basket_id == parentProduct.basket_id){
+            prodSub.addonSubProducts.push(prod);
+          }
+        });
+      }
+    });
+    console.log(this.data.cart);
   }
 
   setSubTotalIfAddons(){
@@ -3289,16 +3352,58 @@ export class MethodsService {
 
   addAddon(parentProduct, product,qty){
     return new Promise((resolve, reject)=>{
-      console.log(parentProduct, product,qty);
       this.checkIfLoggedIn().then((usr)=>{
         if(qty <= +product.products_quantity){
           this.data.isProcessing = true;
+          let parentProd = {
+            id:parentProduct.products_id,
+            basket_id:parentProduct.basket_id
+          }
           let body = new FormData();
           body.append('customers_id', this.data.userInfo.customers_id);
           body.append('products_id', product.products_id);
           body.append('shipping_date', parentProduct.shipping_date);
           body.append('shipping_time', JSON.stringify(parentProduct.shipping_time));
           body.append('shipping_cost', '0');
+          body.append('type', 'addon');
+          body.append('product_parent', JSON.stringify(parentProd));
+          body.append('customers_basket_quantity', qty);
+          body.append('final_price', product.specials_new_products_price ? (+product.specials_new_products_price * +qty).toString() : (+product.products_price * +qty).toString());
+          this.api.post('addToCart', body).subscribe((res)=>{
+            console.log(res);
+            this.data.isProcessing = false;
+            this.showToast(body.get('customers_basket_quantity') + ' quantity of ' + product.products_name + 'is added to your cart');
+            this.getCart();
+            resolve(res);
+          }, (err)=>{
+            this.data.isProcessing = false;
+            console.log(err);
+          });
+        }
+        else{
+          this.showToast('Please add quantity less than available quantity of the product i.e. ' + product.products_quantity);
+        }
+      }).catch((err)=>{
+        this.data.isProcessing = false;
+        this.showToast('You are not logged in!');
+        reject(err);
+      });
+    });
+  }
+
+  addUpsell(product,qty){
+    return new Promise((resolve, reject)=>{
+      this.checkIfLoggedIn().then((usr)=>{
+        if(qty <= +product.products_quantity){
+          this.data.isProcessing = true;
+          let body = new FormData();
+          body.append('customers_id', this.data.userInfo.customers_id);
+          body.append('products_id', product.products_id);
+          body.append('shipping_date', product.shipping_date);
+          body.append('shipping_time', JSON.stringify(product.shipping_time));
+          body.append('shipping_cost', '0');
+          body.append('type', 'none');
+          body.append('product_parent', 'upsell');
           body.append('customers_basket_quantity', qty);
           body.append('final_price', product.specials_new_products_price ? (+product.specials_new_products_price * +qty).toString() : (+product.products_price * +qty).toString());
           this.api.post('addToCart', body).subscribe((res)=>{
@@ -3491,8 +3596,42 @@ export class MethodsService {
       }, (err)=>{
         this.data.isProcessing = false;
         console.log(err);
-      })
+      });
+
+      //remove addons if any
+      if(product.addonSubProducts && product.addonSubProducts.length){
+        product.addonSubProducts.forEach((prod) => {
+          let bodyAddon = {
+            customers_id:this.data.userInfo.customers_id,
+            products_id:prod.products_id,
+            customers_basket_id:prod.customers_basket_id
+          }
+
+          this.data.isProcessing = true;
+          this.api.post('deleteFromCart', bodyAddon).subscribe((res:any)=>{
+            this.data.isProcessing = false;
+            console.log(res);
+            if(res.success=='1'){
+              if(!alert){
+                this.showToast('1 Quantity of ' + product.products_name + 'has been removed from the cart successfully');
+              }
+              this.getCart().then((cart)=>{
+                this.removeCoupon();
+                this.data.appliedCoupon = undefined;
+                this.data.appliedCouponData = undefined;
+                this.data.couponFormOpened = false;
+              });
+            }
+          }, (err)=>{
+            this.data.isProcessing = false;
+            console.log(err);
+          });
+
+
+        });
+      }
     }).catch((err)=>{
+      console.log(err);
       this.data.isProcessing = false;
       this.showToast('Please Log in First');
       this.router.navigate(['/login']);

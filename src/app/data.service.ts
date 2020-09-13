@@ -8,6 +8,7 @@ import { Address } from 'ngx-google-places-autocomplete/objects/address';
 
 export class DataService {
   public isSelectedLocation:boolean = false;
+  public isSelectedLater:boolean = false;
   public journey:[] = [];
   public catalogApiCalled = 0;
   public catSlide = {
@@ -265,6 +266,10 @@ export class DataService {
   public isPopupSeen:boolean = false;
   public hasTempBanner:boolean = false;
   public totalBlogs:any;
+  public upsell_products = [];
+  public couponsModal:any;
+  public couponCode:string = '';
+  public isCouponPopup:boolean = false;
   constructor(public sanitize:DomSanitizer) {
     this.feeds[0].video = this.sanitize.bypassSecurityTrustResourceUrl(this.feeds[0].video);
    }

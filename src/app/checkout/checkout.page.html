@@ -10,8 +10,33 @@
     </div>
     <div *ngIf="data.userInfo && data.cart && data.cart.length" class="cartFilled">
       <div *ngIf="data.cartDiscount > 0" class="savedMoney">Congratulations! You have saved {{ data.cartDiscount | currency : 'INR' }} on your order!</div>
+      
+
+      <div class="upsell_products" *ngIf="data.upsell_products.length">
+        <div class="upsellBox" *ngFor="let prod of data.upsell_products" [class.active]="prod.isUpsellAdded">
+          <ion-list>
+            <ion-item lines="none">
+              <ion-label><strong>Yes! </strong>Add {{ prod.products_name }} with this order: 
+                <span class="price_upsell">
+                  <span>₹ {{ prod.specials_new_products_price ? prod.specials_new_products_price : prod.products_price }}</span>
+                  <span *ngIf="prod.specials_new_products_price && prod.specials_new_products_price!=prod.products_price"><del> ₹ {{ prod.products_price }}</del></span>
+                </span> 
+              </ion-label>
+              <ion-checkbox color="primary" slot="start" mode="md" color="px" (ionChange)="toggleUpsell($event, prod)" [value]="prod.products_id" [checked]="prod.isUpsellAdded"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+          <div class="upsell_product_row">
+            <img [src]="data.apiUrlNew+prod.products_image" />
+            <div class="upsell_details">
+              <p [innerHTML]="prod.products_description"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <ul>
-        <li *ngFor="let prod of data.cart; let i = index;">
+        <li *ngFor="let prod of data.cart | filterBy:cartFilter; let i = index;">
           <div class="fistSec">
             <div class="catRow">
               <span>Item {{ i+1 }}</span>
@@ -20,7 +45,7 @@
               <img [src]="data.apiUrlNew + prod.image" />
               <div class="detailsProd">
                 <h5>{{ prod.products_name }}</h5>
-                <h5 *ngIf="prod.weight != '0'">{{ prod.weight }} gm</h5>
+                <h5 *ngIf="prod.weight && prod.weight != '0'">{{ prod.weight }} gm</h5>
                 <h5>Qty : {{ prod.customers_basket_quantity }}</h5>
                 <div *ngIf="prod.attributes && prod.attributes.length" style="margin-top:3px;white-space: nowrap;">
                   <h3 class="addonHead">- Add on Options</h3>
@@ -33,13 +58,29 @@
                 <!-- <ion-icon name="trash" (click)="methods.removeFromCart(prod)"></ion-icon> -->
               </div>
             </div>
+            <div class="addonRow" *ngIf="prod.addonSubProducts && prod.addonSubProducts.length">
+              <h4>Addons</h4>
+              <div class="prodRow" *ngFor="let addonProd of prod.addonSubProducts">
+                <img [src]="data.apiUrlNew + addonProd.image" />
+              <div class="detailsProd">
+                <h5>{{ addonProd.products_name }}</h5>
+                <h5 *ngIf="addonProd.weight && addonProd.weight != '0'">{{ addonProd.weight }} gm</h5>
+                <h5>Qty : {{ addonProd.customers_basket_quantity }}</h5>
+              </div>
+              <div class="priceProd">
+                <strong *ngIf="+addonProd.final_price >= 1">₹ {{ addonProd.special_price ? (+addonProd.special_price).toFixed(2) : (+addonProd.price).toFixed(2) }}</strong>
+                  <strong *ngIf="+addonProd.final_price == 0"><del style="color:#000;font-size:11px;">₹ {{ (+addonProd.price).toFixed(2) }}</del><div style="color:#f5444c;">Free</div></strong>
+                <!-- <ion-icon name="trash" (click)="methods.removeFromCart(addonProd)"></ion-icon> -->
+              </div>
+              </div>
+            </div>
           </div>
           <div class="deliveryDetails">
             <h3>DELIVERY DATE</h3>
             <div class="detailsDate">
-              <strong>{{ prod.shipping_date | date }}</strong>
-              <span>{{ prod.shipping_cost == '200' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == '0' ? 'Free Delivery' : prod.shipping_cost == '250' ? 'Midnight Delivery' : '' }}</span>
-              <span>{{ prod.shipping_date | date:'shortTime' }}</span>
+              <strong *ngIf="prod.shipping_date && prod.shipping_date !== 'undefined'">{{ prod.shipping_date | date }}</strong>
+              <span *ngIf="prod.shipping_cost == 0 || (prod.shipping_cost && prod.shipping_cost !== 'undefined')">{{ prod.shipping_cost == '99' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == 0 ? 'Free Delivery' : prod.shipping_cost == '250' ? 'Midnight Delivery' : prod.shipping_cost == '149' ? 'Third Party Delivery' : 'Third Party Delivery' }} <s *ngIf="+prod.shipping_cost > 0" style="margin-right: 3px;">-</s> <strong class="currency_px" *ngIf="+prod.shipping_cost > 0"> {{ prod.shipping_cost | currency:'INR' }}</strong></span>
+              <span *ngIf="prod.shipping_time && prod.shipping_time !== 'undefined'">Between {{ prod.shipping_time.from }}:00 to {{ prod.shipping_time.to }}:00</span>
             </div>
           </div>
         </li>
@@ -97,7 +138,7 @@
             <ion-button color="tertiary" (click)="toggleCouponForm()">Apply Coupon<ion-icon name="ios-arrow-forward"></ion-icon></ion-button>
             <div class="couponForm" *ngIf="data.couponFormOpened">
               <h3>Enter Coupon Code</h3>
-              <input type="text" placeholder="Enter code here" [(ngModel)]="couponcode" id="couponCodeField">
+              <input type="text" placeholder="Enter code here" [(ngModel)]="data.couponCode" id="couponCodeField">
               <ion-button expand="full" color="tertiary" (click)="applyCoupon()">Apply</ion-button>
             </div>
           </div>

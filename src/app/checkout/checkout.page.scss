@@ -1,3 +1,7 @@
+.maincontent{
+    padding-left: 0;
+    padding-right: 0;
+}
 .cartFilled ul{
     margin:0;
     padding:0;
@@ -75,6 +79,7 @@
     justify-content: space-between;
     align-items: flex-end;
     flex:auto;
+    min-width:75px;
 }
 .priceProd strong{
     font-size:13px;

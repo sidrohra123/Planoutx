@@ -27,8 +27,9 @@
     </div>
   </div>
   <div class="cartFilled" *ngIf="data.cart.length">
+    <div class="appNotify"><ion-icon name="paper-plane"></ion-icon><span>plan 5 days prior to your occasion to get everything delivered at time</span></div>
     <ul>
-      <li *ngFor="let prod of data.cart; let i = index;">
+      <li *ngFor="let prod of data.cart | filterBy:cartFilter; let i = index;">
         <div class="fistSec">
           <div class="catRow">
             <span>Item {{ i+1 }}</span>
@@ -37,7 +38,7 @@
             <img [src]="data.apiUrlNew + prod.image" />
             <div class="detailsProd">
               <h5>{{ prod.products_name }}</h5>
-              <h5 *ngIf="prod.weight != '0'">{{ prod.weight }} gm</h5>
+              <h5 *ngIf="prod.weight && prod.weight != '0'">{{ prod.weight }} gm</h5>
               <h5>Qty : {{ prod.customers_basket_quantity }}</h5>
               <div *ngIf="prod.attributes && prod.attributes.length" style="margin-top:3px;white-space: nowrap;">
                 <h3 class="addonHead">- Add on Options</h3>
@@ -48,6 +49,22 @@
               <strong *ngIf="+prod.final_price >= 1">₹ {{ prod.special_price ? (+prod.special_price).toFixed(2) : (+prod.price).toFixed(2) }}</strong>
                 <strong *ngIf="+prod.final_price == 0"><del style="color:#000;font-size:11px;">₹ {{ (+prod.price).toFixed(2) }}</del><div style="color:#f5444c;">Free</div></strong>
               <ion-icon name="trash" (click)="methods.removeFromCart(prod)"></ion-icon>
+            </div>
+          </div>
+          <div class="addonRow" *ngIf="prod.addonSubProducts && prod.addonSubProducts.length">
+            <h4>Addons</h4>
+            <div class="prodRow" *ngFor="let addonProd of prod.addonSubProducts">
+              <img [src]="data.apiUrlNew + addonProd.image" />
+            <div class="detailsProd">
+              <h5>{{ addonProd.products_name }}</h5>
+              <h5 *ngIf="addonProd.weight && addonProd.weight != '0'">{{ addonProd.weight }} gm</h5>
+              <h5>Qty : {{ addonProd.customers_basket_quantity }}</h5>
+            </div>
+            <div class="priceProd">
+              <strong *ngIf="+addonProd.final_price >= 1">₹ {{ addonProd.special_price ? (+addonProd.special_price).toFixed(2) : (+addonProd.price).toFixed(2) }}</strong>
+                <strong *ngIf="+addonProd.final_price == 0"><del style="color:#000;font-size:11px;">₹ {{ (+addonProd.price).toFixed(2) }}</del><div style="color:#f5444c;">Free</div></strong>
+              <ion-icon name="trash" (click)="methods.removeFromCart(addonProd)"></ion-icon>
+            </div>
             </div>
           </div>
           <!-- <div class="frequentlySec" *ngIf="prod.addonProducts && prod.addonProducts.length">
@@ -74,7 +91,7 @@
           <h3>DELIVERY DATE</h3>
           <div class="detailsDate">
             <strong *ngIf="prod.shipping_date && prod.shipping_date !== 'undefined'">{{ prod.shipping_date | date }}</strong>
-            <span *ngIf="prod.shipping_cost == 0 || (prod.shipping_cost && prod.shipping_cost !== 'undefined')">{{ prod.shipping_cost == '200' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == 0 ? 'Free Delivery' : prod.shipping_cost == '250' ? 'Midnight Delivery' : prod.shipping_cost == '149' ? 'Third Party Delivery' : '' }}</span>
+            <span *ngIf="prod.shipping_cost == 0 || (prod.shipping_cost && prod.shipping_cost !== 'undefined')">{{ prod.shipping_cost == '99' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == 0 ? 'Free Delivery' : prod.shipping_cost == '250' ? 'Midnight Delivery' : prod.shipping_cost == '149' ? 'Third Party Delivery' : 'Third Party Delivery' }} <s *ngIf="+prod.shipping_cost > 0" style="margin-right: 3px;">-</s> <strong class="currency_px" *ngIf="+prod.shipping_cost > 0"> {{ prod.shipping_cost | currency:'INR' }}</strong></span>
             <span *ngIf="prod.shipping_time && prod.shipping_time !== 'undefined'">Between {{ prod.shipping_time.from }}:00 to {{ prod.shipping_time.to }}:00</span>
           </div>
         </div>

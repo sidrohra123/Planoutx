@@ -14,6 +14,7 @@ export class AddonsPage implements OnInit {
   products = [];
   addonCart = [];
   cartProduct:any;
+  addonSession:number;
   constructor(public methods:MethodsService, public data:DataService, public route:ActivatedRoute) { }
 
   ngOnInit() {
@@ -29,6 +30,7 @@ export class AddonsPage implements OnInit {
   }
 
   ionViewDidEnter(){
+    this.addonSession = Math.floor(Math.random()*2000);
     this.products = [];
     this.keepGettingCart((cart)=>{
       this.route.params.subscribe((params) => {
@@ -55,7 +57,7 @@ export class AddonsPage implements OnInit {
   }
 
   addAddon(parentProd,prod){
-    console.log(parentProd);
+    parentProd.basket_id = parentProd.customers_basket_id;
     this.methods.addAddon(parentProd,prod,1).then((result) => {
       this.addonCart.push(result);
     }).catch((err) => {

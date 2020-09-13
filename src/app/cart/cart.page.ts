@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 })
 export class CartPage implements OnInit {
 
+  cartFilter = {
+    type:'none'
+  }
   constructor(public methods:MethodsService, public data:DataService, public router:Router) { }
 
   ngOnInit() {

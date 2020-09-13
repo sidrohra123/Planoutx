@@ -1,3 +1,11 @@
+<ion-header translucent mode="md" *ngIf="data.isCouponPopup">
+  <ion-toolbar>
+    <ion-title size="small">Choose from your available coupons</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()" color="px">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <div class="maincontent couponsWrapper" *ngIf="userCoupons.length">
     <ul>

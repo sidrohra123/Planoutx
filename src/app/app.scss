@@ -736,3 +736,116 @@ ion-toast {
     color: #000000;
     line-height: 1.4;
 }
+
+.appNotify{
+    background: #f9cf4b;
+    font-weight: 600;
+    color: #000000;
+    font-size: 13px;
+    padding: 6px;
+    margin: 10px;
+    display: flex;
+    border-radius: 2px;
+    align-items: center;
+    letter-spacing: 0.5px;
+    box-shadow: 0px 1px 11px rgba(0,0,0,0.25);
+    ion-icon{
+        font-size: 70px;
+        width: 60px;
+        height: 35px;
+    }
+    span{
+        flex: auto;
+        padding-left: 6px;
+        text-transform: capitalize;
+    }
+}
+.currency_px{
+    color:var(--ion-color-px);
+}
+.addonRow{
+    padding: 10px 15px 0;
+    background: #ffffff;
+    margin-bottom: 4px;
+    > h4{
+        margin: 0 0 8px;
+        font-size: 15px;
+        color: #333;
+    }
+    > .prodRow{
+        &:first-child{
+            border-top: 1px solid #ccc;
+        }
+        padding: 6px 0px !important;
+         > .detailsProd{
+            justify-content: flex-start;
+         }
+    }
+}
+
+.upsellBox{
+    border: 2px dashed #f7c115;
+    margin: 10px;
+    ion-list{
+        margin-bottom: 0 !important;
+        margin-top: 0;
+        ion-item{
+            --padding-start: 8px;
+            --padding-end: 8px;
+            --inner-padding-end: 0;
+            --background: #fff4d3;
+        }
+    }
+    .price_upsell {
+        display: inline-block;
+        font-weight: 600;
+        color: #ff8100;
+        del{
+            font-weight:500;
+            padding-left:4px;
+            color:#979797;
+        }
+    }
+    ion-label{
+        white-space: normal!important;
+        font-size: 14px!important;
+        strong{
+            color: #ff8100;
+        }
+    }
+    .upsell_product_row{
+        align-items: flex-start;
+        padding: 10px;
+        display: none;
+        img{
+            max-width:100%;
+            width:70px;
+        }
+        .upsell_details{
+            flex: auto;
+            padding-left: 10px;
+            p{
+                margin:0;
+                font-size:13px;
+                line-height:1.3;
+            }
+        }
+    }
+}
+.upsellBox.active .upsell_product_row{
+    display:flex;
+}
+.couponsPopup{
+    .modal-wrapper{
+        margin: 15px;
+        height: 75vh;
+    }
+    .maincontent.couponsWrapper{
+        padding-top:0;
+    }
+    ion-header ion-title{
+        padding: 0 55px 0 10px;
+        text-align: left;
+        white-space: normal;
+    }
+}

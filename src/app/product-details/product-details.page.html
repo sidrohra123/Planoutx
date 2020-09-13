@@ -193,8 +193,8 @@
             <ion-icon name="create"></ion-icon>
           </div>
           <p *ngIf="data.userGeoLocation && !data.isEligibleLocation">Sorry we do not deliver in {{ data.userGeoLocation  }}</p>
-          <h4 *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167') && !data.selectedProduct.category_ids.includes('36')">Delivery on</h4>
-          <div class="deliveryDayTabs" *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167') && !data.selectedProduct.category_ids.includes('36')">
+          <h4 *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167')">Delivery on</h4>
+          <div class="deliveryDayTabs" *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167')">
             <div class="rowHead">
               <a href="javascript:void(0);" (click)="methods.changeDeliveryOpts('today')" [class.active]="data.selectedDay.name=='today'" *ngIf="currentTimeHour < (data.deliveryHours.to - 3)">Today</a>
               <a href="javascript:void(0);" (click)="methods.changeDeliveryOpts('tomorrow')" [class.active]="data.selectedDay.name=='tomorrow'">Tomorrow</a>
@@ -203,11 +203,11 @@
             <div class="deliveryBody">
               <span>Delivery options for: <strong>{{ data.selectedDay.date | date : 'd MMM, EEEE' }}</strong></span>
               <ion-list class="deliveryopts">
-                <ion-radio-group>
+                <ion-radio-group [value]="data.selectedDeliveryType.type" >
 
                   <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('1') || data.selectedProduct.delivery_option_ids.includes('1,') || data.selectedProduct.delivery_option_ids.includes(',1')">
                     <ion-label mode="md">Standard Delivery - <span>₹ 49</span></ion-label>
-                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="stdDel" checked></ion-radio>
+                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="stdDel" [checked]="data.selectedDeliveryType.type=='stdDel'"></ion-radio>
                   </ion-item>
 
                   <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('1') || data.selectedProduct.delivery_option_ids.includes('1,') || data.selectedProduct.delivery_option_ids.includes(',1')) && data.selectedDeliveryType.type=='stdDel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">
@@ -229,7 +229,7 @@
 
                   <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('4') || data.selectedProduct.delivery_option_ids.includes('4,') || data.selectedProduct.delivery_option_ids.includes(',4')">
                     <ion-label mode="md">Free Delivery - <span class="freeDel">Free</span></ion-label>
-                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="freedel"></ion-radio>
+                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="freedel" [checked]="data.selectedDeliveryType.type=='freedel'"></ion-radio>
                   </ion-item>  
 
                   <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('4') || data.selectedProduct.delivery_option_ids.includes('4,') || data.selectedProduct.delivery_option_ids.includes(',4')) && data.selectedDeliveryType.type=='freedel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">
@@ -251,7 +251,7 @@
                   
                   <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('2') || data.selectedProduct.delivery_option_ids.includes('2,') || data.selectedProduct.delivery_option_ids.includes(',2')">
                     <ion-label mode="md">Fixed Time Delivery - <span>₹ 99</span></ion-label>
-                    <ion-radio mode="md" slot="start" (ionSelect)="methods.selectDeliveryType($event)" value="fixDel"></ion-radio>
+                    <ion-radio mode="md" slot="start" (ionSelect)="methods.selectDeliveryType($event)" value="fixDel" [checked]="data.selectedDeliveryType.type=='fixedDel'"></ion-radio>
                   </ion-item>
 
                   <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('2') || data.selectedProduct.delivery_option_ids.includes('2,') || data.selectedProduct.delivery_option_ids.includes(',2')) && data.selectedDeliveryType.type=='fixDel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">
@@ -273,7 +273,7 @@
 
                   <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('5') || data.selectedProduct.delivery_option_ids.includes('5,') || data.selectedProduct.delivery_option_ids.includes(',5')">
                     <ion-label mode="md">Mid Night Delivery - <span>₹ 149</span></ion-label>
-                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="midnightDel"></ion-radio>
+                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="midnightDel" [checked]="data.selectedDeliveryType.type=='midnightDel'"></ion-radio>
                   </ion-item>
 
                   <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('5') || data.selectedProduct.delivery_option_ids.includes('5,') || data.selectedProduct.delivery_option_ids.includes(',5')) && data.selectedDeliveryType.type=='midnightDel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">
@@ -298,17 +298,17 @@
               </ion-list>
             </div>
           </div>
-          <h4 *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167') || data.selectedProduct.category_ids.includes('36'))">Expected Delivery</h4>
-          <div class="deliveryDatTabs" *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167') || data.selectedProduct.category_ids.includes('36'))">
-            <div class="shippingBox" *ngIf="!data.selectedProduct.category_ids.includes('167') && !data.selectedProduct.category_ids.includes('36')">
+          <h4 *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167'))">Expected Delivery</h4>
+          <div class="deliveryDatTabs" *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167') || data.selectedProduct.category_ids.includes(',2') || data.selectedProduct.category_ids == '2')">
+            <div class="shippingBox" *ngIf="!data.selectedProduct.category_ids.includes('167') && !data.selectedProduct.category_ids.includes('2')">
               Within 4 days | Expect it by {{ shippingDelivery | date:'mediumDate' }}
               <!-- Expect it by 30th June -->
             </div>
             <div class="shippingBox" *ngIf="data.selectedProduct.category_ids.includes('167')">
               Expect it by {{ shippingDeliveryDigital | date:'dd MMM yyyy' }} between 6:00pm-9:00pm
             </div>
-            <div class="shippingBox" *ngIf="data.selectedProduct.category_ids.includes('36')">
-              Expect it by {{ shippingDeliverySurprises | date:'dd MMM yyyy' }}
+            <div class="shippingBox" *ngIf="data.selectedProduct.category_ids.includes('2')">
+              Expect it by {{ shippingPartySupplies | date:'dd MMM yyyy' }}
             </div>
           </div>
         </div>
