@@ -88,7 +88,7 @@
       <div class="addressDetails">
         <h3>ADDRESS</h3>
         <div class="noAddress" *ngIf="!data.deliveryAddress && (!data.userInfo.addresses) || (data.userInfo.addresses && !data.userInfo.addresses.length)">
-          <ion-button color="tertiary" [routerLink]="['/addnewaddress']" [queryParams]="{next:'/checkout'}">ADD NEW ADDRESS<ion-icon name="ios-arrow-forward"></ion-icon></ion-button>
+          <ion-button color="tertiary" [routerLink]="['/profile/addnewaddress']" [queryParams]="{next:'/checkout'}">ADD NEW ADDRESS<ion-icon name="ios-arrow-forward"></ion-icon></ion-button>
         </div>
         <div class="hasAddress" *ngIf="data.deliveryAddress">
           <p>{{ data.deliveryAddress.firstname }}</p>

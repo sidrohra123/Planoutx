@@ -32,7 +32,7 @@ export class EnterpincodePage implements OnInit {
   handleAddressChange(address: Address){
     console.log(address);
     this.data.isEligibleLocation = false;
-    if(!this.qParams.categoryname.includes('167') && !this.qParams.categoryname.includes('2') && !this.qParams.categoryname.includes('33')){
+    if(this.qParams.categoryname && !this.qParams.categoryname.includes('167') && !this.qParams.categoryname.includes('2') && !this.qParams.categoryname.includes('33')){
       this.methods.getZones().then((states:any)=>{
         let hasPostalCode = false;
         if(address && address.address_components && address.address_components.length){
@@ -56,12 +56,12 @@ export class EnterpincodePage implements OnInit {
     else{
       this.address = address;
       this.data.isEligibleLocation = true;
+      this.methods.saveToDb('userLocation', this.address);
     }
   }
 
   toContinue(){
     if(this.address){
-      this.methods.saveToDb('userLocation', this.address);
       this.data.userGeoLocation = this.address.formatted_address;
       this.router.navigate([this.qParams.next.indexOf('lite') != -1 ? this.qParams.next.split('/lite').pop() : this.qParams.next]);
       this.data.isSelectedLocation = true;

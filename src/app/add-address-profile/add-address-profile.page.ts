@@ -26,6 +26,10 @@ export class AddAddressProfilePage implements OnInit {
   constructor(public data:DataService, public methods:MethodsService, public route:ActivatedRoute, public router:Router) { }
 
   ngOnInit() {
+    
+  }
+
+  ionViewDidEnter(){
     this.methods.fetchUserLocationFromDb().then((dat:any)=>{
       this.userFullLoc = dat;
       dat.address_components.forEach((comp)=>{
