@@ -97,6 +97,7 @@ export class ProductDetailsPage implements OnInit {
                 this.data.selectedProduct.isWishlisted = false;
                 this.methods.checkIfWishlisted(prod);
                 this.methods.checkIfProductEligibleForPassport();
+                if(!this.data.isSelectedLater){
                 if(!this.data.selectedProduct.category_ids.includes('167') && !this.data.selectedProduct.category_ids.includes('33')){
                   if(this.data.selectedProduct.delivery_option_ids!='3'){
                     if(this.data.selectedProduct.delivery_option_ids != '4'){
@@ -113,17 +114,27 @@ export class ProductDetailsPage implements OnInit {
                         !this.data.selectedProduct.availableSlots ? this.methods.createSlots('tomorrow', 'stdDel') : null;
                       }
                     } else {
-                      if(this.currentTimeHour < (this.data.deliveryHours.to - 3)){
-                        this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
-                        this.data.selectedDeliveryType.type = 'freedel';
-                        !this.data.selectedProduct.availableSlots ? this.methods.createSlots('today', 'freedel') : null;
-                      }
-                      else{
-                        this.data.selectedDay.name = 'tomorrow';
-                        this.data.selectedDay.date = Date.now() + 24 * 60 * 60 * 1000;
-                        this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
-                        this.data.selectedDeliveryType.type = 'freedel';
-                        !this.data.selectedProduct.availableSlots ? this.methods.createSlots('tomorrow', 'freedel') : null;
+                      if(!this.data.isSelectedLater){
+                        if(this.currentTimeHour < (this.data.deliveryHours.to - 3)){
+                          this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
+                          this.data.selectedDeliveryType.type = 'freedel';
+                          !this.data.selectedProduct.availableSlots ? this.methods.createSlots('today', 'freedel') : null;
+                        }
+                        else{
+                          this.data.selectedDay.name = 'tomorrow';
+                          this.data.selectedDay.date = Date.now() + 24 * 60 * 60 * 1000;
+                          this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
+                          this.data.selectedDeliveryType.type = 'freedel';
+                          !this.data.selectedProduct.availableSlots ? this.methods.createSlots('tomorrow', 'freedel') : null;
+                        }
+                      } else {
+                        if(this.data.selectedProduct.delivery_option_ids == '4'){
+                          this.data.selectedDeliveryType.type = 'freedel';
+                          this.methods.createSlots('tomorrow', 'freedel');
+                        } else {
+                          this.data.selectedDeliveryType.type = 'stdDel';
+                          this.methods.createSlots('tomorrow', 'stdDel');
+                        }
                       }
                     }
                   }
@@ -183,6 +194,15 @@ export class ProductDetailsPage implements OnInit {
                   }
                   this.data.selectedDeliveryType.type = 'Free Shipping';
                   this.data.selectedProduct.shipping_cost = '0';
+                }
+                } else {
+                  if(this.data.selectedProduct.delivery_option_ids == '4'){
+                    this.data.selectedDeliveryType.type = 'freedel';
+                    this.methods.createSlots('tomorrow', 'freedel');
+                  } else {
+                    this.data.selectedDeliveryType.type = 'stdDel';
+                    this.methods.createSlots('tomorrow', 'stdDel');
+                  }
                 }
                 this.methods.getRecommendedProductsByCatId(prod.categories_id);
                 if(this.data.selectedProduct.products_variant && this.data.selectedProduct.products_variant.length){

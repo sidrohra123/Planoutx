@@ -59,11 +59,12 @@
     flex:auto;
 }
 .detailsProd{
-    display:flex;
-    padding-left:15px;
+    display: flex;
+    padding-left: 15px;
     flex-flow: column;
     justify-content: space-between;
-    flex:auto;
+    flex: auto;
+    max-width: 60%;
 }
 .detailsProd h5{
     font-size:12px;
