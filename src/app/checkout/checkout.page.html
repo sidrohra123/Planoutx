@@ -79,7 +79,7 @@
             <h3>DELIVERY DATE</h3>
             <div class="detailsDate">
               <strong *ngIf="prod.shipping_date && prod.shipping_date !== 'undefined'">{{ prod.shipping_date | date }}</strong>
-              <span *ngIf="prod.shipping_cost == 0 || (prod.shipping_cost && prod.shipping_cost !== 'undefined')">{{ prod.shipping_cost == '99' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == 0 ? 'Free Delivery' : prod.shipping_cost == '250' ? 'Midnight Delivery' : prod.shipping_cost == '149' ? 'Third Party Delivery' : 'Third Party Delivery' }} <s *ngIf="+prod.shipping_cost > 0" style="margin-right: 3px;">-</s> <strong class="currency_px" *ngIf="+prod.shipping_cost > 0"> {{ prod.shipping_cost | currency:'INR' }}</strong></span>
+              <span *ngIf="prod.shipping_cost == 0 || (prod.shipping_cost && prod.shipping_cost !== 'undefined')">{{ prod.shipping_cost == '99' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == 0 ? 'Free Delivery' : prod.shipping_cost == '149' ? 'Midnight Delivery' : 'Third Party Delivery' }} <s *ngIf="+prod.shipping_cost > 0" style="margin-right: 3px;">-</s> <strong class="currency_px" *ngIf="+prod.shipping_cost > 0"> {{ prod.shipping_cost | currency:'INR' }}</strong></span>
               <span *ngIf="prod.shipping_time && prod.shipping_time !== 'undefined'">Between {{ prod.shipping_time.from }}:00 to {{ prod.shipping_time.to }}:00</span>
             </div>
           </div>

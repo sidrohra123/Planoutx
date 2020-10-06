@@ -2740,7 +2740,7 @@ export class MethodsService {
           console.log(res);
           if(res.status=="OK"){
             // this.showToast(res.error_message);
-            if(!this.data.selectedProduct.category_ids.includes('167') && !this.data.selectedProduct.category_ids.includes('2') && !this.data.selectedProduct.category_ids.includes('33')){
+            if(!this.data.selectedProduct.category_ids.includes('167') && this.data.selectedProduct.category_ids !== '2' && !this.data.selectedProduct.category_ids.includes('33')){
               this.getZones().then((states:any)=>{
                 let hasPostalCode = false;
                 this.data.isEligibleLocation = false;

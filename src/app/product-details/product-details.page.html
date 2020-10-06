@@ -301,7 +301,7 @@
           <h4 *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167'))">Expected Delivery</h4>
           <div class="deliveryDatTabs" *ngIf="data.userGeoLocation && (data.selectedProduct.delivery_option_ids=='3' || data.selectedProduct.category_ids.includes('167') || data.selectedProduct.category_ids.includes(',2') || data.selectedProduct.category_ids == '2')">
             <div class="shippingBox" *ngIf="!data.selectedProduct.category_ids.includes('167') && !data.selectedProduct.category_ids.includes('2')">
-              Within 4 days | Expect it by {{ shippingDelivery | date:'mediumDate' }}
+              Expect it by {{ shippingDelivery | date:'mediumDate' }}
               <!-- Expect it by 30th June -->
             </div>
             <div class="shippingBox" *ngIf="data.selectedProduct.category_ids.includes('167')">
