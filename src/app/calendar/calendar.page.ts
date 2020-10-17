@@ -126,7 +126,9 @@ export class CalendarPage {
 
   selectedDays = [];
 
-  constructor(public data:DataService, private router:Router, private _location: Location, public methods:MethodsService) {}
+  constructor(public data:DataService, private router:Router, private _location: Location, public methods:MethodsService) {
+    //this.viewDate.setDate(this.viewDate.getDate()+2);
+  }
 
   dayClicked(day: CalendarMonthViewDay): void {
     day.cssClass = 'active';
@@ -187,6 +189,19 @@ export class CalendarPage {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+
+  dateIsValid(date: Date): boolean {
+    return date.getDate() < date.setDate(date.getDate()+2);
+    ;
+  }
+
+  applyDateSelectionPolicy({ body }: { body: CalendarMonthViewDay[] }): void{
+    body.forEach(day => {
+      if (!this.dateIsValid(day.date)) {
+        day.isPast = true;
+      }
+    });
   }
 
 }
