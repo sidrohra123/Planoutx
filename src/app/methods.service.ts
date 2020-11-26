@@ -3811,7 +3811,8 @@ export class MethodsService {
       totalPrice:this.data.cartSubTotal,
       total_tax:'0',
       order_type:'3',
-      cashback_amount:'0'
+      cashback_amount:'0',
+      coupon_data:[]
     };
     this.getProductsFromCart();
     if(orderType == 'paytm' || orderType == 'online' || orderType == 'cod'){
@@ -3823,6 +3824,7 @@ export class MethodsService {
       this.data.Order['deductable_amount'] = (walletAmount).toFixed(2);
       this.data.Order['totalPrice'] = +this.data.cartSubTotal > 0 ? (((+this.data.cartSubTotal - +this.data.cartDiscount) +this.data.cartShippingTotal) - walletAmount).toFixed(2) : (this.data.cartShippingTotal - walletAmount).toFixed(2);
     }
+    this.data.Order.coupon_data = this.data.appliedCouponData || [];
     console.log(this.data.Order);
     const newBody = new FormData();
     for ( var key in this.data.Order ) {
@@ -3935,7 +3937,8 @@ export class MethodsService {
       this.data.Order['products['+i+'][products_name]'] = item.products_name,
       this.data.Order['products['+i+'][price]'] = item.price,
       this.data.Order['products['+i+'][final_price]'] = item.final_price,
-      this.data.Order['products['+i+'][customers_basket_quantity]'] = item.customers_basket_quantity
+      this.data.Order['products['+i+'][customers_basket_quantity]'] = item.customers_basket_quantity;
+      this.data.Order['products['+i+'][variant_chosen]'] = item.variant_chosen;
     //set attributes if any
       item.attributes.forEach((attr, j)=>{
         this.data.Order['products['+i+'][attributes]['+j+'][products_options_id]'] = attr.options_id;
@@ -4267,7 +4270,8 @@ export class MethodsService {
         totalPrice:plan.amount,
         total_tax:'0',
         order_type:'2',
-        cashback_amount:'0'
+        cashback_amount:'0',
+        coupon_data:[]
       };
       console.log(this.data.Order);
       const newBody = new FormData();

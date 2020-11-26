@@ -214,7 +214,8 @@ export class DataService {
     total_tax:string,
     language_id:string,
     order_type:string,
-    cashback_amount:string
+    cashback_amount:string,
+    coupon_data:Array<[]>
   }
   public isNewUser:boolean = false;
   public phoneNum = '';
