@@ -2,7 +2,7 @@
   <div class="maincontent">
     <div class="walletBlnc text-center" *ngIf="data.userInfo && totalAmt">
       <h3>Total Wallet Balance</h3>
-      <h5>{{ totalAmt | currency : 'INR' }}</h5>
+      <h5>{{ +data.userWalletBalance | currency : 'INR' }}</h5>
     </div>
     <div class="walletUser" *ngIf="data.userInfo && history.length">
       <div class="transactBox" *ngFor="let trans of history">

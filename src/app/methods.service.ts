@@ -4173,10 +4173,11 @@ export class MethodsService {
         });
       });
       console.log(eligibleItem);
-      if(eligibleItem){
+      if(!coupon.product_free_ids && !eligibleItem){
         resolve(true);
-      }
-      else{
+      } else if(coupon.product_free_ids && eligibleItem){
+        resolve(true);
+      } else{
         reject(false);
       }
       //reject(false);

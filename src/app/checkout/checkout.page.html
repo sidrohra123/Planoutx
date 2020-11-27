@@ -75,7 +75,7 @@
               </div>
             </div>
           </div>
-          <div class="deliveryDetails">
+          <div class="deliveryDetails" *ngIf="prod.product_parent != 'upsell'">
             <h3>DELIVERY DATE</h3>
             <div class="detailsDate">
               <strong *ngIf="prod.shipping_date && prod.shipping_date !== 'undefined'">{{ prod.shipping_date | date }}</strong>
