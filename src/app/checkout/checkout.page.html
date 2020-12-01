@@ -151,6 +151,36 @@
   </div>
 </ion-content>
 
+<div class="pxPopup" *ngIf="data.isFreeProductEligible">
+  <span class="pxOverlay" (click)="data.isFreeProductEligible = false;"></span>
+  <div class="pxPopupContent">
+    <h3>Choose your free Product</h3>
+    <div class="productsArea productsSec" *ngIf="data.freeProducts.length">
+      <ion-grid style="padding:0;">
+        <ion-row>
+          <ion-col size="6" *ngFor="let product of data.freeProducts">
+            <div class="prodBox ion-activatable" (click)="methods.applyFreeProductCoupon(product)">
+              <ion-ripple-effect></ion-ripple-effect>
+              <div class="prodImage">
+                <span class="badge" *ngIf="product.products_tags">{{ product.products_tags }}</span>
+                <img [src]="data.apiUrlNew + product.products_image" />
+              </div>
+              <div class="prodDetails text-center">
+                <h5>{{ product.products_name }}</h5>
+                <h6>₹ {{ product.specials_new_products_price ? product.specials_new_products_price : product.products_price }}</h6>
+                <div class="offerTag" *ngIf="product.specials_new_products_price && product.products_price!=product.specials_new_products_price"><del>₹ {{ product.products_price }}</del><span>{{ (((+product.products_price - +product.specials_new_products_price)/+product.products_price)*100).toFixed(0) }}% OFF</span></div>
+                <div class="availNowCta">
+                  <ion-button expand="block" size="small" fill="outline" color="tertiary">Add</ion-button>
+                </div>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</div>
+
 <ion-footer *ngIf="data.cart.length">
   <div class="checkoutBtn">
     <ion-button color="tertiary" expand="full" shape="undefined" size="large" (click)="validateandplace()">PLACE ORDER</ion-button>

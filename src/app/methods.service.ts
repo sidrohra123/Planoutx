@@ -3857,11 +3857,13 @@ export class MethodsService {
               this.processLogin().then((user)=>{
                 console.log(user);
                 self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+                // self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
               });
             });
           }
           else{
             self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+            // self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
           }
         }
         else if(this.data.Order.payment_method=='paytm'){
@@ -3872,11 +3874,13 @@ export class MethodsService {
               this.processLogin().then((user)=>{
                 console.log(user);
                 self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+                // self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
               });
             });
           }
           else{
             self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+            // self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
           }
         }
       }
@@ -4116,8 +4120,12 @@ export class MethodsService {
         if((!res.data) || (res.data && !res.data.length)){
           this.showToast(res.message);
           this.data.isProcessing = false;
-        }
-        else{
+        } else if(res.data && res.data.length && res.data[0].free_product > 0){
+          //free product case
+          console.log('free product');
+          this.applyCouponForFreeProduct(res.data[0]);
+          this.data.isProcessing = false;
+        } else{
           //coupon valid
           this.validateAllCasesOfCoupon(res.data[0]).then((valid)=>{
             this.data.isProcessing = true;
@@ -4181,6 +4189,62 @@ export class MethodsService {
         reject(false);
       }
       //reject(false);
+    });
+  }
+
+  applyCouponForFreeProduct(coupon){
+    this.data.couponDetails = coupon;
+    let eligibleCats = coupon.product_categories.split(',');
+    let cartTotal = +this.data.cartSubTotal;
+    let eligibleTotal = +coupon.minimum_amount;
+    let isCatEligible = false;
+    if(cartTotal >= eligibleTotal){
+      this.data.cart.forEach((prod:any) => {
+        if(eligibleCats.includes(prod.categories_product_id)){
+          isCatEligible = true;
+        }
+      });
+      if(!isCatEligible){
+        this.showToast('Cart is not eligible to apply this coupon');
+      } else {
+        this.data.isFreeProductEligible = true;
+        let maxProductsAmount = +coupon.free_product_amount;
+        let prodCategory = coupon.product_free_categories;
+        this.data.freeProducts = [];
+        this.data.allProducts.forEach((prod:any) => {
+          prod.category_ids.split(',').forEach((cat) => {
+            if(cat == prodCategory && +prod.products_price <= maxProductsAmount){
+              this.data.freeProducts.push(prod);
+            }
+          });
+        });
+      }
+    } else {
+      this.showToast('Order amount is less than ₹'+eligibleTotal.toFixed(2)+'.');
+    }
+  }
+
+  applyFreeProductCoupon(product){
+    this.data.isProcessing = true;
+    let couponType = this.data.couponDetails.discount_type;
+    let bodyOFValidCouopon= {
+      coupon_code:this.data.couponDetails.code.toUpperCase(),
+      coupon_amount:couponType == 'percent' || couponType == 'wallet' || couponType == 'membership_coupon' ? this.data.cartSubTotal*(+this.data.couponDetails.amount/100) : this.data.couponDetails.amount,
+      customer_id:this.data.userInfo.customers_id,
+      customers_basket_id:this.data.cart[0]['customers_basket_id'],
+      free_product:product.products_id
+    }
+    this.api.post('applyCoupon', bodyOFValidCouopon).subscribe((coup:any)=>{
+      this.data.isProcessing = false;
+      console.log(coup);
+      if(coup.data && coup.data.coupon_data){
+        this.data.appliedCoupon = coup.data.coupon_data;
+        this.data.freeProducts = [];
+        this.data.isFreeProductEligible = false;
+        this.getCart().then((cart)=>{
+          this.showToast(coup.message);
+        });
+      }
     });
   }
 

@@ -271,6 +271,9 @@ export class DataService {
   public couponsModal:any;
   public couponCode:string = '';
   public isCouponPopup:boolean = false;
+  public isFreeProductEligible:boolean = false;
+  public freeProducts:Array<any> = [];
+  public couponDetails:any;
   constructor(public sanitize:DomSanitizer) {
     this.feeds[0].video = this.sanitize.bypassSecurityTrustResourceUrl(this.feeds[0].video);
    }
