@@ -3254,6 +3254,7 @@ export class MethodsService {
             this.setCartDiscount();
             this.setCartAddons();
             this.checkIfUpsellAdded();
+            this.checkForFreeProducts();
             resolve(res.data);
           }
           else{
@@ -3275,6 +3276,23 @@ export class MethodsService {
         if(prod.products_id == catProd.products_id && prod.product_parent == 'upsell'){
           catProd.isUpsellAdded = true;
           catProd.customers_basket_id = prod.customers_basket_id;
+        }
+      });
+    });
+  }
+
+  checkForFreeProducts(){
+    this.data.freeProductDetails = undefined;
+    this.data.allProducts.forEach((catProd:any) => {
+      this.data.cart.forEach((prod:any) => {
+        if(prod.applied_coupons && prod.applied_coupons.length){
+          prod.applied_coupons.forEach((coup) => {
+            if(coup.coupon_cake_id != 0 && coup.coupon_type == 'free-product'){
+              if(catProd.products_id == coup.coupon_cake_id){
+                this.data.freeProductDetails = catProd;
+              }
+            }
+          });
         }
       });
     });
@@ -3856,14 +3874,14 @@ export class MethodsService {
               console.log(prodsAvailed);
               this.processLogin().then((user)=>{
                 console.log(user);
-                self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-                // self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
+                //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+                 self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
               });
             });
           }
           else{
-            self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-            // self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
+            //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+             self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
           }
         }
         else if(this.data.Order.payment_method=='paytm'){
@@ -3873,14 +3891,14 @@ export class MethodsService {
               console.log(prodsAvailed);
               this.processLogin().then((user)=>{
                 console.log(user);
-                self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-                // self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
+                //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+                 self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
               });
             });
           }
           else{
-            self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-            // self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
+            //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+             self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
           }
         }
       }
@@ -4232,7 +4250,7 @@ export class MethodsService {
       coupon_amount:couponType == 'percent' || couponType == 'wallet' || couponType == 'membership_coupon' ? this.data.cartSubTotal*(+this.data.couponDetails.amount/100) : this.data.couponDetails.amount,
       customer_id:this.data.userInfo.customers_id,
       customers_basket_id:this.data.cart[0]['customers_basket_id'],
-      free_product:product.products_id
+      coupon_cake_id:product.products_id
     }
     this.api.post('applyCoupon', bodyOFValidCouopon).subscribe((coup:any)=>{
       this.data.isProcessing = false;
@@ -4245,6 +4263,11 @@ export class MethodsService {
           this.showToast(coup.message);
         });
       }
+    }, (err) => {
+      this.data.isProcessing = false;
+      this.showToast('Error applying coupon. Please try again.');
+      this.data.freeProducts = [];
+      this.data.isFreeProductEligible = false;
     });
   }
 

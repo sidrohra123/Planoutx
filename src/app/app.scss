@@ -882,3 +882,27 @@ ion-toast {
         }
     }
 }
+.freeProduct{
+    h3{
+        font-size: 14px !important;
+        width: 100%;
+        flex: 100% 0 1;
+        margin: 0px 0 5px!important;
+    }
+    ion-grid{
+        border-bottom:1px solid #ccc;
+    }
+    h4{
+        font-size:13px;
+        margin:0;
+    }
+    p{
+        margin:5px 0 0;
+        font-size:12px;
+        b{
+            margin-left:2px;
+            color:var(--ion-color-px);
+            text-transform: uppercase;
+        }
+    }
+}

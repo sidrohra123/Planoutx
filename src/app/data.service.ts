@@ -274,6 +274,7 @@ export class DataService {
   public isFreeProductEligible:boolean = false;
   public freeProducts:Array<any> = [];
   public couponDetails:any;
+  public freeProductDetails:any;
   constructor(public sanitize:DomSanitizer) {
     this.feeds[0].video = this.sanitize.bypassSecurityTrustResourceUrl(this.feeds[0].video);
    }

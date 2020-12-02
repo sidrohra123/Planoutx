@@ -18,6 +18,7 @@
         <p>Order shipping - {{ summary.order[0].shipping_cost | currency:'INR' }}</p>
         <p *ngIf="+summary.order[0].deduct_from_wallet > 0">Wallet Discount - {{ (+summary.order[0].deduct_from_wallet) | currency:'INR' }}</p>
         <p>Order total - {{ +summary.order[0].order_price | currency:'INR' }}</p>
+        <p><a target="_blank" download href="{{data.apiUrlNew}}viewOrderPdf/{{summary.order[0].orders_id}}.pdf" color="px">Download Invoice</a></p>
       </ion-card-content>
     </ion-card>
     <ion-card class="cashback_msg" *ngIf="+summary.order[0].cashback_amount >= 1">

@@ -125,6 +125,20 @@
             <strong>Coupon Applied</strong>
             <span><b style="color:var(--ion-color-px);font-size:13px;">{{ data.appliedCouponData.code }}</b></span>
           </div>
+          <div *ngIf="data.freeProductDetails" class="freeProduct">
+            <h3>Free Product Details</h3>
+            <ion-grid style="padding:0;">
+              <ion-row>
+                <ion-col size="3">
+                  <img [src]="data.apiUrlNew+data.freeProductDetails.products_image">
+                </ion-col>
+                <ion-col size="9">
+                  <h4>{{ data.freeProductDetails.products_name }}</h4>
+                  <p><del>{{ data.freeProductDetails.products_price | currency : 'INR' }}</del><b>Free</b></p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
           <div>
             <strong>Shipping</strong>
             <span *ngIf="data.cartShippingTotal != '0'">₹ {{ (data.cartShippingTotal).toFixed(2) }}</span>
