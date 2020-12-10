@@ -576,6 +576,7 @@ export class MethodsService {
         this.data.otpToSend = '';
         this.data.receivedOtp = '';
         this.data.qParams && this.data.qParams.next ? this.router.navigateByUrl(this.data.qParams.next) : this.router.navigate(['/']);
+        this.data.isNewSignup = true;
       }
     }, (err)=>{
       this.data.isProcessing = false;
@@ -2411,6 +2412,7 @@ export class MethodsService {
             this.data.userInfo = user;
             // this.data.selectedLocation = user.location ? user.location : this.router.navigate(['/locations']);
             resolve(user);
+            this.data.isFirstTimeUser = false;
           }
           else{
             reject('Not a user');
@@ -3830,7 +3832,7 @@ export class MethodsService {
       total_tax:'0',
       order_type:'3',
       cashback_amount:'0',
-      coupon_data:[]
+      coupon_data:''
     };
     this.getProductsFromCart();
     if(orderType == 'paytm' || orderType == 'online' || orderType == 'cod'){
@@ -3842,7 +3844,7 @@ export class MethodsService {
       this.data.Order['deductable_amount'] = (walletAmount).toFixed(2);
       this.data.Order['totalPrice'] = +this.data.cartSubTotal > 0 ? (((+this.data.cartSubTotal - +this.data.cartDiscount) +this.data.cartShippingTotal) - walletAmount).toFixed(2) : (this.data.cartShippingTotal - walletAmount).toFixed(2);
     }
-    this.data.Order.coupon_data = this.data.appliedCouponData || [];
+    this.data.Order.coupon_data = JSON.stringify(this.data.appliedCouponData) || '';
     console.log(this.data.Order);
     const newBody = new FormData();
     for ( var key in this.data.Order ) {
@@ -4359,7 +4361,7 @@ export class MethodsService {
         total_tax:'0',
         order_type:'2',
         cashback_amount:'0',
-        coupon_data:[]
+        coupon_data:''
       };
       console.log(this.data.Order);
       const newBody = new FormData();

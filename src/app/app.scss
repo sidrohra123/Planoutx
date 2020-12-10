@@ -906,3 +906,61 @@ ion-toast {
         }
     }
 }
+.imagePop{
+    position: fixed;
+    z-index:9999;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    .popOverlay{
+        position: fixed;
+        z-index:1;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+        background:rgba(0,0,0,0.75);
+        animation: opacer 0.45s ease both;
+    }
+    .popContent{
+        background: #fff;
+        margin: 20px 15px 0;
+        border-radius: 4px;
+        padding: 5px;
+        position: relative;
+        z-index: 2;
+        top: 10%;
+        animation: popper 0.6s ease both;
+        img{
+            max-width:100%;
+            display:block;
+        }
+        .popCloser{
+            position: absolute;
+            top:0;
+            right:0;
+            margin:-10px;
+            border-radius: 50%;
+            width:25px;
+            height:25px;
+            background: #fff;
+            display: block;
+            ion-icon{
+                font-size: 25px;
+            }
+        }
+    }
+}
+@keyframes opacer{
+    from{
+        opacity:0.2;
+    }
+}
+@keyframes popper{
+    from{
+        transform:translateY(40%);
+        opacity:0.6;
+        filter:blur(5px);
+    }
+}

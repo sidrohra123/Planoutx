@@ -196,7 +196,7 @@
           <h4 *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167')">Delivery on</h4>
           <div class="deliveryDayTabs" *ngIf="data.userGeoLocation && data.isEligibleLocation && data.selectedProduct.delivery_option_ids!='3' && !data.selectedProduct.category_ids.includes('167')">
             <div class="rowHead">
-              <a href="javascript:void(0);" (click)="methods.changeDeliveryOpts('today')" [class.active]="data.selectedDay.name=='today'" *ngIf="currentTimeHour < (data.deliveryHours.to - 3)">Today</a>
+              <a href="javascript:void(0);" (click)="methods.changeDeliveryOpts('today')" [class.active]="data.selectedDay.name=='today'" *ngIf="currentTimeHour < (data.deliveryHours.to - 3) && !data.selectedProduct.category_ids.includes('32')">Today</a>
               <a href="javascript:void(0);" (click)="methods.changeDeliveryOpts('tomorrow')" [class.active]="data.selectedDay.name=='tomorrow'">Tomorrow</a>
               <a href="javascript:void(0);" (click)="methods.changeDeliveryOpts('later')" [class.active]="data.selectedDay.name=='later'">Later</a>
             </div>

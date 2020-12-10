@@ -35,9 +35,9 @@ export class AppComponent {
     window.onresize = ()=>{
       this.methods.checkIfMobile();
     };
+    this.methods.checkIfLoggedIn();
     this.methods.getCatalog().then(()=>{
       this.methods.initFirebase();
-      this.methods.checkIfLoggedIn();
       this.methods.getUserBalance();
       this.methods.getUserAddresses();
       this.methods.getOrders();
@@ -50,6 +50,16 @@ export class AppComponent {
     }).catch((err)=>{
       console.log(err);
     });
+    this.checkFirstTimeUser();
+  }
+
+  checkFirstTimeUser(){
+    let firstTimeUser = localStorage.getItem('firstPopupInteracted');
+    if(firstTimeUser == null){
+      this.data.isFirstTimeUser = true;
+    } else {
+      this.data.isFirstTimeUser = false;
+    }
   }
 
   initializeApp() {
@@ -73,5 +83,14 @@ export class AppComponent {
 
   sendToWhatsapp(){
     self.location.href = 'https://api.whatsapp.com/send?phone=918920547957&text=Hey, I need your help in making our moments more special and memorable!';
+  }
+
+  setFirstTimeUser(){
+    localStorage.setItem('firstPopupInteracted', 'true');
+    this.data.isFirstTimeUser = false;
+  }
+
+  setCakeVisited(){
+    this.data.isNewSignup = false;
   }
 }

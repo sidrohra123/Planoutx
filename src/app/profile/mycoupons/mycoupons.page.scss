@@ -55,15 +55,17 @@
                 overflow: hidden;
             }
             > .couponDetails{
-                padding:0 10px;
-                flex: 65% 0 1;
-                padding-right:20px;
+                padding: 0 10px;
+                flex: 80% 0 1;
+                padding-right: 20px;
                 > h3{
-                    margin:0;
-                    font-size:12px;
+                    margin: 0;
+                    font-size: 14px;
+                    font-weight: 600;
+                    text-transform: uppercase;
                 }
                 > p{
-                    margin: 3px 0 0;
+                    margin: 5px 0 0;
                     font-size: 13px;
                 }
                 &:after{
@@ -75,12 +77,16 @@
                     background: #fff;
                     left: calc(65% + 34px);
                     border-radius: 50%;
-                    opacity: 0.4;
+                    opacity: 0;
+                    visibility: hidden;
                 }
             }
             .couponDiscount{
                 text-align:center;
                 flex:auto;
+                opacity:0;
+                visibility: hidden;
+                display:none;
                 > h1{
                     margin:0;
                     font-weight: 700;

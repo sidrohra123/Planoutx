@@ -65,7 +65,7 @@
         <ion-grid class="subcategories mainCategories" *ngIf="(!data.allFiltered.selectedSubCategory || data.allFiltered.selectedSubCategory && !data.allFiltered.selectedSubCategory.id) && data.allFiltered.subcategories && data.allFiltered.subcategories.length">
             <ion-row>
                 <ion-col size="12" *ngIf="data.allFiltered.selectedCategory && data.allFiltered.selectedCategory.show_banner == '1'">
-                    <div class="bannerBox ion-activatable" [routerLink]="['/blogDetails', data.allFiltered.selectedCategory.link_to_blog]">
+                    <div class="bannerBox ion-activatable">
                         <ion-ripple-effect></ion-ripple-effect>
                         <img [src]="data.apiUrlNew + data.allFiltered.selectedCategory.categories_banner" />
                     </div>

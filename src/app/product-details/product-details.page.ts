@@ -98,7 +98,7 @@ export class ProductDetailsPage implements OnInit {
                 this.methods.checkIfWishlisted(prod);
                 this.methods.checkIfProductEligibleForPassport();
                 if(!this.data.isSelectedLater){
-                if(!this.data.selectedProduct.category_ids.includes('167') && !this.data.selectedProduct.category_ids.includes('33')){
+                if(!this.data.selectedProduct.category_ids.includes('167') && !this.data.selectedProduct.category_ids.includes('33') && !this.data.selectedProduct.category_ids.includes('32')){
                   if(this.data.selectedProduct.delivery_option_ids!='3'){
                     if(this.data.selectedProduct.delivery_option_ids != '4'){
                       if(this.currentTimeHour < (this.data.deliveryHours.to - 3)){
@@ -163,7 +163,7 @@ export class ProductDetailsPage implements OnInit {
                   }
                 }
                 else{
-                   if(this.data.selectedProduct.category_ids.includes('2')){
+                   if(this.data.selectedProduct.category_ids.includes(',2') || this.data.selectedProduct.category_ids.includes(',2,')){
                     this.data.selectedProduct.shipping_date = this.shippingPartySupplies;
                     this.data.selectedProduct.shipping_time = {
                       from:9,
@@ -181,6 +181,12 @@ export class ProductDetailsPage implements OnInit {
                       from:9,
                       to:22
                     };
+                  } else if(this.data.selectedProduct.category_ids.includes('32')){
+                    this.data.selectedDay.name = 'tomorrow';
+                    this.data.selectedDay.date = Date.now() + 24 * 60 * 60 * 1000;
+                    this.data.selectedProduct.shipping_date = this.data.selectedDay.date;
+                    this.data.selectedDeliveryType.type = 'freedel';
+                    !this.data.selectedProduct.availableSlots ? this.methods.createSlots('tomorrow', 'stdDel') : null;
                   } else {
                     this.data.selectedProduct.shipping_date = currentDate.setHours(currentDate.getHours()+16);
                     // this.data.selectedProduct.shipping_time = {

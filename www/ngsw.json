@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1606905403894,
+  "timestamp": 1607628351434,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -104,10 +104,10 @@
         "/common.a01b0bbc43abaf9c4d4b.js",
         "/es2015-polyfills.6cca5b9dcec9db3bf554.js",
         "/index.html",
-        "/main.0ce7a0bd1c24278a3921.js",
+        "/main.ce7987ddd126274fb6ef.js",
         "/polyfills.ce3eae1bf6ccc0d89752.js",
         "/runtime.61469d47d84a0bedd8b5.js",
-        "/styles.79a3d730a839b4da835c.css"
+        "/styles.508a6a8a3337f8b57e8d.css"
       ],
       "patterns": []
     },
@@ -168,6 +168,8 @@
         "/assets/loading/13498-new-year-party.json",
         "/assets/loading/5602-credit-card-party.json",
         "/assets/loading/7991-fixed-scheduling.json",
+        "/assets/popups/1.png",
+        "/assets/popups/2.png",
         "/assets/shapes.svg",
         "/heartcolored.34ecc56eba188f60d9c8.svg"
       ],
@@ -321,15 +323,17 @@
     "/assets/loading/13498-new-year-party.json": "fe2a8987eedd66ba76779c14d7f39698b8c6a8db",
     "/assets/loading/5602-credit-card-party.json": "4b141adf0588f8c8d904fd1ab8be5be95dcdbfaa",
     "/assets/loading/7991-fixed-scheduling.json": "de70c2ace6ae0bf5cc3da2d216337f031b4ede10",
+    "/assets/popups/1.png": "8f99dbaa98487aee1e323137bee419be7cf2e498",
+    "/assets/popups/2.png": "8fb97270a23ae3bae552d33790ceef4b23c42d12",
     "/assets/shapes.svg": "638f87e27e6fc7ddfd6e6b262ea70d690f6c7011",
     "/common.a01b0bbc43abaf9c4d4b.js": "64fde8fc442ccd74659edbd00ac33ddec26b19a1",
     "/es2015-polyfills.6cca5b9dcec9db3bf554.js": "d898d8e3cf4c13553ee900e3f782263dad51588a",
     "/heartcolored.34ecc56eba188f60d9c8.svg": "e7f7f9baf05d5a33d7b00d0b8137d5577081317e",
-    "/index.html": "e3db983e80e99c2456ec7388a367099b1153c779",
-    "/main.0ce7a0bd1c24278a3921.js": "f4b106ce40654866b56a30aeda417d9a5c1afeb5",
+    "/index.html": "513afa6fe1802d4d5f9a29256da8426176cd92a4",
+    "/main.ce7987ddd126274fb6ef.js": "06c1d5712a827bd8a161ba7b013e3763d0a28fb6",
     "/polyfills.ce3eae1bf6ccc0d89752.js": "8d61dcfa9c306eef6f65c23f393c1b62b12eb87d",
     "/runtime.61469d47d84a0bedd8b5.js": "325795a7a99c002c296b33ef777cf95649f80dae",
-    "/styles.79a3d730a839b4da835c.css": "b825548c7945ff6ad25448f903bd9ed9772290d2"
+    "/styles.508a6a8a3337f8b57e8d.css": "0bc0bc2420ac915041690ddcaf5f8f80f96bb7e3"
   },
   "navigationUrls": [
     {

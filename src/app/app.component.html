@@ -28,4 +28,22 @@
             <ion-icon name="logo-whatsapp"></ion-icon>
         </ion-fab-button>
     </ion-fab>
+
+    <div class="imagePop" *ngIf="!data.userInfo && data.isFirstTimeUser">
+        <span class="popOverlay"></span>
+        <div class="popContent ion-activatable" [routerLink]="['/login']" (click)="setFirstTimeUser()">
+            <span class="popCloser" (click)="setFirstTimeUser()"><ion-icon name="close"></ion-icon></span>
+            <ion-ripple-effect></ion-ripple-effect>
+            <img src="assets/popups/1.png" />
+        </div>
+    </div>
+
+    <div class="imagePop" *ngIf="data.isNewSignup">
+        <span class="popOverlay"></span>
+        <div class="popContent ion-activatable" [routerLink]="['/shop/cakes']" (click)="setCakeVisited()">
+            <span class="popCloser" (click)="setCakeVisited()"><ion-icon name="close"></ion-icon></span>
+            <ion-ripple-effect></ion-ripple-effect>
+            <img src="assets/popups/2.png" />
+        </div>
+    </div>
 </ion-app>

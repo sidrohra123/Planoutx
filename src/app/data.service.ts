@@ -215,7 +215,7 @@ export class DataService {
     language_id:string,
     order_type:string,
     cashback_amount:string,
-    coupon_data:Array<[]>
+    coupon_data:string
   }
   public isNewUser:boolean = false;
   public phoneNum = '';
@@ -275,6 +275,8 @@ export class DataService {
   public freeProducts:Array<any> = [];
   public couponDetails:any;
   public freeProductDetails:any;
+  public isFirstTimeUser:boolean = false;
+  public isNewSignup:boolean = false;
   constructor(public sanitize:DomSanitizer) {
     this.feeds[0].video = this.sanitize.bypassSecurityTrustResourceUrl(this.feeds[0].video);
    }
