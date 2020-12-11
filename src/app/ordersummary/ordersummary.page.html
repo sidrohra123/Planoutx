@@ -13,7 +13,7 @@
         <h2>Order Details</h2>
         <hr>
         <p>Order Id - PLN{{ summary.order[0].orders_id }}</p>
-        <p>Order Date - {{ summary.order[0].date_purchased | date : 'dd MMM yyyy, hh:mm:a' }}</p>
+        <p>Order Date - {{ methods.toIST(summary.order[0].date_purchased) | date : 'dd MMM yyyy, hh:mm a' }}</p>
         <p>Order subotal - {{ (+summary.order[0].order_price + +summary.order[0].deduct_from_wallet - +summary.order[0].shipping_cost | currency:'INR') }}</p>
         <p>Order shipping - {{ summary.order[0].shipping_cost | currency:'INR' }}</p>
         <p *ngIf="+summary.order[0].deduct_from_wallet > 0">Wallet Discount - {{ (+summary.order[0].deduct_from_wallet) | currency:'INR' }}</p>

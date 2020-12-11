@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1607628351434,
+  "timestamp": 1607712988615,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -104,7 +104,7 @@
         "/common.a01b0bbc43abaf9c4d4b.js",
         "/es2015-polyfills.6cca5b9dcec9db3bf554.js",
         "/index.html",
-        "/main.ce7987ddd126274fb6ef.js",
+        "/main.08f084e29e5375621966.js",
         "/polyfills.ce3eae1bf6ccc0d89752.js",
         "/runtime.61469d47d84a0bedd8b5.js",
         "/styles.508a6a8a3337f8b57e8d.css"
@@ -166,6 +166,7 @@
         "/assets/loading/11504-birthday.json",
         "/assets/loading/12389-happy-holidays.json",
         "/assets/loading/13498-new-year-party.json",
+        "/assets/loading/16305-payment-failed.json",
         "/assets/loading/5602-credit-card-party.json",
         "/assets/loading/7991-fixed-scheduling.json",
         "/assets/popups/1.png",
@@ -321,6 +322,7 @@
     "/assets/loading/11504-birthday.json": "f0583ee408c06f46a3b74c85ddf7c37f6a41d64c",
     "/assets/loading/12389-happy-holidays.json": "7bd91a2ac782deaf6682e8afd7b4f8fef5513102",
     "/assets/loading/13498-new-year-party.json": "fe2a8987eedd66ba76779c14d7f39698b8c6a8db",
+    "/assets/loading/16305-payment-failed.json": "62e51a08e9fdb35065cee664cfcf19c2c9f160c4",
     "/assets/loading/5602-credit-card-party.json": "4b141adf0588f8c8d904fd1ab8be5be95dcdbfaa",
     "/assets/loading/7991-fixed-scheduling.json": "de70c2ace6ae0bf5cc3da2d216337f031b4ede10",
     "/assets/popups/1.png": "8f99dbaa98487aee1e323137bee419be7cf2e498",
@@ -329,8 +331,8 @@
     "/common.a01b0bbc43abaf9c4d4b.js": "64fde8fc442ccd74659edbd00ac33ddec26b19a1",
     "/es2015-polyfills.6cca5b9dcec9db3bf554.js": "d898d8e3cf4c13553ee900e3f782263dad51588a",
     "/heartcolored.34ecc56eba188f60d9c8.svg": "e7f7f9baf05d5a33d7b00d0b8137d5577081317e",
-    "/index.html": "513afa6fe1802d4d5f9a29256da8426176cd92a4",
-    "/main.ce7987ddd126274fb6ef.js": "06c1d5712a827bd8a161ba7b013e3763d0a28fb6",
+    "/index.html": "2a4e4b24e4dab88386b4abc37bcdc7276c794564",
+    "/main.08f084e29e5375621966.js": "bf9172554ef8af55e855ef0a319eba53815e6a0c",
     "/polyfills.ce3eae1bf6ccc0d89752.js": "8d61dcfa9c306eef6f65c23f393c1b62b12eb87d",
     "/runtime.61469d47d84a0bedd8b5.js": "325795a7a99c002c296b33ef777cf95649f80dae",
     "/styles.508a6a8a3337f8b57e8d.css": "0bc0bc2420ac915041690ddcaf5f8f80f96bb7e3"

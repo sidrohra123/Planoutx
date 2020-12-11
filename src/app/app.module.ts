@@ -89,6 +89,7 @@ import { OtherplansPage } from './passport/otherplans/otherplans.page';
 import { DesktopfooterPage } from './desktopfooter/desktopfooter.page';
 import { DesktopProductPage } from './desktop-product/desktop-product.page';
 import { AddonsPage } from './addons/addons.page';
+import { OrderfailedPage } from './orderfailed/orderfailed.page';
 
 
 @NgModule({
@@ -153,7 +154,8 @@ import { AddonsPage } from './addons/addons.page';
     OtherplansPage,
     DesktopfooterPage,
     DesktopProductPage,
-    AddonsPage
+    AddonsPage,
+    OrderfailedPage
   ],
   entryComponents: [
     SortProductsComponent,

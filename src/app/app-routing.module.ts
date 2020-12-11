@@ -48,6 +48,7 @@ import { CakedetailsPage } from './passport/availcakes/cakedetails/cakedetails.p
 import { MycouponsPage } from './profile/mycoupons/mycoupons.page';
 import { SitemapPage } from './sitemap/sitemap.page';
 import { AddonsPage } from './addons/addons.page';
+import { OrderfailedPage } from './orderfailed/orderfailed.page';
 
 const routes: Routes = [
   {path:'tutorials', component:TutorialsPage},
@@ -96,6 +97,7 @@ const routes: Routes = [
   { path: 'payment-options', component:PaymentOptionsPage },
   { path: 'saved-address', component:SavedAddressPage },
   { path: 'thankyou/summary/:id', component:OrdersummaryPage },
+  { path: 'orderfailed/summary/:id', component:OrderfailedPage },
   { path: 'profile/userorders', component:UserordersPage },
   { path: 'profile/userorders/order-details/:id', component:OrderDetailsPage },
   { path: 'profile/savedaddresses', component:SavedaddressesprofilePage },
@@ -109,6 +111,7 @@ const routes: Routes = [
   { path: 'passport/availcakes', component:AvailcakesPage },
   { path: 'passport/availcakes/:cakeName', component:CakedetailsPage },
   { path: 'sitemap', component:SitemapPage }
+
 ];
 
 @NgModule({

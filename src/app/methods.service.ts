@@ -3844,13 +3844,14 @@ export class MethodsService {
       this.data.Order['deductable_amount'] = (walletAmount).toFixed(2);
       this.data.Order['totalPrice'] = +this.data.cartSubTotal > 0 ? (((+this.data.cartSubTotal - +this.data.cartDiscount) +this.data.cartShippingTotal) - walletAmount).toFixed(2) : (this.data.cartShippingTotal - walletAmount).toFixed(2);
     }
-    this.data.Order.coupon_data = JSON.stringify(this.data.appliedCouponData) || '';
+    this.data.Order.coupon_data = JSON.stringify(this.data.appliedCoupon) || '';
     console.log(this.data.Order);
     const newBody = new FormData();
     for ( var key in this.data.Order ) {
       newBody.append(key, this.data.Order[key]);
     }
-    newBody.append('callback_url', location.origin+'/thankyou');
+    // newBody.append('callback_url', location.origin+'/thankyou');
+    newBody.append('callback_url', this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id);
     console.log(this.data.Order);
     this.data.isProcessing = true;
     this.api.post('addToOrder', newBody).subscribe((res:any)=>{
@@ -3877,13 +3878,13 @@ export class MethodsService {
               this.processLogin().then((user)=>{
                 console.log(user);
                 //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-                 self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
+                 self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
               });
             });
           }
           else{
             //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-             self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
+             self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
           }
         }
         else if(this.data.Order.payment_method=='paytm'){
@@ -3894,13 +3895,13 @@ export class MethodsService {
               this.processLogin().then((user)=>{
                 console.log(user);
                 //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-                 self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
+                 self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
               });
             });
           }
           else{
             //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-             self.location.href=this.data.apiUrlNew+'payStatus/'+res.data.orders_id;
+             self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
           }
         }
       }
@@ -3963,6 +3964,9 @@ export class MethodsService {
       this.data.Order['products['+i+'][final_price]'] = item.final_price,
       this.data.Order['products['+i+'][customers_basket_quantity]'] = item.customers_basket_quantity;
       this.data.Order['products['+i+'][variant_chosen]'] = item.variant_chosen;
+      this.data.Order['products['+i+'][shipping_cost]'] = item.shipping_cost;
+      this.data.Order['products['+i+'][shipping_date]'] = item.shipping_date;
+      this.data.Order['products['+i+'][shipping_time]'] = item.shipping_time;
     //set attributes if any
       item.attributes.forEach((attr, j)=>{
         this.data.Order['products['+i+'][attributes]['+j+'][products_options_id]'] = attr.options_id;
@@ -4680,6 +4684,16 @@ export class MethodsService {
     this.sw.activated.subscribe((event) => {
       console.log('current', event.previous, 'available', event.current);
     });
+  }
+
+  toIST(date){
+    var dateUTC = new Date(date);
+    var dateUTCTimeStamp = dateUTC.getTime() 
+    var dateIST = new Date(dateUTCTimeStamp);
+    //date shifting for IST timezone (+5 hours and 30 minutes)
+    dateIST.setHours(dateIST.getHours() + 5); 
+    dateIST.setMinutes(dateIST.getMinutes() + 30);
+    return new Date(dateIST);
   }
 }
 

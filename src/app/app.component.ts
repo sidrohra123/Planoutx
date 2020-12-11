@@ -54,12 +54,14 @@ export class AppComponent {
   }
 
   checkFirstTimeUser(){
-    let firstTimeUser = localStorage.getItem('firstPopupInteracted');
-    if(firstTimeUser == null){
-      this.data.isFirstTimeUser = true;
-    } else {
-      this.data.isFirstTimeUser = false;
-    }
+    setTimeout(()=>{
+      let firstTimeUser = localStorage.getItem('firstPopupInteracted');
+      if(firstTimeUser == null){
+        this.data.isFirstTimeUser = true;
+      } else {
+        this.data.isFirstTimeUser = false;
+      }
+    },15000);
   }
 
   initializeApp() {
