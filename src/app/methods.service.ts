@@ -3966,7 +3966,7 @@ export class MethodsService {
       this.data.Order['products['+i+'][variant_chosen]'] = item.variant_chosen;
       this.data.Order['products['+i+'][shipping_cost]'] = item.shipping_cost;
       this.data.Order['products['+i+'][shipping_date]'] = item.shipping_date;
-      this.data.Order['products['+i+'][shipping_time]'] = item.shipping_time;
+      this.data.Order['products['+i+'][shipping_time]'] = JSON.stringify(item.shipping_time);
     //set attributes if any
       item.attributes.forEach((attr, j)=>{
         this.data.Order['products['+i+'][attributes]['+j+'][products_options_id]'] = attr.options_id;
@@ -4034,11 +4034,11 @@ export class MethodsService {
         }
         this.api.post('getOrderById', body).subscribe((res:any)=>{
           this.hideLoading()
-          if(res.data && res.data.length){
+          if(res.data){
             this.data.cart && this.data.cart.length ? this.data.cart.forEach((item)=>{
               this.removeFromCart(item, 'noalert');
             }) : null;
-            resolve(res.data[0]);
+            resolve(res);
           }
         }, (err)=>{
           this.hideLoading()

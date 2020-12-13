@@ -32,10 +32,13 @@ export class OrdersummaryPage implements OnInit {
     this.route.params.subscribe((params)=>{
       if(params.id){
         this.methods.getOrderById(params.id).then((summ:any)=>{
-          console.log(summ);
           // this.anim.play();
-          if(summ.data && summ.data.length){
+          if(summ.data){
             this.summary = summ;
+            if(this.summary.data.coupon_data){
+              this.summary.data.coupon_data = JSON.parse(this.summary.data.coupon_data);
+            }
+            console.log(this.summary);
             this.data.cart && this.data.cart.length ? this.data.cart.forEach((item)=>{
               this.methods.removeFromCart(item, 'noalert');
             }) : this.methods.getCart().then((cart)=>{

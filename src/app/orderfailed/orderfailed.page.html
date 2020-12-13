@@ -14,12 +14,13 @@
       <ion-card-content>
         <!-- <h2>Order Details</h2> -->
         <!-- <hr> -->
-        <p>Order Id - PLN{{ summary.order[0].orders_id }}</p>
-        <p>Order Date - {{ summary.order[0].date_purchased | date : 'dd MMM yyyy, hh:mm:a' }}</p>
-        <p>Order subotal - {{ (+summary.order[0].order_price + +summary.order[0].deduct_from_wallet - +summary.order[0].shipping_cost | currency:'INR') }}</p>
-        <p>Order shipping - {{ summary.order[0].shipping_cost | currency:'INR' }}</p>
-        <p *ngIf="+summary.order[0].deduct_from_wallet > 0">Wallet Discount - {{ (+summary.order[0].deduct_from_wallet) | currency:'INR' }}</p>
-        <p>Order total - {{ +summary.order[0].order_price | currency:'INR' }}</p>
+        <p>Order Id - PLN{{ summary.data.orders_id }}</p>
+        <p>Order Date - {{ summary.data.date_purchased | date : 'dd MMM yyyy, hh:mm:a' }}</p>
+        <p>Order subotal - {{ (+summary.subtotal | currency:'INR') }}</p>
+        <p *ngIf="summary.data.coupon_data && summary.data.coupon_data.coupon_amount > 0">Coupon discount - {{ (+summary.data.coupon_data.coupon_amount | currency:'INR') }}</p>
+        <p *ngIf="+summary.data.deduct_from_wallet > 0">Wallet Discount - {{ (+summary.data.deduct_from_wallet) | currency:'INR' }}</p>
+        <p>Order shipping - {{ summary.data.shipping_cost | currency:'INR' }}</p>
+        <p>Order total - {{ +summary.total_price | currency:'INR' }}</p>
         <ion-button color="tertiary" expand="block" style="margin-top:10px;" (click)="retryOrder()">Retry here</ion-button>
       </ion-card-content>
     </ion-card>

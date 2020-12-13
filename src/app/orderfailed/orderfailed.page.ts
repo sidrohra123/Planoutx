@@ -26,10 +26,13 @@ export class OrderfailedPage implements OnInit {
     this.route.params.subscribe((params)=>{
       if(params.id){
         this.methods.getOrderById(params.id).then((summ:any)=>{
-          console.log(summ);
           // this.anim.play();
-          if(summ.data && summ.data.length){
+          if(summ.data){
             this.summary = summ;
+            if(this.summary.data.coupon_data){
+              this.summary.data.coupon_data = JSON.parse(this.summary.data.coupon_data);
+            }
+            console.log(this.summary);
           }
         });
       }
@@ -46,7 +49,7 @@ export class OrderfailedPage implements OnInit {
   }
 
   retryOrder(){
-    self.location.href=this.data.apiUrlNew+'payStatus/'+this.summary.order[0].orders_id;
+    self.location.href=this.data.apiUrlNew+'payStatus/'+this.summary.data.orders_id;
   }
 
 }
