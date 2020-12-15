@@ -3051,9 +3051,9 @@ export class MethodsService {
             res.data.forEach((wallet)=>{
               amount = amount + +wallet.amount;
               this.data.userInfo.amount = amount.toString();
-              //this.data.userWalletBalance = amount.toString();
+              this.data.userWalletBalance = amount.toString();
             });
-            this.data.userWalletBalance = res.user_balance;
+            //this.data.userWalletBalance = res.user_balance;
             resolve(res.data);
           }
         }, (err)=>{
