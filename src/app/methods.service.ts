@@ -4156,7 +4156,7 @@ export class MethodsService {
             let couponType = res.data[0].discount_type;
             let bodyOFValidCouopon= {
               coupon_code:coupon.toUpperCase(),
-              coupon_amount:couponType == 'percent' || couponType == 'wallet' || couponType == 'membership_coupon' ? this.data.cartSubTotal*(+res.data[0].amount/100) : res.data[0].amount,
+              coupon_amount:couponType == 'percent' || couponType == 'wallet' || couponType == 'membership_coupon' ? res.data[0].amount : res.data[0].amount,
               customer_id:this.data.userInfo.customers_id,
               customers_basket_id:this.data.cart[0]['customers_basket_id']
             }
