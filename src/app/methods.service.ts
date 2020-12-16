@@ -3877,14 +3877,14 @@ export class MethodsService {
               console.log(prodsAvailed);
               this.processLogin().then((user)=>{
                 console.log(user);
-                //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-                 self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
+                self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+                 //self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
               });
             });
           }
           else{
-            //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-             self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
+            self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+             //self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
           }
         }
         else if(this.data.Order.payment_method=='paytm'){
@@ -3894,14 +3894,14 @@ export class MethodsService {
               console.log(prodsAvailed);
               this.processLogin().then((user)=>{
                 console.log(user);
-                //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-                 self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
+                self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+                // self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
               });
             });
           }
           else{
-            //self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
-             self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
+            self.location.href=this.data.apiUrlNew+'payme/'+res.data.orders_id;
+             //self.location.href=this.data.apiUrlNew+'payStatus/'+this.data.userInfo.customers_id;
           }
         }
       }
