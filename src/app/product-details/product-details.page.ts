@@ -91,6 +91,9 @@ export class ProductDetailsPage implements OnInit {
               if(name==params.name){
                 console.log(prod);
                 this.data.selectedProduct = prod;
+                if(this.data.selectedProduct.products_quantity == '0'){
+                  this.notifyMe(false);
+                }
                 this.methods.generateMetaDetails('product', this.data.selectedProduct.products_id);
                 this.slideChanged();
                 //this.methods.fetchUserLocationFromDb();
@@ -388,7 +391,7 @@ export class ProductDetailsPage implements OnInit {
     },700);
   }
 
-  notifyMe(){
+  notifyMe(isShow){
     let data = {
       name:'',
       email:'',
@@ -399,7 +402,7 @@ export class ProductDetailsPage implements OnInit {
       data.email = this.data.userInfo.customers_email_address;
       data.feedback = 'I want this product back in stock '+JSON.stringify(this.data.selectedProduct);
     });
-    this.methods.sendForm(data).then((dat)=>{
+    this.methods.sendForm(data, isShow).then((dat)=>{
       
     });
   }

@@ -111,6 +111,10 @@ html {
     padding-top: 100px;
 }
 
+.searchOpened.HomePage .maincontent{
+    padding-top: 148px;
+}
+
 .text-center {
     text-align: center;
 }
@@ -963,4 +967,18 @@ ion-toast {
         opacity:0.6;
         filter:blur(5px);
     }
+}
+.appBenefits{
+    padding: 0 10px;
+    background: linear-gradient(#f7c215, #96760e);
+    color: #fff;
+    position: relative;
+    z-index: 1;
+    font-size: 11px;
+    text-align: center;
+    text-transform: uppercase;
+    height: 48px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
 }

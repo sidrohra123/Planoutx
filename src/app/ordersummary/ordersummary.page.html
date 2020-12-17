@@ -38,15 +38,27 @@
       </ion-card-content>
     </ion-card>
     <ion-list *ngIf="summary.data.data.length">
-      <h2>Order Items</h2>
-      <ion-item *ngFor="let prod of summary.data.data">
-        <ion-thumbnail slot="start">
+      <h2 style="padding: 0 0px 6px;font-size: 18px;border-bottom: 1px solid #ccc;margin: 10px 15px 10px;">Order Items</h2>
+      <ion-item *ngFor="let prod of summary.data.data" class="ion-align-items-stretch" style="margin-bottom:15px;">
+        <ion-thumbnail slot="start" style="position: absolute;top: 0;width:56px;">
           <img [src]="data.apiUrlNew + prod.image">
         </ion-thumbnail>
-        <ion-label>
-          <h3>{{ prod.products_name }}</h3>
-          <p>Quantity: {{ prod.products_quantity }}</p>
-          <p>Price: ₹{{ prod.final_price }}</p>
+        <ion-label style="margin-top:0;padding-left:70px;">
+          <h3 style="font-size: 12px;text-overflow: ellipsis;overflow: hidden;text-transform: uppercase;">{{ prod.products_name }}</h3>
+          <p style="font-size: 12px;text-overflow: ellipsis;overflow: hidden;">Quantity: {{ prod.products_quantity }}</p>
+          <p style="font-size: 12px;text-overflow: ellipsis;overflow: hidden;">Price: ₹{{ prod.final_price }}</p>
+          <div *ngIf="prod.attribute && prod.attribute.length" style="    margin-top: 3px;white-space: nowrap;color: #525252;">
+            <h3 class="addonHead" style="font-size:13px;">- Add on Options</h3>
+            <h5 *ngFor="let attr of prod.attribute" style="font-size:12px;"><strong><span class="dotted">•</span> {{ attr.products_options_values_name }}</strong>, + {{ attr.options_values_price | currency : 'INR' }}</h5>
+          </div>
+          <div class="deliveryDetails">
+            <h3>DELIVERY DATE</h3>
+            <div class="detailsDate">
+              <strong *ngIf="prod.shipping_date && prod.shipping_date !== 'undefined'">{{ prod.shipping_date | date }}</strong>
+              <span *ngIf="+prod.shipping_cost == 0 || (prod.shipping_cost && prod.shipping_cost !== 'undefined')">{{ prod.shipping_cost == '99' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == 0 ? 'Free Delivery' : prod.shipping_cost == '149' ? 'Midnight Delivery' : 'Third Party Delivery' }} <s *ngIf="+prod.shipping_cost > 0" style="margin-right: 3px;">-</s> <strong class="currency_px" *ngIf="+prod.shipping_cost > 0"> {{ prod.shipping_cost | currency:'INR' }}</strong></span>
+              <span *ngIf="prod.shipping_time && prod.shipping_time.from && prod.shipping_time !== 'undefined'">Between {{ prod.shipping_time.from }}:00 to {{ prod.shipping_time.to }}:00</span>
+            </div>
+          </div>
         </ion-label>
       </ion-item>
     </ion-list>

@@ -12,7 +12,7 @@
    !router.url.includes('/filter'))"></app-header>
     <app-menu></app-menu>
     <ion-router-outlet [animated]="false" mode="md" id="menu-content" [class.autoHeight]="router.url.includes('/product/') || router.url.includes('trending') || router.url=='/passport' || router.url.includes('eveyrthing') || router.url.includes('/shop') || router.url.includes('cart') || router.url.includes('/filter') || router.url.includes('/checkout') || router.url.includes('/payment-options') || router.url.includes('/login') || router.url.includes('passport/availcakes') || router.url.includes('addons')"
-        (activate)="onNavStart()"></ion-router-outlet>
+        (activate)="onNavStart($event)" (deactivate)="onNavEnd($event)"></ion-router-outlet>
     <!-- <div class="planoutPop" id=planoutPass *ngIf="!router.url.includes('login') && !router.url.includes('tutorials')">
     <h3><ion-icon name="close" (click)="methods.closePopup()"></ion-icon> <span>Buy Planout Passport Now</span></h3>
     <ion-button color="tertiary">Buy Now</ion-button>

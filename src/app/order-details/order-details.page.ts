@@ -29,11 +29,22 @@ export class OrderDetailsPage implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params)=>{
       if(params.id){
-        this.methods.getOrderFromListById(params.id, (order)=>{
-          console.log(order);
+        this.methods.getOrderById(params.id).then((order:any)=>{
+          this.data.isProcessing = false;
           this.order = order;
-          this.calculateEligibilityforReturn(order);
-        });
+          if(this.order.data.coupon_data){
+            this.order.data.coupon_data = JSON.parse(this.order.data.coupon_data);
+          }
+          if(this.order.data.data && this.order.data.data.length){
+            this.order.data.data.forEach((prod) => {
+              if(prod.shipping_time){
+                prod.shipping_time = JSON.parse(prod.shipping_time);
+              }
+            });
+          }
+          console.log(order);
+          this.calculateEligibilityforReturn(order.data);
+        }).catch(e=>this.data.isProcessing = false);
       }
     })
   }

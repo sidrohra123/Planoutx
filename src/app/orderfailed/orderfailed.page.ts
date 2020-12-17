@@ -49,7 +49,8 @@ export class OrderfailedPage implements OnInit {
   }
 
   retryOrder(){
-    self.location.href=this.data.apiUrlNew+'payStatus/'+this.summary.data.orders_id;
+    //self.location.href=this.data.apiUrlNew+'payStatus/'+this.summary.data.orders_id;
+    this.router.navigate(['/checkout'])
   }
 
 }

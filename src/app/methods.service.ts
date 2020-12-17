@@ -4303,7 +4303,7 @@ export class MethodsService {
     }
   }
 
-  sendForm(details){
+  sendForm(details, isShow?){
     return new Promise((resolve,reject)=>{
       this.checkIfLoggedIn().then((usr)=>{
         let body = {
@@ -4318,7 +4318,7 @@ export class MethodsService {
           console.log(res);
           if(res.success=='1' && res.query_data){
             resolve(res);
-            this.showToast(details.responseMessage ? details.responseMessage : 'We have received your request and will revert you shortly.');
+            isShow ? this.showToast(details.responseMessage ? details.responseMessage : 'We have received your request and will revert you shortly.') : null;
           }
         }, (err)=>{
           this.data.isProcessing = false;

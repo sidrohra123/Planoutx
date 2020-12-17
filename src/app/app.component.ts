@@ -78,9 +78,16 @@ export class AppComponent {
     this.anim = e;
   }
 
-  onNavStart(){
+  onNavStart(e){
     this.data.multilottieConfig['path'] = this.data.loadingAnimPaths[Math.floor(Math.random()*this.data.loadingAnimPaths.length)];
     this.methods.generateCanonical();
+    let compName = e.constructor.name
+    document.body.classList.add(compName)
+  }
+
+  onNavEnd(e){
+    let compName = e.constructor.name
+    document.body.classList.remove(compName)
   }
 
   sendToWhatsapp(){

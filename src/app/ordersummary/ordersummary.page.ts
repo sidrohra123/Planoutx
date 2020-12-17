@@ -38,6 +38,13 @@ export class OrdersummaryPage implements OnInit {
             if(this.summary.data.coupon_data){
               this.summary.data.coupon_data = JSON.parse(this.summary.data.coupon_data);
             }
+            if(this.summary.data.data && this.summary.data.data.length){
+              this.summary.data.data.forEach((prod) => {
+                if(prod.shipping_time){
+                  prod.shipping_time = JSON.parse(prod.shipping_time);
+                }
+              });
+            }
             console.log(this.summary);
             this.data.cart && this.data.cart.length ? this.data.cart.forEach((item)=>{
               this.methods.removeFromCart(item, 'noalert');

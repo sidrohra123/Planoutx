@@ -4,6 +4,11 @@
     <ion-button color="tertiary" (click)="methods.closeTempPopup()">Ok</ion-button>
   </div>
 </div>
+<div class="appBenefits" *ngIf="router.url == '/'">
+  <div>
+    Planoutx promise : Same day & contactless delivery - Easy returns & refunds - Instant support - Quirkiest surprises
+  </div>
+</div>
 <ion-header [class.openedSearch]="data.isSubHeaderOpened">
   <ion-toolbar class="mainHeader" color="tertiary">
     <ion-buttons slot="start">

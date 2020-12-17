@@ -3,40 +3,56 @@
     <div class="orderDetails" *ngIf="order">
       <div class="whiteCard">
         <h3>Recipient Details</h3>
-        <p>{{ order.delivery_name }}</p>
-        <p>{{ order.delivery_street_address }}</p>
-        <p>{{ order.delivery_city }}, {{ order.delivery_postcode }}</p>
-        <p>Mobile: {{ order.customers_telephone }}</p>
+        <p>{{ order.data.delivery_name }}</p>
+        <p>{{ order.data.delivery_street_address }}</p>
+        <p>{{ order.data.delivery_city }}, {{ order.data.delivery_postcode }}</p>
+        <p>Mobile: {{ order.data.customers_telephone }}</p>
+      </div>
+      <div class="whiteCard" *ngIf="+order.data.cashback_amount >= 1" [routerLink]="['/profile/wallethistory']">
+        <h3>Congratulations! You have got <strong>{{ +order.data.cashback_amount | currency:'INR' }}</strong> cashback on this order. Please check your wallet.</h3>
       </div>
       <div class="whiteCard">
         <h3>Products</h3>
-        <div class="orderBody" *ngFor="let prod of order.data">
+        <div class="orderBody" *ngFor="let prod of order.data.data">
           <div class="imageOrder">
             <img [src]="data.apiUrlNew+prod.image" />
           </div>
           <div class="prodDetails">
             <p>{{ prod.products_name }} </p>
             <p><strong>Price:</strong> <span>₹ {{ prod.final_price }} X {{ prod.products_quantity }}</span></p>
+            <div *ngIf="prod.attribute && prod.attribute.length" style="margin-top: 3px;white-space: nowrap;color: #525252;">
+              <h3 class="addonHead" style="font-size:12px;margin:0">- Add on Options</h3>
+              <h5 *ngFor="let attr of prod.attribute" style="font-size:12px;margin:2px 0 0;"><strong><span class="dotted">•</span> {{ attr.products_options_values_name }}</strong>, + {{ attr.options_values_price | currency : 'INR' }}</h5>
+            </div>
+          </div>
+          <div class="deliveryDetails">
+            <h3>DELIVERY DATE</h3>
+            <div class="detailsDate">
+              <strong *ngIf="prod.shipping_date && prod.shipping_date !== 'undefined'">{{ prod.shipping_date | date }}</strong>
+              <span *ngIf="+prod.shipping_cost == 0 || (prod.shipping_cost && prod.shipping_cost !== 'undefined')">{{ prod.shipping_cost == '99' ? 'Fixed Time Delivery' : prod.shipping_cost == '49' ? 'Standard Delivery' : prod.shipping_cost == 0 ? 'Free Delivery' : prod.shipping_cost == '149' ? 'Midnight Delivery' : 'Third Party Delivery' }} <s *ngIf="+prod.shipping_cost > 0" style="margin-right: 3px;">-</s> <strong class="currency_px" *ngIf="+prod.shipping_cost > 0"> {{ prod.shipping_cost | currency:'INR' }}</strong></span>
+              <span *ngIf="prod.shipping_time && prod.shipping_time.from && prod.shipping_time !== 'undefined'">Between {{ prod.shipping_time.from }}:00 to {{ prod.shipping_time.to }}:00</span>
+            </div>
           </div>
           <div class="productActions">
-            <ion-button expand="block" (click)="cancelProductFromOrder(prod)" color="tertiary" fill="outline" size="small" *ngIf="order.orders_status=='Pending' && prod.categories_id == '2'">Cancel</ion-button>
-            <ion-button color="tertiary" fill="outline" size="small" (click)="returnProductFromOrder(prod)" *ngIf="isEligibleForReturn && order.orders_status=='Completed'">Return</ion-button>
-            <p *ngIf="order.orders_status=='Completed' && orderDay && orderDay > 0">Days left till return period : {{ maxReturnPeriod - orderDay }}</p>
+            <ion-button expand="block" (click)="cancelProductFromOrder(prod)" color="tertiary" fill="outline" size="small" *ngIf="order.data.orders_status=='Pending' && prod.categories_id == '2'">Cancel</ion-button>
+            <ion-button color="tertiary" fill="outline" size="small" (click)="returnProductFromOrder(prod)" *ngIf="isEligibleForReturn && order.data.orders_status=='Completed'">Return</ion-button>
+            <p *ngIf="order.data.orders_status=='Completed' && orderDay && orderDay > 0">Days left till return period : {{ maxReturnPeriod - orderDay }}</p>
           </div>
         </div>
       </div>
       <div class="whiteCard">
         <h3 style="margin-bottom:5px;">Price Details</h3>
-        <p><strong>Subtotal:</strong><span>₹ {{ (+order.order_price - +order.shipping_cost).toFixed(2) }}</span></p>
-        <p><strong>Discount:</strong><span>₹ {{ (+order.coupon_amount).toFixed(2) }}</span></p>
-        <p><strong>Shipping:</strong><span>₹ {{ order.shipping_cost }}</span></p>
-        <p><strong><b>Total:</b></strong><span style="text-align:right"><b>₹ {{ order.order_price }}</b><small style="display:block">(Inc. of all Taxes)</small></span></p>
+        <p><strong>Subtotal:</strong><span>{{ (+order.subtotal | currency:'INR') }}</span></p>
+        <p *ngIf="order.data.coupon_data && order.data.coupon_data.coupon_amount > 0"><strong>Coupon discount</strong><span>{{ (+order.data.coupon_data.coupon_amount | currency:'INR') }}</span></p>
+        <p *ngIf="+order.data.deduct_from_wallet > 0"><strong>Wallet Discount</strong><span>{{ (+order.data.deduct_from_wallet) | currency:'INR' }}</span></p>
+        <p><strong>Shipping:</strong><span>{{ order.data.shipping_cost | currency:'INR' }}</span></p>
+        <p><strong><b>Total:</b></strong><span style="text-align:right"><b>{{ +order.total_price | currency:'INR' }}</b><small style="display:block">(Inc. of all Taxes)</small></span></p>
       </div>
       <div class="whiteCard orderStatus">
         <h3 style="margin-bottom:5px;">Order Status</h3>
-        <p><strong>Order placed on:</strong><span> {{ order.date_purchased | date:'dd MMM yyyy' }}</span></p>
-        <p><strong>Current Status:</strong><span> {{ order.orders_status == 'Pending' ? 'Order Placed' : order.orders_status == 'Delivered' ? 'Delivered on '+(order.date_added | date:'dd MMM yyyy') : order.orders_status }}</span></p>
-        <p><strong>Invoice:</strong><span><a target="_blank" download href="{{data.apiUrlNew}}viewOrderPdf/{{order.orders_id}}.pdf">Download Here</a></span></p>
+        <p><strong>Order placed on:</strong><span> {{ order.data.date_purchased | date:'dd MMM yyyy' }}</span></p>
+        <p><strong>Current Status:</strong><span> {{ order.data.orders_status_name == 'Pending' ? 'Order Placed' : order.data.orders_status_name == 'Delivered' ? 'Delivered on '+(order.data.date_added | date:'dd MMM yyyy') : order.data.orders_status_name }}</span></p>
+        <p><strong>Invoice:</strong><span><a target="_blank" download href="{{data.apiUrlNew}}viewOrderPdf/{{order.data.orders_id}}.pdf">Download Here</a></span></p>
       </div>
       <div class="actions">
         <ion-button expand="block" color="tertiary" (click)="openRaiseQueryForm()">Raise Query</ion-button>

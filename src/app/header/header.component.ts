@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MethodsService } from '../methods.service';
 import { DataService } from '../data.service';
 import { IonSearchbar } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild('headerSearch') headerS:IonSearchbar
   recognition:any;
   isRecording:boolean = false;
-  constructor(public methods:MethodsService, public data:DataService) { }
+  constructor(public methods:MethodsService, public data:DataService, public router:Router) { }
 
   ngOnInit() {
     this.methods.checkIfPopupSeen();

@@ -1,0 +1,28 @@
+.maincontent {
+    padding-bottom:70px;
+}
+.deliveryDetails{
+    display:flex;
+    padding:6px 0 0;
+    margin-top:4px;
+    border-top:1px solid #ccc;
+}
+.deliveryDetails h3{
+    color:#333;
+    font-size:11px;
+    margin:0;
+    font-weight: 700;
+}
+.deliveryDetails .detailsDate{
+    display:flex;
+    flex-flow: column;
+    justify-content: center;
+    padding-left:25px;
+    font-size:11px;
+}
+.deliveryDetails .detailsDate span{
+    display:block;
+    &:nth-child(2){
+        margin:3px 0;
+    }
+}
