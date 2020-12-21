@@ -277,6 +277,7 @@ export class DataService {
   public freeProductDetails:any;
   public isFirstTimeUser:boolean = false;
   public isNewSignup:boolean = false;
+  public walletCashbackData:any = undefined;
   constructor(public sanitize:DomSanitizer) {
     this.feeds[0].video = this.sanitize.bypassSecurityTrustResourceUrl(this.feeds[0].video);
    }

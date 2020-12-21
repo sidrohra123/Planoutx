@@ -3245,6 +3245,9 @@ export class MethodsService {
               if(cartItem.applied_coupons.length){
                 this.data.appliedCoupon = cartItem.applied_coupons[0]; 
               }
+              if(cartItem.applied_wallet_cashback && cartItem.applied_wallet_cashback.length){
+                this.data.walletCashbackData = cartItem.applied_wallet_cashback.slice(-1)[0];
+              }
               if(+cartItem.final_price > 0){
                 cartSubTotal += cartItem.special_price ? +cartItem.special_price : +cartItem.price;
               }
@@ -3844,8 +3847,11 @@ export class MethodsService {
       this.data.Order['deductable_amount'] = (walletAmount).toFixed(2);
       this.data.Order['totalPrice'] = +this.data.cartSubTotal > 0 ? (((+this.data.cartSubTotal - +this.data.cartDiscount) +this.data.cartShippingTotal) - walletAmount).toFixed(2) : (this.data.cartShippingTotal - walletAmount).toFixed(2);
     }
-    this.data.Order.coupon_data = JSON.stringify(this.data.appliedCoupon) || '';
-    console.log(this.data.Order);
+    let couponData = {...this.data.appliedCoupon, ...this.data.appliedCouponData};
+    this.data.Order.coupon_data = JSON.stringify(couponData) || '';
+    if(this.data.walletCashbackData){
+      this.data.Order['wallet_coupon_cashback_id'] = this.data.walletCashbackData.wallet_id;
+    }
     const newBody = new FormData();
     for ( var key in this.data.Order ) {
       newBody.append(key, this.data.Order[key]);

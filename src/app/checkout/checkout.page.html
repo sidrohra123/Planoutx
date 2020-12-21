@@ -125,6 +125,10 @@
             <strong>Coupon Applied</strong>
             <span><b style="color:var(--ion-color-px);font-size:13px;">{{ data.appliedCouponData.code }}</b></span>
           </div>
+          <div *ngIf="data.walletCashbackData">
+            <strong>Cashback you get ({{ data.appliedCouponData.amount }}%)</strong>
+            <span><b style="color:var(--ion-color-px);font-size:13px;">{{ (+data.appliedCouponData.amount/100)*+data.cartSubTotal | currency : 'INR' }}</b></span>
+          </div>
           <div *ngIf="data.freeProductDetails" class="freeProduct">
             <h3>Free Product Details</h3>
             <ion-grid style="padding:0;">
