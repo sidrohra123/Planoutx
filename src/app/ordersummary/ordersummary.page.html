@@ -22,6 +22,25 @@
         <p><a target="_blank" download href="{{data.apiUrlNew}}viewOrderPdf/{{summary.data.orders_id}}.pdf" color="px">Download Invoice</a></p>
       </ion-card-content>
     </ion-card>
+    <ion-card class="freeProd" *ngIf="freeProduct">
+      <ion-card-content style="padding: 20px 20px 10px;">
+        <div class="freeProduct">
+          <h2 style="display: none;">Free Product you got</h2>
+          <p style="font-size: 14px;color: #bf9401;padding: 10px 15px 10px 25px;background: #fff1c1;margin: -20px -20px 5px;border-radius: 8px 8px 0 0;">Coupon Code - <strong style="text-transform: uppercase;">{{ summary.data.coupon_data.code }}</strong></p>
+          <ion-grid style="padding:0;margin-top:8px;border-bottom:none;">
+            <ion-row>
+              <ion-col size="3">
+                <img [src]="data.apiUrlNew+freeProduct.products_image">
+              </ion-col>
+              <ion-col size="9">
+                <h4>{{ freeProduct.products_name }}</h4>
+                <p><del>{{ freeProduct.products_price | currency : 'INR' }}</del><b>Free</b></p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-card-content>
+    </ion-card>
     <ion-card class="cashback_msg" *ngIf="+summary.data.cashback_amount >= 1">
       <ion-card-content [routerLink]="['/profile/wallethistory']">
         Congratulations! You have got <strong>{{ +summary.data.cashback_amount | currency:'INR' }}</strong> cashback on this order. Please check your wallet.

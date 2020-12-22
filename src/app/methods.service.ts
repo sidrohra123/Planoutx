@@ -2440,6 +2440,7 @@ export class MethodsService {
     this.router.navigate(['/']).then(()=>{
       this.menu.close('sideMenu');
       this.nativeStorage.remove('user');
+      this.data.isFirstTimeUser = false;
       this.data.userInfo = '';
       this.data.selectedLocation = '';
       if(window.localStorage){

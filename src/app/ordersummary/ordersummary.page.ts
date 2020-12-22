@@ -14,6 +14,7 @@ export class OrdersummaryPage implements OnInit {
   public lottieConfig: Object;
   private anim: any;
   private animationSpeed: number = 1;
+  public freeProduct:any
   constructor(public methods:MethodsService, public data:DataService, public route:ActivatedRoute, public router:Router) {
     this.lottieConfig = {
       path: 'assets/433-checked-done.json',
@@ -37,6 +38,12 @@ export class OrdersummaryPage implements OnInit {
             this.summary = summ;
             if(this.summary.data.coupon_data){
               this.summary.data.coupon_data = JSON.parse(this.summary.data.coupon_data);
+              let getProducts = setInterval(() => {
+                if(this.data.allProducts.length){
+                  this.checkForFreeProduct(this.summary.data.coupon_data);
+                  clearInterval(getProducts);
+                }
+              },100);
             }
             if(this.summary.data.data && this.summary.data.data.length){
               this.summary.data.data.forEach((prod) => {
@@ -61,6 +68,17 @@ export class OrdersummaryPage implements OnInit {
     window.onbeforeunload = ((e)=>{
       self.location.href="/";
     });
+  }
+
+  checkForFreeProduct(coupon){
+    if(+coupon.coupon_cake_id >= 1){
+      this.data.allProducts.forEach((prod:any) => {
+        if(+prod.products_id == +coupon.coupon_cake_id){
+          this.freeProduct = prod;
+        }
+      })
+      console.log(this.freeProduct)
+    }
   }
 
 }

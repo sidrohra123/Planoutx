@@ -629,7 +629,7 @@
             </div>
         </div>
 
-        <div class="walletBalanceArea refernearn" *ngIf="data.userInfo && +data.userWalletBalance <= 0" [routerLink]="['/refernearn']">
+        <div class="walletBalanceArea refernearn" *ngIf="data.userInfo && (+data.userWalletBalance <= 0 || !data.userWalletBalance)" [routerLink]="['/refernearn']">
             <div class="walletBox">
                 <h4>Get ₹ 1000 in your wallet. Refer your friends</h4>
                 <p>Click here</p>

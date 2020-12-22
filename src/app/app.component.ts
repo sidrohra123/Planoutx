@@ -47,10 +47,10 @@ export class AppComponent {
       this.methods.getAllOffersNew();
       this.methods.getAllPages().then((pages)=>{});
       this.methods.getBanners().then((banners)=>{});
+      this.checkFirstTimeUser();
     }).catch((err)=>{
       console.log(err);
     });
-    this.checkFirstTimeUser();
   }
 
   checkFirstTimeUser(){
@@ -61,7 +61,7 @@ export class AppComponent {
       } else {
         this.data.isFirstTimeUser = false;
       }
-    },15000);
+    },10000);
   }
 
   initializeApp() {

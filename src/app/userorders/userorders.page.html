@@ -1,6 +1,6 @@
 <ion-content>
-  <div class="maincontent">
-    <div class="orderCollection" *ngIf="orders.length">
+  <div class="maincontent" *ngIf="orders.length">
+    <div class="orderCollection">
       <div class="whiteCard ion-activatable" *ngFor="let order of orders | filterBy : data.orderType;" >
         <ion-ripple-effect></ion-ripple-effect>
         <div class="orderBody">
@@ -38,5 +38,10 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="maincontent noData" *ngIf="!orders.length">
+    <img src="https://www.netclipart.com/pp/m/161-1615494_download-man-bowing-island-ai-file-waiting-emoji.png" />
+    <h2>No orders placed!<br> They will be here waiting for you!</h2>
+    <ion-button color="tertiary" expand="block" routerLink="/">Buy Some</ion-button>
   </div>
 </ion-content>
