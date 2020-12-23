@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MethodsService } from '../methods.service';
 import { DataService } from '../data.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { sum } from 'lodash';
+declare var fbq:any;
 
 @Component({
   selector: 'app-ordersummary',
@@ -60,6 +62,7 @@ export class OrdersummaryPage implements OnInit {
                 this.methods.removeFromCart(item, 'noalert');
               })
             });
+            fbq('track', 'Purchase', {currency: "INR", value: +summ.total_price});
           }
         });
       }

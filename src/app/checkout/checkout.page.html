@@ -12,7 +12,7 @@
       <div *ngIf="data.cartDiscount > 0" class="savedMoney">Congratulations! You have saved {{ data.cartDiscount | currency : 'INR' }} on your order!</div>
       
 
-      <div class="upsell_products" *ngIf="data.upsell_products.length">
+      <div class="upsell_products" *ngIf="data.upsell_products.length && +data.cartTotal >= 2000">
         <div class="upsellBox" *ngFor="let prod of data.upsell_products" [class.active]="prod.isUpsellAdded">
           <ion-list>
             <ion-item lines="none">

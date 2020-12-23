@@ -20,6 +20,7 @@ import { UrlSlugPipe } from './url-slug.pipe';
 import { SwUpdate } from '@angular/service-worker';
 declare var AccountKit:any;
 declare var zESettings:any;
+declare var fbq:any;
 
 @Injectable({
   providedIn: 'root'
@@ -1906,6 +1907,7 @@ export class MethodsService {
           }
           this.checkIfWishlisted(product);
           this.data.isProcessing = false;
+          fbq('track', 'AddToWishlist', {content_ids:product.products_id,content_name:product.products_name, value:product.products_price});
         }, (err)=>{
           console.log(err);
           this.data.isProcessing = false;
@@ -3453,6 +3455,7 @@ export class MethodsService {
   }
 
   addToCart(product, qty){
+    fbq('track', 'Warm_Audience_with_Cart', {});
     return new Promise((resolve,reject)=>{
       this.data.isProcessing = true;
       this.checkIfLoggedIn().then((user)=>{
