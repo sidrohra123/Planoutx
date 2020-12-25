@@ -46,7 +46,7 @@ export class MycouponsPage implements OnInit {
             }
 
             if(coupon.expiry_date){
-              coupon.expiry_date = new Date(coupon.expiry_date).getTime().toString();
+              //coupon.expiry_date = new Date(coupon.expiry_date).getTime().toString();
             }
           });
           console.log(this.userCoupons);
