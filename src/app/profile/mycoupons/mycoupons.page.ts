@@ -27,6 +27,9 @@ export class MycouponsPage implements OnInit {
         console.log(coupons);
         if(coupons.length){
           coupons.forEach((coupon)=>{
+            if(coupon.expiry_date){
+              coupon.expiry_date = new Date(coupon.expiry_date).getTime().toString();
+            }
             //check for user specific coupons
             if(coupon.email_restrictions){
               let emailsOfCoupon = coupon.email_restrictions.split(',');
@@ -43,10 +46,6 @@ export class MycouponsPage implements OnInit {
             //check for members only coupons
             if(coupon.discount_type=='membership_coupon' && coupon.coupon_mem!='1' && this.data.userInfo.membership && this.data.userInfo.membership.length){
               this.userCoupons.push(coupon);
-            }
-
-            if(coupon.expiry_date){
-              coupon.expiry_date = new Date(coupon.expiry_date).getTime().toString();
             }
           });
           console.log(this.userCoupons);
