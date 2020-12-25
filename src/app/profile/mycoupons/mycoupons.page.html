@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="couponFooter">
-          <p>Valid until : {{ coupon.expiry_date | date : 'dd MMM yyyy' }}</p>
+          <p>Valid until : {{ coupon.expiry_date }}</p>
           <ion-button size="small" (click)="copyCode(coupon)">Copy code</ion-button>
         </div>
       </li>
