@@ -44,6 +44,10 @@ export class MycouponsPage implements OnInit {
             if(coupon.discount_type=='membership_coupon' && coupon.coupon_mem!='1' && this.data.userInfo.membership && this.data.userInfo.membership.length){
               this.userCoupons.push(coupon);
             }
+
+            if(coupon.expiry_date){
+              coupon.expiry_date = new Date(coupon.expiry_date);
+            }
           });
           console.log(this.userCoupons);
         }
