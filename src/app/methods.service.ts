@@ -4234,9 +4234,12 @@ export class MethodsService {
     let isCatEligible = false;
     if(cartTotal >= eligibleTotal){
       this.data.cart.forEach((prod:any) => {
-        if(eligibleCats.includes(prod.categories_product_id)){
-          isCatEligible = true;
-        }
+        let prodCats = prod.categories_product_id.split(',');
+        prodCats.forEach((cartCat) => {
+          if(eligibleCats.includes(cartCat)){
+            isCatEligible = true;
+          }
+        });
       });
       if(!isCatEligible){
         this.showToast('Cart is not eligible to apply this coupon');
