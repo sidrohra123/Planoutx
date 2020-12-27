@@ -87,7 +87,7 @@
             <h3 class="addonHead" style="font-size:13px;">- Add on Options</h3>
             <h5 *ngFor="let attr of prod.attribute" style="font-size:12px;"><strong><span class="dotted">•</span> {{ attr.products_options_values_name }}</strong>, + {{ attr.options_values_price | currency : 'INR' }}</h5>
           </div>
-          <div class="deliveryDetails">
+          <div class="deliveryDetails" *ngIf="prod.products_id != 495 || prod.products_name != 'Hangover Kit'">
             <h3>DELIVERY DATE</h3>
             <div class="detailsDate">
               <strong *ngIf="prod.shipping_date && prod.shipping_date !== 'undefined'">{{ prod.shipping_date | date }}</strong>
