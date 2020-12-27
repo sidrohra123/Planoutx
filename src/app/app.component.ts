@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { MethodsService } from './methods.service';
 import { Router } from '@angular/router';
 import { DataService } from './data.service';
+declare var particlesJS:any;
 
 @Component({
   selector: 'app-root',
@@ -48,6 +49,9 @@ export class AppComponent {
       this.methods.getAllPages().then((pages)=>{});
       this.methods.getBanners().then((banners)=>{});
       this.checkFirstTimeUser();
+      particlesJS.load('particles-js', 'assets/particles.json', function() {
+        console.log('callback - particles.js config loaded');
+      });
     }).catch((err)=>{
       console.log(err);
     });

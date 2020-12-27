@@ -669,6 +669,7 @@ ion-toast {
                 color: #000;
                 font-size: 13px;
                 font-weight: 800;
+                text-transform: uppercase;
             }
         }
     }
@@ -1002,4 +1003,12 @@ ion-toast {
         margin:0 0 10px;
         color:#444;
     }
+}
+#particles-js{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
 }
