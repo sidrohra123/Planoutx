@@ -393,7 +393,6 @@ export class MethodsService {
 
       this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((result:any) => {
         console.log(result);
-        alert(JSON.stringify(result));
         this.data.fbResponse = result;
         let params={
           accessToken:result.authToken,
@@ -407,17 +406,14 @@ export class MethodsService {
           if(usr.picture){
             params.picture = usr.picture.data.url;
             this.data.fbData = params;
-            alert(JSON.stringify(params));
             this.signInPlanoutNew(params);
           }
         }).catch((err)=>{
           console.log(err);
-          alert(err);
         })
       }).catch((err) => {
         this.data.isProcessing = false;
         console.log(err);
-        alert(err);
         this.showToast(err);
       })
 
@@ -584,12 +580,12 @@ export class MethodsService {
       }
     } else if(this.data.googleResponse){
       body = {
-        customers_firstname:this.data.googleResponse.additionalUserInfo.profile.given_name,
-        customers_lastname:this.data.googleResponse.additionalUserInfo.profile.family_name,
-        customers_email_address:this.data.googleResponse.additionalUserInfo.profile.email,
-        customers_password:this.data.googleResponse.additionalUserInfo.profile.id,
+        customers_firstname:this.data.googleResponse.firstName,
+        customers_lastname:this.data.googleResponse.lastName,
+        customers_email_address:this.data.googleResponse.email,
+        customers_password:this.data.googleResponse.id,
         customers_telephone:'+91' + this.data.phoneNum.toString(),
-        customers_picture:this.data.googleResponse.additionalUserInfo.profile.picture
+        customers_picture:this.data.googleResponse.photoUrl
       }
     }
     if(this.data.referralCode && this.data.referralCode.trim()){
@@ -2583,29 +2579,45 @@ export class MethodsService {
     this.data.fbResponse = undefined;
     if(!this.platform.is('cordova')){
       this.data.isFetching = true;
+      this.data.isProcessing = true;
+      // firebase.auth().signOut().then(()=>{
+      //   var provider = new firebase.auth.GoogleAuthProvider();
+      //   provider.addScope('profile');
+      //   provider.addScope('email');
+      // firebase.auth().signInWithPopup(provider).then((result:any)=>{
+      //   this.data.isFetching = false;
+      //   console.log(result);
+      //   this.data.googleResponse = result;
+      //   let params={
+      //     accessToken:result.credential.accessToken,
+      //     userID:result.additionalUserInfo.profile.id,
+      //     platform:'google',
+      //     email:result.additionalUserInfo.profile.email,
+      //     picture:result.additionalUserInfo.profile.picture
+      //   }
+      //   this.data.googleData = params;
+      //   // this.showToast('You have been logged in successfully!');
+      //   this.signInPlanoutNew(params);
+      // }).catch((err)=>{
+      //   console.log(err);
+      // });
+      // });
 
-      firebase.auth().signOut().then(()=>{
-        var provider = new firebase.auth.GoogleAuthProvider();
-        provider.addScope('profile');
-        provider.addScope('email');
-      firebase.auth().signInWithPopup(provider).then((result:any)=>{
-        this.data.isFetching = false;
+      this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((result:any) => {
         console.log(result);
         this.data.googleResponse = result;
         let params={
-          accessToken:result.credential.accessToken,
-          userID:result.additionalUserInfo.profile.id,
+          accessToken:result.authToken,
+          userID:result.id,
           platform:'google',
-          email:result.additionalUserInfo.profile.email,
-          picture:result.additionalUserInfo.profile.picture
+          email:result.email,
+          picture:result.photoUrl
         }
         this.data.googleData = params;
-        // this.showToast('You have been logged in successfully!');
         this.signInPlanoutNew(params);
-      }).catch((err)=>{
+      }).catch((err) => {
         console.log(err);
-      });
-      });
+      })
       
     }
     else{
