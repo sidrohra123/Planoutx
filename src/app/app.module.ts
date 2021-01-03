@@ -77,7 +77,8 @@ import { WallethistoryPage } from './wallethistory/wallethistory.page';
 import { WishlistPage } from './wishlist/wishlist.page';
 import { UpdateprofilePage } from './updateprofile/updateprofile.page';
 import { MembershipdetailsPage } from './membershipdetails/membershipdetails.page';
-import { LottieAnimationViewModule } from 'ng-lottie';
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
 import { RequestinterceptorService } from './requestinterceptor.service';
 import { AvailcakesPage } from './passport/availcakes/availcakes.page';
 import { CakedetailsPage } from './passport/availcakes/cakedetails/cakedetails.page';
@@ -90,6 +91,15 @@ import { DesktopfooterPage } from './desktopfooter/desktopfooter.page';
 import { DesktopProductPage } from './desktop-product/desktop-product.page';
 import { AddonsPage } from './addons/addons.page';
 import { OrderfailedPage } from './orderfailed/orderfailed.page';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from 'angularx-social-login';
+
+export function playerFactory() {
+  return player;
+}
 
 
 @NgModule({
@@ -167,6 +177,7 @@ import { OrderfailedPage } from './orderfailed/orderfailed.page';
   ],
   imports: [
     BrowserModule,
+    SocialLoginModule,
     QRCodeModule,
     IonicModule.forRoot({
       mode:'ios'
@@ -183,7 +194,7 @@ import { OrderfailedPage } from './orderfailed/orderfailed.page';
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     GooglePlaceModule,
-    LottieAnimationViewModule.forRoot()
+    LottieModule.forRoot({ player: playerFactory })
   ],
   providers: [
     StatusBar,
@@ -199,7 +210,25 @@ import { OrderfailedPage } from './orderfailed/orderfailed.page';
     NativeGeocoder,
     SocialSharing,
     {provide: HTTP_INTERCEPTORS, useClass: RequestinterceptorService, multi: true},
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '956820123214-rchpbo8u4411dflqeovh00tgbo3h97of.apps.googleusercontent.com'
+            )
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('1671063226360754')
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    }
   ],
   bootstrap: [AppComponent]
 })

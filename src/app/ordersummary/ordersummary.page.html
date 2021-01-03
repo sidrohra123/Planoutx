@@ -1,11 +1,12 @@
 <ion-content>
   <div class="maincontent" *ngIf="summary">
-    <lottie-animation-view
-    [options]="lottieConfig"
-    [width]="300"
-    [height]="100"
-    (animCreated)="handleAnimation($event)">
-    </lottie-animation-view>
+      <ng-lottie
+      [options]="lottieConfig"
+      width="300px"
+      height="100px"
+      [styles]="styles"
+      (animationCreated)="handleAnimation($event)">
+      </ng-lottie>
     <h3 class="text-center">Thank you for shopping with us!</h3>
     <p class="text-center">Find below your order details</p>
     <ion-card class="transaction">

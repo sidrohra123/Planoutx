@@ -16,7 +16,11 @@ export class OrdersummaryPage implements OnInit {
   public lottieConfig: Object;
   private anim: any;
   private animationSpeed: number = 1;
-  public freeProduct:any
+  public freeProduct:any;
+  styles: Partial<CSSStyleDeclaration> = {
+    maxWidth: '100%',
+    margin: '0 auto',
+  };
   constructor(public methods:MethodsService, public data:DataService, public route:ActivatedRoute, public router:Router) {
     this.lottieConfig = {
       path: 'assets/433-checked-done.json',

@@ -19,8 +19,8 @@
   </div> -->
     <app-tabs *ngIf="!router.url.includes('/product/') && !router.url.includes('locations') && !router.url.includes('login') && router.url!='/passport' && !router.url.includes('eveyrthing') && !router.url.includes('/shop') && !router.url.includes('cart') && !router.url.includes('/filter') && !router.url.includes('/checkout') && !router.url.includes('/payment-options') && !router.url.includes('passport/availcakes') && !router.url.includes('addons')"></app-tabs>
     <div class="loadingMore" *ngIf="data.isProcessing">
-        <lottie-animation-view [options]="data.multilottieConfig" [width]="300" [height]="auto" (animCreated)="handleAnimation($event)">
-        </lottie-animation-view>
+        <ng-lottie [options]="data.multilottieConfig" width="300px" height="auto" [styles]="styles" (animationCreated)="handleAnimation($event)">
+        </ng-lottie>
     </div>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="whtsappButton">

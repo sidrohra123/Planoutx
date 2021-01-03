@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { MethodsService } from './methods.service';
 import { Router } from '@angular/router';
 import { DataService } from './data.service';
+import { AnimationItem } from 'lottie-web';
+import { AnimationOptions } from 'ngx-lottie';
 declare var particlesJS:any;
 
 @Component({
@@ -16,6 +18,10 @@ export class AppComponent {
   public lottieConfig: Object;
   private anim: any;
   private animationSpeed: number = 1;
+  styles: Partial<CSSStyleDeclaration> = {
+    maxWidth: '100%',
+    margin: '0 auto',
+  };
   public loadingAnimPaths = ['assets/loading/11504-birthday.json', 'assets/loading/7991-fixed-scheduling.json', 'assets/loading/12389-happy-holidays.json', 'assets/loading/5602-credit-card-party.json', 'assets/loading/13498-new-year-party.json'];
   constructor(
     private platform: Platform,

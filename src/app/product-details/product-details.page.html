@@ -151,12 +151,12 @@
 
         <div class="attributesSec" *ngIf="data.selectedProduct.attributes && data.selectedProduct.attributes.length">
           <ion-list *ngFor="let attr of data.selectedProduct.attributes" [hidden]="attr.values.length <= 1" mode="md">
-            <ion-radio-group *ngIf="attr.values.length && attr.values.length > 1">
+            <ion-radio-group *ngIf="attr.values.length && attr.values.length > 1" [value]="attr.selectedValue.id">
               <ion-list-header>Select {{ attr.option.name }}</ion-list-header>
 
               <ion-item *ngFor="let option of attr.values; let i=index;" lines="none">
                 <ion-label mode="md">{{ option.value }}</ion-label>
-                <ion-radio mode="md" color="px" (ionSelect)="methods.selectAttribute(attr,option, 'yes')" slot="start" [value]="option.id" [checked]="option.id==attr.selectedValue.id"></ion-radio>
+                <ion-radio mode="md" color="px" (click)="methods.selectAttribute(attr,option, 'yes')" slot="start" [value]="option.id"></ion-radio>
               </ion-item>
 
             </ion-radio-group>
@@ -207,7 +207,7 @@
 
                   <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('1') || data.selectedProduct.delivery_option_ids.includes('1,') || data.selectedProduct.delivery_option_ids.includes(',1')">
                     <ion-label mode="md">Standard Delivery - <span>₹ 49</span></ion-label>
-                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="stdDel" [checked]="data.selectedDeliveryType.type=='stdDel'"></ion-radio>
+                    <ion-radio mode="md" (click)="methods.selectDeliveryType($event)" slot="start" value="stdDel" [checked]="data.selectedDeliveryType.type=='stdDel'"></ion-radio>
                   </ion-item>
 
                   <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('1') || data.selectedProduct.delivery_option_ids.includes('1,') || data.selectedProduct.delivery_option_ids.includes(',1')) && data.selectedDeliveryType.type=='stdDel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">
@@ -229,7 +229,7 @@
 
                   <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('4') || data.selectedProduct.delivery_option_ids.includes('4,') || data.selectedProduct.delivery_option_ids.includes(',4')">
                     <ion-label mode="md">Free Delivery - <span class="freeDel">Free</span></ion-label>
-                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="freedel" [checked]="data.selectedDeliveryType.type=='freedel'"></ion-radio>
+                    <ion-radio mode="md" (click)="methods.selectDeliveryType($event)" slot="start" value="freedel" [checked]="data.selectedDeliveryType.type=='freedel'"></ion-radio>
                   </ion-item>  
 
                   <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('4') || data.selectedProduct.delivery_option_ids.includes('4,') || data.selectedProduct.delivery_option_ids.includes(',4')) && data.selectedDeliveryType.type=='freedel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">
@@ -251,7 +251,7 @@
                   
                   <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('2') || data.selectedProduct.delivery_option_ids.includes('2,') || data.selectedProduct.delivery_option_ids.includes(',2')">
                     <ion-label mode="md">Fixed Time Delivery - <span>₹ 99</span></ion-label>
-                    <ion-radio mode="md" slot="start" (ionSelect)="methods.selectDeliveryType($event)" value="fixDel" [checked]="data.selectedDeliveryType.type=='fixedDel'"></ion-radio>
+                    <ion-radio mode="md" slot="start" (click)="methods.selectDeliveryType($event)" value="fixDel" [checked]="data.selectedDeliveryType.type=='fixedDel'"></ion-radio>
                   </ion-item>
 
                   <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('2') || data.selectedProduct.delivery_option_ids.includes('2,') || data.selectedProduct.delivery_option_ids.includes(',2')) && data.selectedDeliveryType.type=='fixDel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">
@@ -273,7 +273,7 @@
 
                   <ion-item lines="none" *ngIf="data.selectedProduct.delivery_option_ids.includes('5') || data.selectedProduct.delivery_option_ids.includes('5,') || data.selectedProduct.delivery_option_ids.includes(',5')">
                     <ion-label mode="md">Mid Night Delivery - <span>₹ 149</span></ion-label>
-                    <ion-radio mode="md" (ionSelect)="methods.selectDeliveryType($event)" slot="start" value="midnightDel" [checked]="data.selectedDeliveryType.type=='midnightDel'"></ion-radio>
+                    <ion-radio mode="md" (click)="methods.selectDeliveryType($event)" slot="start" value="midnightDel" [checked]="data.selectedDeliveryType.type=='midnightDel'"></ion-radio>
                   </ion-item>
 
                   <div class="bodyDel" *ngIf="(data.selectedProduct.delivery_option_ids.includes('5') || data.selectedProduct.delivery_option_ids.includes('5,') || data.selectedProduct.delivery_option_ids.includes(',5')) && data.selectedDeliveryType.type=='midnightDel' && data.selectedProduct.availableSlots && data.selectedProduct.availableSlots.length">

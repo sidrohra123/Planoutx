@@ -16,7 +16,7 @@ export class EnterpincodePage implements OnInit {
   numReg = /^\d+$/;
   hasError:boolean = false;
   public qParams:any;
-  @ViewChild("placesRef") placesRef : GooglePlaceDirective;
+  @ViewChild("placesRef", { static: true }) placesRef : GooglePlaceDirective;
   options = {
     componentRestrictions: {country: 'IN'}
   };

@@ -1,12 +1,13 @@
 <ion-content>
   <div class="maincontent" *ngIf="summary">
     <div style="margin-top:25px;">
-      <lottie-animation-view
+      <ng-lottie
       [options]="lottieConfig"
-      [width]="300"
-      [height]="100"
-      (animCreated)="handleAnimation($event)">
-      </lottie-animation-view>
+      width="300px"
+      height="100px"
+      [styles]="styles"
+      (animationCreated)="handleAnimation($event)">
+      </ng-lottie>
     </div>
     <h3 class="text-center">Payment not Successfull!</h3>
     <p class="text-center">Please try again.</p>

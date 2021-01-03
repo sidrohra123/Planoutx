@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./tutorials.page.scss'],
 })
 export class TutorialsPage implements OnInit {
-  @ViewChild('swiperInst') public swiperWrapper: any;
+  @ViewChild('swiperInst', { static: true }) public swiperWrapper: any;
   public config:any;
   constructor(public methods:MethodsService, public router:Router) { }
 

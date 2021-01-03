@@ -42,7 +42,7 @@
 .p-btn > div{
     font-weight:bold;
 }
-/deep/ ion-searchbar .searchbar-input{
+:host ::ng-deep ion-searchbar .searchbar-input{
     line-height: 42px !important;
     padding-left: 34px !important;
     box-shadow: none !important;
@@ -51,7 +51,7 @@
     height: 42px!important;
     padding: 2px 36px 0!important;
 }
-/deep/ ion-searchbar .searchbar-input-container /deep/ ion-icon{
+:host ::ng-deep ion-searchbar .searchbar-input-container :host ::ng-deep ion-icon{
     left: 8px!important;
     top: 12px!important;
     width: 21px!important;
@@ -67,7 +67,7 @@ ion-grid, ion-col{
 .logo{
     outline: none!important;
 }
-/deep/ .searchbar-input-container.sc-ion-searchbar-ios{
+:host ::ng-deep .searchbar-input-container.sc-ion-searchbar-ios{
     height:40px;
 }
 .sc-ion-searchbar-ios-h{

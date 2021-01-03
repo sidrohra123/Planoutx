@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild('headerSearch') headerS:IonSearchbar
+  @ViewChild('headerSearch', { static: true }) headerS:IonSearchbar
   recognition:any;
   isRecording:boolean = false;
   constructor(public methods:MethodsService, public data:DataService, public router:Router) { }

@@ -46,11 +46,11 @@
     --border-width:2px;
     --box-shadow:none;
 }
-/deep/ .buttonsSocial ion-button.fbButton.ion-color-light{
+:host ::ng-deep .buttonsSocial ion-button.fbButton.ion-color-light{
     --ion-color-base:#38539b!important;
     --ion-color-contrast:#fff!important;
 }
-/deep/ .buttonsSocial ion-button.googleBtn.ion-color-light{
+:host ::ng-deep .buttonsSocial ion-button.googleBtn.ion-color-light{
     --ion-color-base:#d64134!important;
     --ion-color-contrast:#fff!important;
     margin-top:10px;

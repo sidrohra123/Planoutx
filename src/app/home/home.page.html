@@ -14,8 +14,8 @@
                 </ion-slide>
             </ion-slides>
             <div class="buttonsNav">
-                <ion-icon slot="icon-only" *ngIf="index>=1" name="arrow-dropleft" (click)="slideTo('left')"></ion-icon>
-                <ion-icon slot="icon-only" [style.float]="index<catSlide.slidesPerView-1 ? 'right' : ''" *ngIf="index<catSlide.slidesPerView-1" name="arrow-dropright" (click)="slideTo('right')"></ion-icon>
+                <ion-icon slot="icon-only" *ngIf="index>=1" name="chevron-back-circle-outline" (click)="slideTo('left')"></ion-icon>
+                <ion-icon slot="icon-only" [style.float]="index<catSlide.slidesPerView-1 ? 'right' : ''" *ngIf="index<catSlide.slidesPerView-1" name="chevron-forward-circle-outline" (click)="slideTo('right')"></ion-icon>
             </div>
         </div>
         <div class="catSlides" *ngIf="!data.categories.length">

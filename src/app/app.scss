@@ -246,7 +246,7 @@ html {
     font-weight: 500;
 }
 
-/deep/ ion-searchbar .searchbar-input {
+:host ::ng-deep ion-searchbar .searchbar-input {
     line-height: 26px!important;
     padding-left: 34px!important;
     box-shadow: none!important;
@@ -254,14 +254,14 @@ html {
     font-size: 14px!important;
 }
 
-/deep/ ion-searchbar .searchbar-input-container /deep/ ion-icon {
+:host ::ng-deep ion-searchbar .searchbar-input-container :host ::ng-deep ion-icon {
     left: 8px!important;
     top: 9px!important;
     width: 21px!important;
     height: 21px!important;
 }
 
-/deep/ .searchbar-input-container.sc-ion-searchbar-ios {
+:host ::ng-deep .searchbar-input-container.sc-ion-searchbar-ios {
     height: 40px;
 }
 

@@ -18,6 +18,8 @@ import { DomSanitizer, Meta, Title } from '@angular/platform-browser';
 import * as _ from "lodash";
 import { UrlSlugPipe } from './url-slug.pipe';
 import { SwUpdate } from '@angular/service-worker';
+import { SocialAuthService } from "angularx-social-login";
+import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 declare var AccountKit:any;
 declare var zESettings:any;
 declare var fbq:any;
@@ -26,7 +28,7 @@ declare var fbq:any;
   providedIn: 'root'
 })
 export class MethodsService {
-  constructor(private menu:MenuController, private data:DataService, private geolocation: Geolocation, private contacts: Contacts, private youtube: YoutubeVideoPlayer, private api:ApiService, private toast: ToastController, private platform:Platform, private fb: Facebook, private router:Router, private nativeStorage: NativeStorage, private googlePlus: GooglePlus, private alertController:AlertController, private nativeGeocoder: NativeGeocoder, public actionSheetController: ActionSheetController, private socialSharing: SocialSharing, public san:DomSanitizer, private loadingController: LoadingController, public route:ActivatedRoute, private titleService: Title, private metaService: Meta, private sw:SwUpdate) {
+  constructor(private menu:MenuController, private data:DataService, private geolocation: Geolocation, private contacts: Contacts, private youtube: YoutubeVideoPlayer, private api:ApiService, private toast: ToastController, private platform:Platform, private fb: Facebook, private router:Router, private nativeStorage: NativeStorage, private googlePlus: GooglePlus, private alertController:AlertController, private nativeGeocoder: NativeGeocoder, public actionSheetController: ActionSheetController, private socialSharing: SocialSharing, public san:DomSanitizer, private loadingController: LoadingController, public route:ActivatedRoute, private titleService: Title, private metaService: Meta, private sw:SwUpdate, private authService: SocialAuthService) {
     
    }
 
@@ -348,7 +350,6 @@ export class MethodsService {
       const toast = await this.toast.create({
         message:message,
         duration:duration ? duration : 2000,
-        showCloseButton:true,
         cssClass:'plnToaster'
       });
       toast.present();
@@ -359,21 +360,48 @@ export class MethodsService {
     if(!this.platform.is('cordova')){
       this.data.isProcessing = true;
 
-      firebase.auth().signOut().then(()=>{
-        var provider = new firebase.auth.FacebookAuthProvider();
-      provider.addScope('email');
-      firebase.auth().signInWithPopup(provider).then((result:any)=>{
+      // firebase.auth().signOut().then(()=>{
+      //   var provider = new firebase.auth.FacebookAuthProvider();
+      // provider.addScope('email');
+      // firebase.auth().signInWithPopup(provider).then((result:any)=>{
+      //   console.log(result);
+      //   this.data.fbResponse = result;
+      //   let params={
+      //     accessToken:result.credential.accessToken,
+      //     userID:result.additionalUserInfo.profile.id,
+      //     platform:'fb',
+      //     email:result.additionalUserInfo.profile.email,
+      //     picture:''
+      //   }
+      //   this.data.fbData = params;
+      //   // this.signInPlanout('fb', result, params);
+      //   let getProfile = fetch(`https://graph.facebook.com/v5.0/${params.userID}?access_token=${params.accessToken}&fields=id%2Cname%2Cpicture.width(800)`).then(response => response.json()).then((usr)=>{
+      //     if(usr.picture){
+      //       params.picture = usr.picture.data.url;
+      //       this.data.fbData = params;
+      //       this.signInPlanoutNew(params);
+      //     }
+      //   }).catch((err)=>{
+      //     console.log(err);
+      //   })
+      // }).catch((err)=>{
+      //   this.data.isProcessing = false;
+      //   console.log(err);
+      //   this.showToast(err.message);
+      // })
+      // })
+
+      this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((result:any) => {
         console.log(result);
         this.data.fbResponse = result;
         let params={
-          accessToken:result.credential.accessToken,
-          userID:result.additionalUserInfo.profile.id,
+          accessToken:result.authToken,
+          userID:result.id,
           platform:'fb',
-          email:result.additionalUserInfo.profile.email,
+          email:result.email,
           picture:''
         }
         this.data.fbData = params;
-        // this.signInPlanout('fb', result, params);
         let getProfile = fetch(`https://graph.facebook.com/v5.0/${params.userID}?access_token=${params.accessToken}&fields=id%2Cname%2Cpicture.width(800)`).then(response => response.json()).then((usr)=>{
           if(usr.picture){
             params.picture = usr.picture.data.url;
@@ -383,12 +411,13 @@ export class MethodsService {
         }).catch((err)=>{
           console.log(err);
         })
-      }).catch((err)=>{
+      }).catch((err) => {
         this.data.isProcessing = false;
         console.log(err);
-        this.showToast(err.message);
+        this.showToast(err);
       })
-      })
+
+
       
     }
     else{
@@ -542,10 +571,10 @@ export class MethodsService {
     let body = {};
     if(this.data.fbResponse){
       body = {
-        customers_firstname:this.data.fbResponse.additionalUserInfo.profile.first_name,
-        customers_lastname:this.data.fbResponse.additionalUserInfo.profile.last_name,
-        customers_email_address:this.data.fbResponse.additionalUserInfo.profile.email,
-        customers_password:this.data.fbResponse.additionalUserInfo.profile.id,
+        customers_firstname:this.data.fbResponse.firstName,
+        customers_lastname:this.data.fbResponse.lastName,
+        customers_email_address:this.data.fbResponse.email,
+        customers_password:this.data.fbResponse.id,
         customers_telephone:'+91' + this.data.phoneNum.toString(),
         customers_picture:this.data.fbData.picture
       }

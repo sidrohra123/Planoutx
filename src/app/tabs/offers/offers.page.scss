@@ -16,11 +16,11 @@ ion-card-title{
     font-size:18px;
     margin-top:3px;
 }
-/deep/ ion-card-content p{
+:host ::ng-deep ion-card-content p{
     color:#181818;
     margin-bottom:10px;
 }
-/deep/ ion-card-content p:before{
+:host ::ng-deep ion-card-content p:before{
     content:'';
     display:inline-block;
     margin-right:4px;

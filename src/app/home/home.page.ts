@@ -17,7 +17,7 @@ export class HomePage implements OnInit, AfterViewInit {
   @ViewChild('offSlides') offSlides:IonSlides;
   @ViewChild('prodSlides') prodSlides:IonSlides;
   @ViewChild('ratingSlides') ratingSlides:IonSlides;
-  @ViewChild('homeContent') homContent:IonContent;
+  @ViewChild('homeContent', { static: true }) homContent:IonContent;
 
   catSlide = {
     initialSlide: 0,

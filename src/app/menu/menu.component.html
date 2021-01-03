@@ -45,7 +45,7 @@
 
       <ion-list *ngIf="data.allPages.length">
         <ion-item lines="none" [routerLink]="['/content', page.name | urlSlug]" (click)="methods.closeMenu()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" *ngFor="let page of data.allPages">
-          <ion-icon name="paper"></ion-icon>
+          <ion-icon name="newspaper"></ion-icon>
           <span>{{ page.name }}</span>
         </ion-item>
       </ion-list>

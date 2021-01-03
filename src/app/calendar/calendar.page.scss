@@ -17,11 +17,11 @@
         margin:0;
     }
 }
-/deep/ .cal-past {
+:host ::ng-deep .cal-past {
     color:#f2f2f2;
     pointer-events: none;
 }
-/deep/ .cal-month-view .cal-day-cell{
+:host ::ng-deep .cal-month-view .cal-day-cell{
     min-height:0;
     height:50px;
     line-height:50px;
@@ -30,7 +30,7 @@
     margin:auto;
     min-width: 0;
 }
-/deep/ .cal-month-view .cal-day-cell.cal-today{
+:host ::ng-deep .cal-month-view .cal-day-cell.cal-today{
     background: transparent;
     position: relative;
     &:after{
@@ -46,10 +46,10 @@
         margin:5px;
     }
 }
-/deep/ .cal-month-view .cal-cell-row .cal-cell:hover, .cal-month-view .cal-cell.cal-has-events.cal-open{
+:host ::ng-deep .cal-month-view .cal-cell-row .cal-cell:hover, .cal-month-view .cal-cell.cal-has-events.cal-open{
     background: transparent;
 }
-/deep/ .cal-month-view .cal-day-cell.active{
+:host ::ng-deep .cal-month-view .cal-day-cell.active{
     position: relative;
     &:after{
         content:'';
@@ -64,10 +64,10 @@
         margin:5px;
     }
 }
-/deep/ .cal-month-view .cal-cell-top{
+:host ::ng-deep .cal-month-view .cal-cell-top{
     min-height:0;
 }
-/deep/ .cal-month-view .cal-day-number{
+:host ::ng-deep .cal-month-view .cal-day-number{
     color: inherit !important;
     font-size: inherit !important;
     opacity: 1;
@@ -76,16 +76,16 @@
     display: block;
     margin:0;
 }
-/deep/ .cal-month-view .cal-cell-row:hover {
+:host ::ng-deep .cal-month-view .cal-cell-row:hover {
     background-color: transparent;
 }
-/deep/ .cal-month-view .cal-days .cal-cell-row, /deep/ .cal-month-view .cal-day-cell {
+:host ::ng-deep .cal-month-view .cal-days .cal-cell-row, :host ::ng-deep .cal-month-view .cal-day-cell {
     border: none!important;
 }
-/deep/ .cal-month-view .cal-days{
+:host ::ng-deep .cal-month-view .cal-days{
     border:none!important;
 }
-/deep/ .cal-month-view .cal-header .cal-cell{
+:host ::ng-deep .cal-month-view .cal-header .cal-cell{
     font-size:11px;
     font-weight: 400;
 }

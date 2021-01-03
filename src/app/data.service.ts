@@ -1,6 +1,7 @@
 import { Injectable, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Injectable({
   providedIn: 'root'
@@ -117,7 +118,7 @@ export class DataService {
   public sideMenuItems=[
     {name:'Home', icon:'home', link:'/'},
     // {name:'Offers', icon:'cafe', link:'/offers'},
-    {name:'Refer and Earn', icon:'contacts', link:'/refernearn', auth:true},
+    {name:'Refer and Earn', icon:'people-circle', link:'/refernearn', auth:true},
     {name:'Planout Passport', icon:'appstore', link:'/passport', highlight:true},
     // {name:'Trending', icon:'trending-up', link:'/trending'},
     {name:'Party Ideas', icon:'bulb', link:'/trending'},
@@ -245,7 +246,7 @@ export class DataService {
   public allOrders=[];
   public loading:any;
   public cartHasCake:boolean = false;
-  public multilottieConfig: Object;
+  public multilottieConfig: AnimationOptions;
   public userWalletBalance:any;
   public loadingAnimPaths = ['assets/loading/13498-new-year-party.json'];
   public allCoupons= [];

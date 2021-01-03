@@ -13,6 +13,10 @@ export class OrderfailedPage implements OnInit {
   public lottieConfig: Object;
   private anim: any;
   private animationSpeed: number = 1;
+  styles: Partial<CSSStyleDeclaration> = {
+    maxWidth: '100%',
+    margin: '0 auto',
+  };
   constructor(public methods:MethodsService, public data:DataService, public route:ActivatedRoute, public router:Router) {
     this.lottieConfig = {
       path: 'assets/loading/16305-payment-failed.json',

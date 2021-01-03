@@ -79,7 +79,7 @@ export class AddAddressProfilePage implements OnInit {
       return false;
     }
     this.methods.saveAddress(this.address).then((addr)=>{
-      this.router.navigate(['/profile/savedaddresses']);
+      location.href.indexOf('checkout') > -1 ? this.router.navigate(['/checkout']) : this.router.navigate(['/profile/savedaddresses']);
     });
   }
 
