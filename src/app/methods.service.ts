@@ -2616,6 +2616,7 @@ export class MethodsService {
         this.data.googleData = params;
         this.signInPlanoutNew(params);
       }).catch((err) => {
+        this.data.isProcessing = false;
         console.log(err);
       })
       
