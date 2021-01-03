@@ -1,27 +1,27 @@
 <ion-list>
-  <ion-radio-group>
+  <ion-radio-group [value]="data.selectedSortBy">
     <ion-list-header>
       Sort By
     </ion-list-header>
 
     <ion-item>
       <ion-label>Recommended</ion-label>
-      <ion-radio [checked]="data.selectedSortBy == 'recommended' ? 'true' : 'false'" value="recommended" color="tertiary" (ionSelect)="sortProductsBy('recommended')"></ion-radio>
+      <ion-radio value="recommended" color="tertiary" (click)="sortProductsBy('recommended')"></ion-radio>
     </ion-item>
 
     <ion-item>
       <ion-label>New</ion-label>
-      <ion-radio [checked]="data.selectedSortBy == 'new' ? 'true' : 'false'" value="new" color="tertiary" (ionSelect)="sortProductsBy('new')"></ion-radio>
+      <ion-radio value="new" color="tertiary" (click)="sortProductsBy('new')"></ion-radio>
     </ion-item>
 
     <ion-item>
       <ion-label>Price Low to High</ion-label>
-      <ion-radio [checked]="data.selectedSortBy == 'pltoh' ? 'true' : 'false'" value="pltoh" color="tertiary" (ionSelect)="sortProductsBy('pltoh')"></ion-radio>
+      <ion-radio value="pltoh" color="tertiary" (click)="sortProductsBy('pltoh')"></ion-radio>
     </ion-item>
 
     <ion-item>
       <ion-label>Price High to Low</ion-label>
-      <ion-radio [checked]="data.selectedSortBy == 'phtol' ? 'true' : 'false'" value="phtol" color="tertiary" (ionSelect)="sortProductsBy('phtol')"></ion-radio>
+      <ion-radio value="phtol" color="tertiary" (click)="sortProductsBy('phtol')"></ion-radio>
     </ion-item>
 
   </ion-radio-group>
