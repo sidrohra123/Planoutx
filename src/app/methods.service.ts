@@ -450,6 +450,7 @@ export class MethodsService {
 
   signInPlanoutNew(params){
     console.log(params);
+    alert(JSON.stringify(params));
     let body = {
       // access_token:params.accessToken
       customers_email_address:params.email
