@@ -393,6 +393,7 @@ export class MethodsService {
 
       this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((result:any) => {
         console.log(result);
+        alert(JSON.stringify(result));
         this.data.fbResponse = result;
         let params={
           accessToken:result.authToken,
@@ -406,14 +407,17 @@ export class MethodsService {
           if(usr.picture){
             params.picture = usr.picture.data.url;
             this.data.fbData = params;
+            alert(JSON.stringify(params));
             this.signInPlanoutNew(params);
           }
         }).catch((err)=>{
           console.log(err);
+          alert(err);
         })
       }).catch((err) => {
         this.data.isProcessing = false;
         console.log(err);
+        alert(err);
         this.showToast(err);
       })
 
@@ -450,7 +454,6 @@ export class MethodsService {
 
   signInPlanoutNew(params){
     console.log(params);
-    alert(JSON.stringify(params));
     let body = {
       // access_token:params.accessToken
       customers_email_address:params.email
