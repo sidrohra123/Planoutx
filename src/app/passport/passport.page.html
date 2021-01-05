@@ -136,7 +136,7 @@
         </div>
     </div>
 </ion-content>
-<div class="memberCTA" *ngIf="(data.userInfo && !data.userInfo.membership) || (data.userInfo && data.userInfo.membership && !data.userInfo.membership.length) || !data.userInfo && selectedPlan">
+<div class="memberCTA" *ngIf="selectedPlan && ((data.userInfo && !data.userInfo.membership) || (data.userInfo && data.userInfo.membership && !data.userInfo.membership.length) || !data.userInfo && selectedPlan)">
     <button *ngIf="canBuyPassport" class="ion-activatable" (click)="buyMembership()"><ion-ripple-effect></ion-ripple-effect>Buy Now<p>{{ selectedPlan.days/30 }} months membership @ {{ selectedPlan.amount | currency:'INR' }}</p></button>
     <button *ngIf="!canBuyPassport" class="ion-activatable" (click)="getNotified()"><ion-ripple-effect></ion-ripple-effect>Passport launching soon after lockdown<p>Tap on this button to get notified</p></button>
 </div>
