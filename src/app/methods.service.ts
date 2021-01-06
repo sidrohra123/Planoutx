@@ -4277,6 +4277,8 @@ export class MethodsService {
         resolve(true);
       } else if(coupon.product_free_ids && eligibleItem){
         resolve(true);
+      } else if(!coupon.product_free_ids && eligibleItem){
+        resolve(true);
       } else{
         reject(false);
       }

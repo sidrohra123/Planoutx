@@ -125,7 +125,7 @@
             <strong>Coupon Applied</strong>
             <span><b style="color:var(--ion-color-px);font-size:13px;">{{ data.appliedCouponData.code }}</b></span>
           </div>
-          <div *ngIf="data.walletCashbackData">
+          <div *ngIf="data.walletCashbackData && data.appliedCouponData">
             <strong>Cashback you get ({{ data.appliedCouponData.amount }}%)</strong>
             <span><b style="color:var(--ion-color-px);font-size:13px;">{{ (+data.appliedCouponData.amount/100)*+data.cartSubTotal | currency : 'INR' }}</b></span>
           </div>
