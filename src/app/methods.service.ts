@@ -355,6 +355,12 @@ export class MethodsService {
       toast.present();
   }
   signInFb(){
+    let isInsta = navigator.userAgent.includes("Instagram");
+    if(isInsta){
+      this.showToast('Please Chrome/Safari/Other Browser to continue with the signup process.');
+      this.showConfirm('Attention!', 'Please Chrome/Safari/Other Browser to continue with the signup process.', '', ()=>{this.router.navigate(['/'])}, null, 'Go Home', 'Ok')
+      return false;
+    }
     this.data.googleData = undefined;
     this.data.googleResponse = undefined;
     if(!this.platform.is('cordova')){
@@ -2575,6 +2581,12 @@ export class MethodsService {
   }
 
   signInGoogle(){
+    let isInsta = navigator.userAgent.includes("Instagram");
+    if(isInsta){
+      this.showToast('Please Chrome/Safari/Other Browser to continue with the signup process.');
+      this.showConfirm('Attention!', 'Please Chrome/Safari/Other Browser to continue with the signup process.', '', ()=>{this.router.navigate(['/'])}, null, 'Go Home', 'Ok')
+      return false;
+    }
     this.data.fbData = undefined;
     this.data.fbResponse = undefined;
     if(!this.platform.is('cordova')){
