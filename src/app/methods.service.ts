@@ -357,8 +357,8 @@ export class MethodsService {
   signInFb(){
     let isInsta = navigator.userAgent.includes("Instagram");
     if(isInsta){
-      this.showToast('Please Chrome/Safari/Other Browser to continue with the signup process.');
-      this.showConfirm('Attention!', 'Please Chrome/Safari/Other Browser to continue with the signup process.', '', ()=>{this.router.navigate(['/'])}, null, 'Go Home', 'Ok')
+      this.showToast('Please open Chrome/Safari/Other Browser to continue to continue Shopping.');
+      this.showConfirm('Attention!', 'Please open Chrome/Safari/Other Browser to continue Shopping.', 'Instagram is facing some problem.', ()=>{this.router.navigate(['/'])}, null, 'Go Home', 'Ok')
       return false;
     }
     this.data.googleData = undefined;
@@ -2583,8 +2583,8 @@ export class MethodsService {
   signInGoogle(){
     let isInsta = navigator.userAgent.includes("Instagram");
     if(isInsta){
-      this.showToast('Please Chrome/Safari/Other Browser to continue with the signup process.');
-      this.showConfirm('Attention!', 'Please Chrome/Safari/Other Browser to continue with the signup process.', '', ()=>{this.router.navigate(['/'])}, null, 'Go Home', 'Ok')
+      this.showToast('Please open Chrome/Safari/Other Browser to continue to continue Shopping.');
+      this.showConfirm('Attention!', 'Please open Chrome/Safari/Other Browser to continue Shopping.', 'Instagram is facing some problem.', ()=>{this.router.navigate(['/'])}, null, 'Go Home', 'Ok')
       return false;
     }
     this.data.fbData = undefined;
