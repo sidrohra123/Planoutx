@@ -114,7 +114,9 @@ export class DataService {
   public offersCatalog:any;
   public isContent:boolean = false;
   public apiUrl:string="http://choprapriyanka.com/";
-  public apiUrlNew:string="https://deviantnestor.com/upcoming-ecommerce/";
+  // public apiUrlNew:string="https://deviantnestor.com/upcoming-ecommerce/";
+  //public apiUrlNew:string="http://162.210.70.169/deviantnestor.com/upcoming-ecommerce/";
+  public apiUrlNew:string="http://planoutx.xyz/upcoming-ecommerce/";
   public sideMenuItems=[
     {name:'Home', icon:'home', link:'/'},
     // {name:'Offers', icon:'cafe', link:'/offers'},
