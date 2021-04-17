@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { DataService } from './data.service';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
-declare var particlesJS:any;
 
 @Component({
   selector: 'app-root',
@@ -55,9 +54,9 @@ export class AppComponent {
       this.methods.getAllPages().then((pages)=>{});
       this.methods.getBanners().then((banners)=>{});
       this.checkFirstTimeUser();
-      particlesJS.load('particles-js', 'assets/particles.json', function() {
-        console.log('callback - particles.js config loaded');
-      });
+      // particlesJS.load('particles-js', 'assets/particles.json', function() {
+      //   console.log('callback - particles.js config loaded');
+      // });
     }).catch((err)=>{
       console.log(err);
     });
